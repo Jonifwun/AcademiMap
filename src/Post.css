@@ -1,0 +1,35 @@
+.postImage{
+    width: 100%;
+    object-fit: contain;
+}
+
+.post{
+    max-width: 650px;
+}
+
+#postCard {
+    background-color: #0c3141;
+    margin: 25px;
+    max-width: 650px;
+}
+
+.username{
+    font-weight: bold;
+}
+
+.postText{
+    font-weight: normal;
+    padding: 15px 10px;
+    color: #FFF;
+}
+
+.postHeader{
+    display: flex;
+    align-items: center;
+    padding: 15px 10px;
+    color: #FFF;
+}
+
+.postAvatar{
+    margin-right: 10px;
+}
