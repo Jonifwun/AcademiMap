@@ -9,10 +9,9 @@
 
 .header{
   background-color: #019CDD;
-  padding: 5px;
+  padding: 0 5px;
 }
 
-.App{
+body {
   background-color: #164B61;
-  height: 100vh;
 }

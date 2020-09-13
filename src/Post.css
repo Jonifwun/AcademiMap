@@ -4,7 +4,7 @@
 }
 
 .post{
-    max-width: 650px;
+    object-fit: contain;
 }
 
 #postCard {
@@ -25,6 +25,7 @@
 
 .postHeader{
     display: flex;
+    justify-content: space-between;
     align-items: center;
     padding: 15px 10px;
     color: #FFF;
@@ -32,4 +33,13 @@
 
 .postAvatar{
     margin-right: 10px;
+}
+
+.postUserAvatar{
+    display: flex;
+    align-items: center;
+}
+
+#menuIcon{
+    float: right;
 }
