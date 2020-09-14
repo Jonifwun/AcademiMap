@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Button, FormControl, Input, InputLabel } from '@material-ui/core'
+import { Button, Card, FormControl, Input, InputLabel } from '@material-ui/core'
 import '../SignUpForm.css'
 import { auth } from 'firebase'
 
@@ -13,7 +13,15 @@ function SignUpForm() {
         e.preventDefault();
 
         auth().createUserWithEmailAndPassword(email, password)
-        .catch((err) => alert(err.message))
+        .catch((err) => {
+            const errorCode = err.code;
+            const errorMessage = err.message;
+            if (errorCode === 'auth/weak-password') {
+              alert('The password is too weak.');
+            } else {
+              alert(errorMessage);
+            }  
+        })
     } 
 
     return(
@@ -21,9 +29,12 @@ function SignUpForm() {
             <div className="header">
                 <img src="logo.png" alt="logo" className="headerLogo"></img>
             </div>
-            <h2>Sign Up</h2>
+            
+            
             <form className="signUpForm">
-                <FormControl>
+                <Card id="Card">
+                <h2>Sign Up</h2>
+                <FormControl className="input">
                     <InputLabel htmlFor="username">Username</InputLabel>
                     <Input 
                         placeholder="Username"
@@ -34,7 +45,7 @@ function SignUpForm() {
                     />
                 </FormControl> 
                     
-                <FormControl>
+                <FormControl className="input">
                     <InputLabel htmlFor="email">Email</InputLabel>
                     <Input 
                         placeholder="Email"
@@ -45,7 +56,7 @@ function SignUpForm() {
                     />
                 </FormControl>
                     
-                <FormControl>
+                <FormControl className="input">
                     <InputLabel htmlFor="password">Password</InputLabel>
                     <Input 
                         placeholder="Password"
@@ -55,8 +66,10 @@ function SignUpForm() {
                         onChange={(e) => setPassword(e.target.value)}
                     />
                 </FormControl>
+                </Card>
                 <Button type="submit" onClick={ signUp } variant="contained" color="primary" className="signUpBtn">Sign Up</Button>
             </form>
+           
             
         </div>
     )

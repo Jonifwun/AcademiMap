@@ -13,14 +13,28 @@
     max-width: 650px;
 }
 
+/* #commentIcon{
+    color: #FFF
+} */
+
 .username{
     font-weight: bold;
 }
 
 .postText{
     font-weight: normal;
+    padding: 5px 10px;
+    color: #FFF;
+}
+
+.icons{
     padding: 15px 10px;
     color: #FFF;
+    
+}
+
+.icon{
+    margin-right: 10px;
 }
 
 .postHeader{

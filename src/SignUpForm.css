@@ -1,4 +1,4 @@
-.signUpForm, .signUpDiv{
+.signUpForm, .signUpDiv, #Card{
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -6,7 +6,20 @@
 
 .signUpBtn{
 
-    width: 375px; 
+    width: 400px;
+    background-color: #019CDD !important; 
+}
+
+.input {
+    width: 400px;
+}
+
+#Card {
+    background-color: #0c3141;
+    margin: 25px;
+    width: 400px;
+    max-width: 650px;
+    color: #FFF;    
 }
 
 .header{
