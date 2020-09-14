@@ -1,16 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
 import Post from './Components/Post'
-import { db } from './firebase'
+import { db, auth } from './firebase'
 import Modal from '@material-ui/core/Modal';
 import { makeStyles } from '@material-ui/core/styles';
 import { Button, Card } from '@material-ui/core';
+import SignUpForm from './Components/SignUpForm'
 
 function App() {
   
   const [posts, setPosts] = useState([]);
   const [openModal, setOpenModal] = useState(false)
   const [modalStyle] = useState(getModalStyle)
+  const [user, setUser] = useState(null)
 
   useEffect(() => {
     db.collection('posts').onSnapshot(snapshot => {
@@ -20,6 +22,16 @@ function App() {
       }
       )))
     })  
+  }, [])
+
+  useEffect(() => {
+    auth.onAuthStateChanged((authUser) => {
+        if(authUser){
+          setUser(authUser)
+        } else {
+          setUser(null)
+        }
+    })
   }, [])
 
   function getModalStyle() {
@@ -41,7 +53,7 @@ function App() {
       color: '#FFF',
       borderRadius: 5,
       boxShadow: theme.shadows[5],
-      padding: theme.spacing(2, 4, 3),
+      padding: theme.spacing(2, 4, 3)
     },
   }));
    
@@ -55,10 +67,7 @@ function App() {
       >     
           <Card>
               <div style={ modalStyle } className={ classes.paper }>
-                <h2 id="simple-modal-title">Sign Up</h2>
-                <p id="simple-modal-description">
-                  Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-                </p>
+                <SignUpForm />
               </div>
           </Card>
            

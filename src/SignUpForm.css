@@ -1,0 +1,17 @@
+.signUpForm, .signUpDiv{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.signUpBtn{
+
+    width: 375px; 
+}
+
+.header{
+    background-color: #019CDD;
+    padding: 0 5px;
+    width: 100%;
+    border-radius: 5px;
+}
