@@ -1,10 +1,10 @@
-.signUpForm, .signUpDiv, #Card{
+.signUpForm, .signUpDiv, .logInDiv, .logInForm, #Card{
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-.signUpBtn{
+.signUpBtn, .logInBtn{
 
     width: 400px;
     background-color: #019CDD !important; 

@@ -3,52 +3,35 @@ import { Button, Card, FormControl, Input, InputLabel } from '@material-ui/core'
 import '../SignUpForm.css'
 import { auth } from 'firebase'
 
-
-function SignUpForm() {
+function LogInForm() {
     const [email, setEmail] = useState('')
-    const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
 
-    const signUp = (e) => {
-        e.preventDefault();
+    const logIn = (e) => {
+        e.preventDefault()
 
-        auth().createUserWithEmailAndPassword(email, password)
-        .then((authUser) => {
-            return authUser.user.updateProfile({
-                displayName: username
-            })
-        })
-        .catch((err) => {
-            const errorCode = err.code;
-            const errorMessage = err.message;
-            if (errorCode === 'auth/weak-password') {
-              alert('The password is too weak.');
-            } else {
-              alert(errorMessage);
-            }  
-        })
-    } 
+        auth().signInWithEmailAndPassword(email, password)
+        .catch((error) => {
+          
+            var errorCode = error.code;
+            var errorMessage = error.message;
+            console.log(errorCode)
+            alert(errorMessage)
+           
+          });
+
+    }
 
     return(
-        <div className="signUpDiv">
+        <div className="LogInDiv">
             <div className="header">
                 <img src="logo.png" alt="logo" className="headerLogo"></img>
             </div>
             
             
-            <form className="signUpForm">
+            <form className="logInForm">
                 <Card id="Card">
-                <h2>Sign Up</h2>
-                <FormControl className="input">
-                    <InputLabel htmlFor="username">Username</InputLabel>
-                    <Input 
-                        placeholder="Username"
-                        type="text"
-                        id="username"
-                        value={ username }
-                        onChange={(e) => setUsername(e.target.value)}
-                    />
-                </FormControl> 
+                <h2>Log In</h2>
                     
                 <FormControl className="input">
                     <InputLabel htmlFor="email">Email</InputLabel>
@@ -72,7 +55,7 @@ function SignUpForm() {
                     />
                 </FormControl>
                 </Card>
-                <Button type="submit" onClick={ signUp } variant="contained" color="primary" className="signUpBtn">Sign Up</Button>
+                <Button type="submit" onClick={ logIn } variant="contained" color="primary" className="logInBtn">Log In</Button>
             </form>
            
             
@@ -82,4 +65,4 @@ function SignUpForm() {
 }
 
 
-export default SignUpForm
+export default LogInForm
