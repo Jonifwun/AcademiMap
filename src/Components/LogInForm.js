@@ -3,7 +3,7 @@ import { Button, Card, FormControl, Input, InputLabel } from '@material-ui/core'
 import '../SignUpForm.css'
 import { auth } from 'firebase'
 
-function LogInForm() {
+function LogInForm({setOpenModal}) {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
@@ -19,7 +19,7 @@ function LogInForm() {
             alert(errorMessage)
            
           });
-
+        setOpenModal(false)  
     }
 
     return(

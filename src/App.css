@@ -10,6 +10,24 @@
 .header{
   background-color: #019CDD;
   padding: 0 5px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logInContainer{
+  margin-right: 25px;
+}
+
+.logInBtns{
+  color: #FFF !important;
+  border: 2px solid rgba(255, 255, 255, 0.4) !important;
+  margin-left: 20px !important;
+}
+
+.loggedInDisplay{
+  color: #FFF;
+  display: inline;
 }
 
 body {

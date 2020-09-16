@@ -6,7 +6,11 @@ import Modal from '@material-ui/core/Modal';
 import { makeStyles } from '@material-ui/core/styles';
 import { Button, Card } from '@material-ui/core';
 import SignUpForm from './Components/SignUpForm';
-import LogInForm from './Components/LogInForm'
+import LogInForm from './Components/LogInForm';
+import ExitToAppTwoToneIcon from '@material-ui/icons/ExitToAppTwoTone';
+import LockOpenTwoToneIcon from '@material-ui/icons/LockOpenTwoTone';
+import CreateTwoToneIcon from '@material-ui/icons/CreateTwoTone';
+import Upload from './Components/Upload'
 
 function App() {
   
@@ -75,11 +79,10 @@ function App() {
           <Card>
               <div style={ modalStyle } className={ classes.paper }>
                 { logIn ? 
-                <LogInForm />
+                <LogInForm setOpenModal={ setOpenModal }/>
                 :
-                <SignUpForm /> 
+                <SignUpForm setOpenModal={ setOpenModal }/> 
               }
-                
               </div>
           </Card>
       </Modal>
@@ -87,19 +90,22 @@ function App() {
 
       <div className="header">
         <img src="logo.png" alt="logo" className="headerLogo"></img>
-        { user ? 
-        <Button onClick={() => auth.signOut()}>Log Out</Button>
+        { user ?
+        <div className="logInContainer">
+          <p className="loggedInDisplay"> Signed in as { user.displayName }</p> 
+          <Button className="logInBtns" onClick={() => auth.signOut()}><ExitToAppTwoToneIcon/>Log Out</Button>
+        </div>
         :
-        <div>
-          <Button onClick={() => {
+        <div className="logInContainer">
+          <Button className="logInBtns" onClick={() => {
             setOpenModal({open: true})
             setLogin(true)
-            console.log('click')
-          }}>Log In</Button>
-          <Button onClick={() => {
+          }}><LockOpenTwoToneIcon/>Log In</Button>
+
+          <Button className="logInBtns" onClick={() => {
             setOpenModal({open: true})
             setLogin(false)
-          }}>Sign Up</Button>
+          }}><CreateTwoToneIcon/>Sign Up</Button>
         </div>
         }
         
@@ -110,6 +116,8 @@ function App() {
         ))
         
       }
+
+      <Upload />
       
      
     

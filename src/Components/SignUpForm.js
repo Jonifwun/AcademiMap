@@ -4,7 +4,7 @@ import '../SignUpForm.css'
 import { auth } from 'firebase'
 
 
-function SignUpForm() {
+function SignUpForm({setOpenModal}) {
     const [email, setEmail] = useState('')
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
@@ -14,9 +14,11 @@ function SignUpForm() {
 
         auth().createUserWithEmailAndPassword(email, password)
         .then((authUser) => {
+            setOpenModal(false)
             return authUser.user.updateProfile({
                 displayName: username
             })
+            
         })
         .catch((err) => {
             const errorCode = err.code;
