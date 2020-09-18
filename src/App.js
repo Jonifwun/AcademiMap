@@ -115,7 +115,14 @@ function App() {
       <div className="posts">
         {
           posts.map(({ post, id }) => (
-            <Post username={ post.username } key={ id } postID={ id } caption={ post.caption } imgsrc={ post.imgsrc }/>
+                  //the post belongs to this username
+            <Post username={ post.username }
+                  //this is the signed in user 
+                  user={ user } 
+                  key={ id } 
+                  postID={ id } 
+                  caption={ post.caption } 
+                  imgsrc={ post.imgsrc }/>
           ))
           
         }

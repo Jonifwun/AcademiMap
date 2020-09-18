@@ -25,6 +25,7 @@
     font-weight: normal;
     padding: 5px 10px;
     color: #FFF;
+    margin-bottom: 10px;
 }
 
 .icons{
@@ -35,6 +36,42 @@
 
 .icon{
     margin-right: 10px;
+}
+
+.commentBox{
+    display: flex;
+    height: 50px;
+}
+
+.commentBtn{
+    flex: 0;
+    color: #FFF;
+    background-color: #019CDD;
+    border: none; 
+}
+
+.commentText{
+    font-weight: normal;
+}
+
+.commentDisplay{
+    color: #FFF;
+    padding: 10px;
+    display: flex;
+}
+
+.commentUsername{
+    margin-right: 15px;
+}
+
+.commentInput{
+    flex: 1;
+    border: none;
+    padding: 10px;
+}
+
+.commentInput:focus{
+    outline: none;
 }
 
 .postHeader{
