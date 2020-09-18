@@ -1,6 +1,10 @@
-.uploadCard{
+
+ .uploadCard{
     align-items: center;
     justify-content: space-between;
     display: flex;
+ }
 
-}
+/* .progressBar{
+    width: 100%;
+} */

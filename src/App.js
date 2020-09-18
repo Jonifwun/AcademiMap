@@ -21,6 +21,7 @@ function App() {
   const [user, setUser] = useState(null)
 
   useEffect(() => {
+    // db.collection('posts').orderBy('timestamp', 'desc').onSnapshot(snapshot => {
     db.collection('posts').onSnapshot(snapshot => {
       setPosts(snapshot.docs.map(doc => ({
         id: doc.id,
@@ -110,14 +111,18 @@ function App() {
         }
         
       </div>
-      {
-        posts.map(({ post, id }) => (
-          <Post username={ post.username } key={ id } caption={ post.caption } imgsrc={ post.imgsrc }/>
-        ))
-        
-      }
-
-      <Upload />
+      <div className="posts">
+        {
+          posts.map(({ post, id }) => (
+            <Post username={ post.username } key={ id } caption={ post.caption } imgsrc={ post.imgsrc }/>
+          ))
+          
+        }
+      </div>
+      
+      
+      { user?.displayName ? <Upload username={ user.displayName }/> : null }
+      
       
      
     

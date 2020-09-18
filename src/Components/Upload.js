@@ -1,14 +1,16 @@
 import React, { useState } from 'react'
-import { Button, Card, Input } from '@material-ui/core';
+import { Button, Card, Input, Fab } from '@material-ui/core';
 import '../Upload.css'
 import { storage, db } from '../firebase'
 import firebase from "firebase"
+import AddIcon from '@material-ui/icons/Add';
 
-function Upload() {
+function Upload( {username} ) {
 
     const [caption, setCaption] = useState('')
     const [image, setImage] = useState(null)
     const [progressBar, setProgressBar] = useState(0)
+    const [uploadDisplay, setUploadDisplay] = useState(false)
     
 
     const handleUpload = () => {
@@ -29,9 +31,14 @@ function Upload() {
             .then(url => {
                 db.collection('posts').add({
                     caption: caption,
-                    imageUrl: url,
-                    timestamp: firebase.firestore.FieldValue.serverTimestamp()
+                    imgsrc: url,
+                    timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+                    username: username
                 })
+                setProgressBar(0)
+                setCaption('')
+                setImage(null)
+                setUploadDisplay(false)
             })
         }
         )
@@ -44,10 +51,31 @@ function Upload() {
     }
 
     return (
-        <Card className="uploadCard">
-            <Input type="text" placeholder="Caption" onChange={(e) => setCaption(e.target.value) } value={ caption }/>
-            <input type="file" onChange={ handleChange }/>
+        <Card style={{alignItems: 'center',
+            justifyContent: 'space-between',
+            display: 'flex',
+            backgroundColor: '#019CDD',
+            position: 'fixed',
+            bottom: 0,
+            width: '100%'
+            }}>
+            
+            {uploadDisplay ? <div className="uploadCard"><progress value={ progressBar } max='100' className="progressBar"/>
+            
+            <div>
+                <Input type="text" placeholder="Caption" onChange={(e) => setCaption(e.target.value) } value={ caption }/>
+                <input type="file" onChange={ handleChange }/>
+                
+            
+            </div>
+            
             <Button onClick={ handleUpload } variant="contained" color="secondary">Upload</Button>
+            </div> 
+            :   <Fab style={{backgroundColor:  '#164B61'}} color="primary" onClick={() => setUploadDisplay(true)} aria-label="add">
+                    <AddIcon />
+                </Fab> 
+               
+            }    
         </Card>
     )
 }
