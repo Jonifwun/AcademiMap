@@ -52,28 +52,33 @@ function Upload( {username} ) {
 
     return (
         <Card style={{alignItems: 'center',
-            justifyContent: 'space-between',
             display: 'flex',
             backgroundColor: '#019CDD',
             position: 'fixed',
             bottom: 0,
-            width: '100%'
+            width: '100%',
+            height: '55px',
             }}>
             
-            {uploadDisplay ? <div className="uploadCard"><progress value={ progressBar } max='100' className="progressBar"/>
-            
-            <div>
-                <Input type="text" placeholder="Caption" onChange={(e) => setCaption(e.target.value) } value={ caption }/>
+            {uploadDisplay ? <div className="uploadCard">
+                <Button onClick={() => setUploadDisplay(false)} variant="contained" color="primary">Close</Button>
+                <progress value={ progressBar } max='100' className="progressBar"/>               
                 <input type="file" onChange={ handleChange }/>
-                
-            
-            </div>
-            
-            <Button onClick={ handleUpload } variant="contained" color="secondary">Upload</Button>
+                <Input type="text" placeholder="Caption" onChange={(e) => setCaption(e.target.value) } value={ caption }/>            
+                <Button onClick={ handleUpload } variant="contained" color="secondary">Upload</Button>
             </div> 
-            :   <Fab style={{backgroundColor:  '#164B61'}} color="primary" onClick={() => setUploadDisplay(true)} aria-label="add">
-                    <AddIcon />
-                </Fab> 
+            :  <div style={{alignItems: 'center',
+            justifyContent:"center",
+            display: 'flex',
+            backgroundColor: '#019CDD',
+          
+            
+            width: '100%'
+            }}>
+                    <Fab style={{backgroundColor:  '#164B61', height: '55px', width: '55px'}} color="primary" onClick={() => setUploadDisplay(true)}>
+                        <AddIcon />
+                    </Fab>
+                </div> 
                
             }    
         </Card>

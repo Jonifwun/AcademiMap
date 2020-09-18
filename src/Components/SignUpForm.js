@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Button, Card, FormControl, Input, InputLabel } from '@material-ui/core'
 import '../SignUpForm.css'
 import { auth } from 'firebase'
+import LogInSignUpHeader from './LogInSignUpHeader'
 
 
 function SignUpForm({setOpenModal}) {
@@ -33,10 +34,7 @@ function SignUpForm({setOpenModal}) {
 
     return(
         <div className="signUpDiv">
-            <div className="header">
-                <img src="logo.png" alt="logo" className="headerLogo"></img>
-            </div>
-            
+            <LogInSignUpHeader />       
             
             <form className="signUpForm">
                 <Card id="Card">

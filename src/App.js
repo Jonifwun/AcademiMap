@@ -78,6 +78,7 @@ function App() {
         onClose={() => setOpenModal(false)}
       >     
           <Card>
+            
               <div style={ modalStyle } className={ classes.paper }>
                 { logIn ? 
                 <LogInForm setOpenModal={ setOpenModal }/>

@@ -3,7 +3,7 @@
 }
 
 .headerLogo{
-  height: 70px;
+  height: 55px;
   width: auto;
 }
 
@@ -16,10 +16,12 @@
   position: fixed;
   top: 0;
   z-index: 1;
+  width: 100%;
 }
 
 .posts{
   margin-top: 100px;
+  margin-bottom: 100px;
 }
 
 .logInContainer{
