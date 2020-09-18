@@ -115,7 +115,7 @@ function App() {
       <div className="posts">
         {
           posts.map(({ post, id }) => (
-            <Post username={ post.username } key={ id } caption={ post.caption } imgsrc={ post.imgsrc }/>
+            <Post username={ post.username } key={ id } postID={ id } caption={ post.caption } imgsrc={ post.imgsrc }/>
           ))
           
         }
