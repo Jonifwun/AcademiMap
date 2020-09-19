@@ -11,6 +11,7 @@ import firebase from 'firebase'
 function Post({ postID, username, user, imgsrc, caption}) {
     const [comments, setComments] = useState([])
     const [comment, setComment] = useState('')
+    const [openComment, setOpenComment] = useState(false)
 
     useEffect(() => {
         let unsubscribe
@@ -67,7 +68,7 @@ function Post({ postID, username, user, imgsrc, caption}) {
                 <img className="postImage" src={ imgsrc } alt="postimg"></img>
                 <div className="icons">
                     <FavoriteTwoToneIcon className="icon"/>
-                    <QuestionAnswerTwoToneIcon />
+                    <QuestionAnswerTwoToneIcon className ="icon" onClick={() => setOpenComment(!openComment) }/>
                 </div>
                 <h4 className="postText"><span className="username">{ username }</span> { caption }</h4>
                 { comments ? comments.map(({comment, id}) => {
@@ -82,7 +83,7 @@ function Post({ postID, username, user, imgsrc, caption}) {
             }
             </div>
             <div>
-                { user && (
+                { user && openComment && (
                 <form className="commentBox">
                     <input
                     className="commentInput"

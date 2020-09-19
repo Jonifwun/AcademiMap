@@ -11,6 +11,7 @@
     background-color: #0c3141;
     margin: 25px;
     max-width: 650px;
+    break-inside: avoid-column;
 }
 
 /* #commentIcon{
@@ -36,6 +37,12 @@
 
 .icon{
     margin-right: 10px;
+    transition: all .2s ease-in-out;
+    
+}
+
+.icon:hover{
+    transform: scale(1.1);
 }
 
 .commentBox{
@@ -93,4 +100,8 @@
 
 #menuIcon{
     float: right;
+}
+
+.posts{
+    columns: 2 auto;
 }

@@ -122,7 +122,9 @@ function App() {
                   key={ id } 
                   postID={ id } 
                   caption={ post.caption } 
-                  imgsrc={ post.imgsrc }/>
+                  imgsrc={ post.imgsrc }
+                  />
+                  
           ))
           
         }
