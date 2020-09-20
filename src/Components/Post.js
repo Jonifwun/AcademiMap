@@ -3,10 +3,11 @@ import { db } from '../firebase'
 import '../Post.css'
 import Avatar from '@material-ui/core/Avatar'
 import Card from '@material-ui/core/Card';
-import MenuTwoToneIcon from '@material-ui/icons/MenuTwoTone';
 import QuestionAnswerTwoToneIcon from '@material-ui/icons/QuestionAnswerTwoTone'
 import FavoriteTwoToneIcon from '@material-ui/icons/FavoriteTwoTone';
 import firebase from 'firebase'
+import DeleteForeverTwoToneIcon from '@material-ui/icons/DeleteForeverTwoTone';
+import DropDownPostMenu from './DropDownPostMenu'
 
 function Post({ postID, username, user, imgsrc, caption}) {
     const [comments, setComments] = useState([])
@@ -50,6 +51,25 @@ function Post({ postID, username, user, imgsrc, caption}) {
 
     } 
 
+    const deleteComment = (commentID) => {
+
+        db.collection('posts').doc(postID).collection('comments').doc(commentID).delete().then(function() {
+            console.log("Document successfully deleted!");
+        }).catch(function(error) {
+            console.error("Error removing document: ", error);
+        });
+
+    }
+
+    const deletePost = () => {
+
+        db.collection('posts').doc(postID).delete().then(function() {
+            console.log("Document successfully deleted!");
+        }).catch(function(error) {
+            console.error("Error removing document: ", error);
+        });
+    }
+
     return (
         <Card id="postCard">
             <div className="post">
@@ -62,8 +82,8 @@ function Post({ postID, username, user, imgsrc, caption}) {
                     />
                     <h4>{ username }</h4>  
                     </div>
-                   
-                    <MenuTwoToneIcon id="menuIcon"/>
+                    <DropDownPostMenu deletePost={ deletePost } postID={ postID }/>
+                    
                 </div>
                 <img className="postImage" src={ imgsrc } alt="postimg"></img>
                 <div className="icons">
@@ -76,6 +96,8 @@ function Post({ postID, username, user, imgsrc, caption}) {
                     <div className="commentDisplay" key={ id } >
                         <h5 className="commentUsername"><strong>{ comment.username }</strong></h5>
                         <h5 className="commentText">{ comment.text }</h5>
+                        <DeleteForeverTwoToneIcon className="icon" onClick={() => deleteComment(id) }/>
+
                     </div>    
                     )
                 })

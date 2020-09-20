@@ -38,6 +38,7 @@
 .icon{
     margin-right: 10px;
     transition: all .2s ease-in-out;
+    cursor: pointer;
     
 }
 
