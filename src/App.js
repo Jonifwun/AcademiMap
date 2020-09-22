@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
-import Post from './Components/Post'
-import { db, auth } from './firebase'
+import { auth } from './firebase'
 import Modal from '@material-ui/core/Modal';
 import { makeStyles } from '@material-ui/core/styles';
 import { Button, Card } from '@material-ui/core';
@@ -10,26 +9,18 @@ import LogInForm from './Components/LogInForm';
 import ExitToAppTwoToneIcon from '@material-ui/icons/ExitToAppTwoTone';
 import LockOpenTwoToneIcon from '@material-ui/icons/LockOpenTwoTone';
 import CreateTwoToneIcon from '@material-ui/icons/CreateTwoTone';
-import Upload from './Components/Upload'
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
+import Posts from './Components/Posts'
+import Profile from './Components/Profile';
+import { Link } from 'react-router-dom'
 
 function App() {
   
-  const [posts, setPosts] = useState([]);
   const [openModal, setOpenModal] = useState(false)
   const [logIn, setLogin] = useState(true)
   const [modalStyle] = useState(getModalStyle)
   const [user, setUser] = useState(null)
 
-  useEffect(() => {
-    // db.collection('posts').orderBy('timestamp', 'desc').onSnapshot(snapshot => {
-    db.collection('posts').onSnapshot(snapshot => {
-      setPosts(snapshot.docs.map(doc => ({
-        id: doc.id,
-        post: doc.data()
-      }
-      )))
-    })  
-  }, [])
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((authUser) => {
@@ -72,6 +63,7 @@ function App() {
   const classes = useStyles()
 
   return (
+    <Router>
     <div className="App">
       <Modal
         open={ openModal }
@@ -94,6 +86,7 @@ function App() {
         <img src="logo.png" alt="logo" className="headerLogo"></img>
         { user ?
         <div className="logInContainer">
+          <Link to="/profile">Profile</Link>
           <p className="loggedInDisplay"> Signed in as { user.displayName }</p> 
           <Button className="logInBtns" onClick={() => auth.signOut()}><ExitToAppTwoToneIcon/>Log Out</Button>
         </div>
@@ -112,31 +105,27 @@ function App() {
         }
         
       </div>
-      <div className="posts">
-        {
-          posts.map(({ post, id }) => (
-                  //the post belongs to this username
-            <Post username={ post.username }
-                  //this is the signed in user 
-                  user={ user } 
-                  key={ id } 
-                  postID={ id } 
-                  caption={ post.caption } 
-                  imgsrc={ post.imgsrc }
-                  />
-                  
-          ))
-          
-        }
-      </div>
+
+      <Switch>   
+
       
+        
+        <Route path='/' exact user={ user } render={() => (
+          <Posts user={ user }/>
+        )}
+        />
+        <Route path='/profile' exact user={ user } render={() => (
+          <Profile user={ user }/>
+        )}
+        />
+        
+    
       
-      { user?.displayName ? <Upload username={ user.displayName }/> : null }
-      
-      
+      </Switch>
      
     
     </div>
+    </Router>
   );
 }
 

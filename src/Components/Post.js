@@ -5,13 +5,13 @@ import Avatar from '@material-ui/core/Avatar'
 import Card from '@material-ui/core/Card';
 import QuestionAnswerTwoToneIcon from '@material-ui/icons/QuestionAnswerTwoTone'
 import FavoriteTwoToneIcon from '@material-ui/icons/FavoriteTwoTone';
-import firebase from 'firebase'
 import DeleteForeverTwoToneIcon from '@material-ui/icons/DeleteForeverTwoTone';
 import DropDownPostMenu from './DropDownPostMenu'
+import CommentBox from './CommentBox';
 
 function Post({ postID, username, user, imgsrc, caption}) {
     const [comments, setComments] = useState([])
-    const [comment, setComment] = useState('')
+    
     const [openComment, setOpenComment] = useState(false)
 
     useEffect(() => {
@@ -36,20 +36,7 @@ function Post({ postID, username, user, imgsrc, caption}) {
         })
     }, [postID])
 
-    const postComment = (e) => {
-        e.preventDefault()
-        db.collection('posts')
-          .doc(postID)
-          .collection('comments')
-          .add({
-              text: comment,
-              username: user.displayName,
-              timestamp: firebase.firestore.FieldValue.serverTimestamp()
-          })
 
-          setComment('')
-
-    } 
 
     const deleteComment = (commentID) => {
 
@@ -106,24 +93,7 @@ function Post({ postID, username, user, imgsrc, caption}) {
             </div>
             <div>
                 { user && openComment && (
-                <form className="commentBox">
-                    <input
-                    className="commentInput"
-                    type="text"
-                    placeholder="Add comment"
-                    value={ comment }
-                    onChange={(e) => setComment(e.target.value)}
-                    />
-                    <button
-                    className="commentBtn" 
-                    type="submit" 
-                    onClick={ postComment } 
-                    disabled={!comment}
-                    >
-                    Post
-                    </button>
-                    
-                </form>
+                    <CommentBox postID={ postID } user={ user }/>
                 )}
             </div>
         </Card>

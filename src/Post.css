@@ -11,6 +11,10 @@
     background-color: #0c3141;
     margin: 25px;
     max-width: 650px;
+    
+}
+
+.postComponent{
     break-inside: avoid-column;
 }
 
