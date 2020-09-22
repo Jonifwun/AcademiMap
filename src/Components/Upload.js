@@ -46,7 +46,9 @@ function Upload( {username} ) {
 
     const handleChange = (e) => {
         if(e.target.files[0]){
+            console.log(e.target.files[0].name)
             setImage(e.target.files[0])
+            console.log(e.target.files[0])
         }
     }
 

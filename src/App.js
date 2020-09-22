@@ -85,8 +85,13 @@ function App() {
       <div className="header">
         <img src="logo.png" alt="logo" className="headerLogo"></img>
         { user ?
-        <div className="logInContainer">
-          <Link to="/profile">Profile</Link>
+        <div style={{  marginRight: '25px',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between'
+          }}>
+          <Link style={{  marginRight: '25px'}} to="/">Feed</Link>
+          <Link style={{  marginRight: '25px'}} to="/profile">Profile</Link>
           <p className="loggedInDisplay"> Signed in as { user.displayName }</p> 
           <Button className="logInBtns" onClick={() => auth.signOut()}><ExitToAppTwoToneIcon/>Log Out</Button>
         </div>
@@ -114,10 +119,11 @@ function App() {
           <Posts user={ user }/>
         )}
         />
-        <Route path='/profile' exact user={ user } render={() => (
+        <Route path='/profile' user={ user } render={() => (
           <Profile user={ user }/>
         )}
         />
+        
         
     
       
