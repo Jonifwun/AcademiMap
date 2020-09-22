@@ -81,8 +81,10 @@ function Post({ postID, username, user, imgsrc, caption}) {
                 { comments ? comments.map(({comment, id}) => {
                     return (
                     <div className="commentDisplay" key={ id } >
-                        <h5 className="commentUsername"><strong>{ comment.username }</strong></h5>
-                        <h5 className="commentText">{ comment.text }</h5>
+                        <div style={{display: 'flex'}}>                           
+                            <h5 className="commentUsername"><strong>{ comment.username }</strong></h5>
+                            <h5 className="commentText">{ comment.text }</h5>
+                        </div>
                         <DeleteForeverTwoToneIcon className="icon" onClick={() => deleteComment(id) }/>
 
                     </div>    
