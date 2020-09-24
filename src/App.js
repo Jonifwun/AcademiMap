@@ -62,6 +62,13 @@ function App() {
    
   const classes = useStyles()
 
+  const linkStyles = {
+    marginRight: '25px',
+    color: '#FFF',
+    textDecoration: 'none', 
+    fontWeight: "bold"
+  }  
+
   return (
     <Router>
     <div className="App">
@@ -90,8 +97,9 @@ function App() {
           alignItems: 'center',
           justifyContent: 'space-between'
           }}>
-          <Link style={{  marginRight: '25px'}} to="/">Feed</Link>
-          <Link style={{  marginRight: '25px'}} to="/profile">Profile</Link>
+         
+          <Link style={linkStyles} to="/">Feed</Link>
+          <Link style={linkStyles} to="/profile">Profile</Link>
           <p className="loggedInDisplay"> Signed in as { user.displayName }</p> 
           <Button className="logInBtns" onClick={() => auth.signOut()}><ExitToAppTwoToneIcon/>Log Out</Button>
         </div>
