@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { db } from '../firebase'
 import '../Post.css'
 import Avatar from '@material-ui/core/Avatar'
@@ -8,6 +8,7 @@ import FavoriteTwoToneIcon from '@material-ui/icons/FavoriteTwoTone';
 import DeleteForeverTwoToneIcon from '@material-ui/icons/DeleteForeverTwoTone';
 import DropDownPostMenu from './DropDownPostMenu'
 import CommentBox from './CommentBox';
+import UserContext from '../contexts/UserContext'
 
 function Post({ postID, username, user, imgsrc, caption}) {
     const [comments, setComments] = useState([])

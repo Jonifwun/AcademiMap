@@ -1,7 +1,8 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect, useState, useContext} from 'react'
 import { Button, Card } from '@material-ui/core'
 import Bio from './Bio'
 import UserCard from './UserCard'
+import UserContext from '../contexts/UserContext'
 
 
 function Profile(props) {

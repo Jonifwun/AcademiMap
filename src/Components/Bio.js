@@ -1,5 +1,6 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Card } from '@material-ui/core'
+import UserContext from '../contexts/UserContext'
 
 
 function Bio({ user }) {

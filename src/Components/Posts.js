@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import { db } from '../firebase'
 import Upload from './Upload'
 import Post from './Post'
+import UserContext from '../contexts/UserContext'
 
 
 
