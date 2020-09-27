@@ -2,13 +2,18 @@ import React, { useEffect, useState, useContext } from 'react'
 import { db } from '../firebase'
 import Upload from './Upload'
 import Post from './Post'
-import UserContext from '../contexts/UserContext'
+import { UserContext } from '../Contexts/UserContext'
 
 
 
-function Posts({ user }) {
+function Posts() {
     
     const [posts, setPosts] = useState([])
+
+    // const userContext = useContext(UserContext)
+    // const { user } = userContext
+
+    const user = useContext(UserContext)
 
     useEffect(() => {
         db.collection('posts').orderBy('timestamp', 'desc').onSnapshot(snapshot => {

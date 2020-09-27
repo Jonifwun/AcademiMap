@@ -1,9 +1,12 @@
 import React, { useContext } from 'react'
 import { Card } from '@material-ui/core'
-import UserContext from '../contexts/UserContext'
+import { UserContext } from '../Contexts/UserContext'
 
 
-function Bio({ user }) {
+function Bio() {
+
+    const user = useContext(UserContext)
+
     return (
 
         <Card style={{display: 'flex', flexDirection: "column", alignItems: "center", backgroundColor: '#164B61', color: '#FFF', padding: '15px 35px'}}>

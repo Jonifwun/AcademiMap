@@ -1,20 +1,25 @@
-import React, {useEffect, useState, useContext} from 'react'
+import React, { useContext } from 'react'
 import { Button, Card } from '@material-ui/core'
 import Bio from './Bio'
 import UserCard from './UserCard'
-import UserContext from '../contexts/UserContext'
+import { UserContext } from '../Contexts/UserContext'
+import Group from './Group'
 
 
-function Profile(props) {
+function Profile() {
     
-    const [user, setUser] = useState(null)
+    // const [user, setUser] = useState(null)
 
-    useEffect(() => {
-        if(props.user){
-            setUser(props.user)
-        }
+    // useEffect(() => {
+    //     if(props.user){
+    //         setUser(props.user)
+    //     }
         
-    }, [props.user])
+    // }, [props.user])
+
+    // const userContext = useContext(UserContext)
+    const user = useContext(UserContext)
+    console.log('Here is:', user)
 
     return (
         <div>
@@ -24,7 +29,8 @@ function Profile(props) {
                         <img src="profile.jpg" alt="profilepicture" style={{width: '160px', height: "160px", borderRadius: '80px'}}></img>
                         <Button style={{ color: '#FFF', backgroundColor: '#019CDD', margin: '25px'}} >Update Profile Picture</Button>
                     </div>
-                    <Bio user={ user }/>
+                    <Bio />
+                    <Group />
 
 
                 </div>

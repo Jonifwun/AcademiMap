@@ -13,6 +13,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import Posts from './Components/Posts'
 import Profile from './Components/Profile';
 import { Link } from 'react-router-dom'
+import { UserContextProvider } from './Contexts/UserContext'
 
 function App() {
   
@@ -88,6 +89,7 @@ function App() {
           </Card>
       </Modal>
 
+      <UserContextProvider user={ user }>
 
       <div className="header">
         <img src="logo.png" alt="logo" className="headerLogo"></img>
@@ -123,12 +125,12 @@ function App() {
 
       
         
-        <Route path='/' exact user={ user } render={() => (
-          <Posts user={ user }/>
+        <Route path='/' exact render={() => (
+          <Posts />
         )}
         />
-        <Route path='/profile' user={ user } render={() => (
-          <Profile user={ user }/>
+        <Route path='/profile' render={() => (
+          <Profile />
         )}
         />
         
@@ -137,7 +139,7 @@ function App() {
       
       </Switch>
      
-    
+      </UserContextProvider>    
     </div>
     </Router>
   );

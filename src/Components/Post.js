@@ -8,12 +8,17 @@ import FavoriteTwoToneIcon from '@material-ui/icons/FavoriteTwoTone';
 import DeleteForeverTwoToneIcon from '@material-ui/icons/DeleteForeverTwoTone';
 import DropDownPostMenu from './DropDownPostMenu'
 import CommentBox from './CommentBox';
-import UserContext from '../contexts/UserContext'
+import { UserContext } from '../Contexts/UserContext'
 
-function Post({ postID, username, user, imgsrc, caption}) {
+function Post({ postID, username, imgsrc, caption}) {
     const [comments, setComments] = useState([])
     
     const [openComment, setOpenComment] = useState(false)
+
+    // const userContext = useContext(UserContext)
+    // const { user } = userContext
+
+    const user = useContext(UserContext)
 
     useEffect(() => {
         let unsubscribe
