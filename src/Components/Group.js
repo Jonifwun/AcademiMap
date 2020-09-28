@@ -47,6 +47,15 @@ function Group({ buttonStyle }) {
 
     // }
 
+    const groupStyles = {
+        display: 'flex',
+        flexDirection: "column",
+        alignItems: "center",
+        backgroundColor: '#164B61',
+        color: '#FFF',
+        padding: '15px 35px'
+    }
+
     return (
         <div>
         <Modal
@@ -70,8 +79,8 @@ function Group({ buttonStyle }) {
             NEED TO CHECK IF THERE A USER ID IS PRESENT IN A RESEARCH GROUP OR NOT AND DISPLAY ACCORDINGLY
         } */}
         { user ?
-            <Card style={{display: 'flex', flexDirection: "column", alignItems: "center", backgroundColor: '#164B61', color: '#FFF', padding: '15px 35px', objectFit: 'fill'}}> 
-                <div style={{display: 'flex', flexDirection: "column", alignItems: "center", backgroundColor: '#164B61', color: '#FFF', padding: '15px 35px'}}>
+            <Card style={ groupStyles }> 
+                <div style={ groupStyles }>
                     <h3>Research Group:</h3>
                     <h5 style={{margin: '20px'}}><em>Research Group Name</em></h5>
                     <p style={{width: '300px', textAlign: 'justify'}}>
@@ -83,7 +92,7 @@ function Group({ buttonStyle }) {
                 </div>
             </Card>
             : 
-            <Card style={{display: 'flex', flexDirection: "column", alignItems: "center", backgroundColor: '#164B61', color: '#FFF', padding: '15px 35px', objectFit: 'fill'}}>
+            <Card style={ groupStyles }>
                 <p>You are currently not part of any research groups</p>
                 <hr style={{color: '#FFF', width: '100%'}}></hr>
                 <Button style={ buttonStyle } onClick={() => {
