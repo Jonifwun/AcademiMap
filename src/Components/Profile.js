@@ -1,25 +1,45 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Button, Card } from '@material-ui/core'
 import Bio from './Bio'
 import UserCard from './UserCard'
 import { UserContext } from '../Contexts/UserContext'
 import Group from './Group'
+import { db } from '../firebase'
 
 
 function Profile() {
     
-    // const [user, setUser] = useState(null)
-
-    // useEffect(() => {
-    //     if(props.user){
-    //         setUser(props.user)
-    //     }
-        
-    // }, [props.user])
-
-    // const userContext = useContext(UserContext)
+    const [researchGroup, setResearchGroup] = useState({})
     const user = useContext(UserContext)
     console.log('Here is:', user)
+
+   
+    useEffect(() => {
+        //Match the users id to any groups
+
+        try {
+            db.collection('researchgroups').where('groupmembers', 'array-contains', user.uid).get()
+            .then(function(querySnapshot) {
+            querySnapshot.forEach(function(doc) {
+                // doc.data() is never undefined for query doc snapshots
+                console.log(doc.id, " => ", doc.data())
+                const res = doc.data()
+                setResearchGroup(res)
+
+                // db.collection('researchgroups').doc(doc.id).update({
+                //     groupmembers: firebase.firestore.FieldValue.arrayUnion(user.uid)
+                // })
+                
+            });
+        })
+        .catch(function(error) {
+            console.log("Error getting documents: ", error);
+        });
+        } catch (err){
+            console.log(err)
+        }
+        
+    }, [user])
 
     const buttonStyle = { color: '#FFF', backgroundColor: '#019CDD', margin: '25px'}
 
@@ -32,7 +52,7 @@ function Profile() {
                         <Button style={ buttonStyle } >Update Profile Picture</Button>
                     </div>
                 <Bio />
-                <Group buttonStyle={ buttonStyle }/>
+                <Group buttonStyle={ buttonStyle } researchGroup={ researchGroup }/>
 
 
                 </div>

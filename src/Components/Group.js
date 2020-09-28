@@ -5,14 +5,14 @@ import JoinGroupForm from './JoinGroupForm'
 import CreateGroupForm from './CreateGroupForm'
 import { makeStyles } from '@material-ui/core/styles';
 
-function Group({ buttonStyle }) {
+function Group({ buttonStyle, researchGroup }) {
 
     const user = useContext(UserContext)
+
     const [joinGroup, setJoinGroup] = useState(true)
     const [openModal, setOpenModal] = useState(false)
     const [modalStyle] = useState(getModalStyle)
 
-    
 
     function getModalStyle() {
         const top = 50
@@ -75,14 +75,12 @@ function Group({ buttonStyle }) {
           </Card>
         </Modal>
 
-        {/* {
-            NEED TO CHECK IF THERE A USER ID IS PRESENT IN A RESEARCH GROUP OR NOT AND DISPLAY ACCORDINGLY
-        } */}
+
         { user ?
             <Card style={ groupStyles }> 
                 <div style={ groupStyles }>
                     <h3>Research Group:</h3>
-                    <h5 style={{margin: '20px'}}><em>Research Group Name</em></h5>
+                    <h5 style={{margin: '20px'}}><em>{researchGroup.groupName}</em></h5>
                     <p style={{width: '300px', textAlign: 'justify'}}>
                         Updates: 
                         Bio: Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
@@ -109,7 +107,7 @@ function Group({ buttonStyle }) {
                     // For Create Group. need logic to create research group by name and give a reference value for joining. 
 
                 }
-        </Card>
+            </Card>
         }
         </div>
     )
