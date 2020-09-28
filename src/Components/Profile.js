@@ -41,6 +41,8 @@ function Profile() {
         
     }, [user])
 
+    console.log(researchGroup.groupmembers)
+
     const buttonStyle = { color: '#FFF', backgroundColor: '#019CDD', margin: '25px'}
 
     return (
@@ -59,11 +61,15 @@ function Profile() {
             </Card>
             <Card style={{margin: '0 30px 30px', backgroundColor: '#0c3141', color: '#FFF', padding: '25px'}}>
                 <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-around'}}>
-                    <UserCard />
-                    <UserCard />
-                    <UserCard />
-                    <UserCard />
-                    <UserCard />
+
+                    { researchGroup?.groupmembers ? 
+                        researchGroup.groupmembers.map((member) => (
+                            <UserCard key={member.id} user={member}/>
+                        ))
+                        : null
+                    }
+                    
+
                 </div>
             </Card>
         </div>
