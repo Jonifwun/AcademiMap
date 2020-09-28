@@ -3,6 +3,7 @@ import { Button, Card, FormControl, Input, InputLabel } from '@material-ui/core'
 import '../SignUpForm.css'
 import { auth } from 'firebase'
 import LogInSignUpHeader from './LogInSignUpHeader'
+import { db } from '../firebase'
 
 
 function SignUpForm({setOpenModal}) {
@@ -16,11 +17,21 @@ function SignUpForm({setOpenModal}) {
         auth().createUserWithEmailAndPassword(email, password)
         .then((authUser) => {
             setOpenModal(false)
-            return authUser.user.updateProfile({
+            
+            authUser.user.updateProfile({
                 displayName: username
             })
-            
-        })
+            return authUser.user.uid
+              
+        }).then((uid) => {
+            //Create separate database for querying later - no credentials etc.
+            return db.collection('users').add({
+                userID: uid,
+                username: username,
+                posts: [],
+                photoURL: ''
+            })
+        }) 
         .catch((err) => {
             const errorCode = err.code;
             const errorMessage = err.message;
