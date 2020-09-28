@@ -21,16 +21,18 @@ function Profile() {
     const user = useContext(UserContext)
     console.log('Here is:', user)
 
+    const buttonStyle = { color: '#FFF', backgroundColor: '#019CDD', margin: '25px'}
+
     return (
         <div>
             <Card style={{margin: '100px 30px 40px', backgroundColor: '#0c3141', color: '#FFF', padding: '25px'}}>
                 <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-around'}}>
                     <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
                         <img src="profile.jpg" alt="profilepicture" style={{width: '160px', height: "160px", borderRadius: '80px'}}></img>
-                        <Button style={{ color: '#FFF', backgroundColor: '#019CDD', margin: '25px'}} >Update Profile Picture</Button>
+                        <Button style={ buttonStyle } >Update Profile Picture</Button>
                     </div>
-                    <Bio />
-                    <Group />
+                <Bio />
+                <Group buttonStyle={ buttonStyle }/>
 
 
                 </div>

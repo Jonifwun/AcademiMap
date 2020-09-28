@@ -4,7 +4,7 @@ import '../SignUpForm.css'
 import { auth } from 'firebase'
 import LogInSignUpHeader from './LogInSignUpHeader'
 
-function LogInForm({setOpenModal}) {
+function LogInForm({ setOpenModal }) {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
@@ -34,7 +34,6 @@ function LogInForm({setOpenModal}) {
                 <FormControl className="input">
                     <InputLabel htmlFor="email">Email</InputLabel>
                     <Input 
-                        placeholder="Email"
                         type="email"
                         id="email"
                         value={ email }
@@ -44,8 +43,7 @@ function LogInForm({setOpenModal}) {
                     
                 <FormControl className="input">
                     <InputLabel htmlFor="password">Password</InputLabel>
-                    <Input 
-                        placeholder="Password"
+                    <Input
                         type="password"
                         id="password"
                         value={ password }

@@ -42,7 +42,6 @@ function SignUpForm({setOpenModal}) {
                 <FormControl className="input">
                     <InputLabel htmlFor="username">Username</InputLabel>
                     <Input 
-                        placeholder="Username"
                         type="text"
                         id="username"
                         value={ username }
@@ -53,7 +52,6 @@ function SignUpForm({setOpenModal}) {
                 <FormControl className="input">
                     <InputLabel htmlFor="email">Email</InputLabel>
                     <Input 
-                        placeholder="Email"
                         type="email"
                         id="email"
                         value={ email }
@@ -64,7 +62,6 @@ function SignUpForm({setOpenModal}) {
                 <FormControl className="input">
                     <InputLabel htmlFor="password">Password</InputLabel>
                     <Input 
-                        placeholder="Password"
                         type="password"
                         id="password"
                         value={ password }

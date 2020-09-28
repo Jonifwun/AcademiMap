@@ -1,32 +1,108 @@
-import { Button, Card } from '@material-ui/core'
-import React, { useContext } from 'react'
+import { Button, Card, Modal } from '@material-ui/core'
+import React, { useContext, useState } from 'react'
 import { UserContext } from '../Contexts/UserContext'
+import JoinGroupForm from './JoinGroupForm'
+import CreateGroupForm from './CreateGroupForm'
+import { makeStyles } from '@material-ui/core/styles';
 
-function Group() {
+function Group({ buttonStyle }) {
 
     const user = useContext(UserContext)
+    const [joinGroup, setJoinGroup] = useState(true)
+    const [openModal, setOpenModal] = useState(false)
+    const [modalStyle] = useState(getModalStyle)
+
+    
+
+    function getModalStyle() {
+        const top = 50
+        const left = 50
+      
+        return {
+          top: `${top}%`,
+          left: `${left}%`,
+          transform: `translate(-${top}%, -${left}%)`,
+        };
+      };
+      
+      const useStyles = makeStyles((theme) => ({
+        paper: {
+          position: 'absolute',
+          width: 400,
+          backgroundColor: '#164B61',
+          color: '#FFF',
+          borderRadius: 5,
+          boxShadow: theme.shadows[5],
+          padding: theme.spacing(2, 4, 3)
+        },
+      }));
+       
+      const classes = useStyles();
+
+    // const handleJoinGroup = () => {
+
+    // }
+
+    // const handleCreateGroup = () => {
+
+    // }
 
     return (
-        // user ?
-        // <Card style={{display: 'flex', flexDirection: "column", alignItems: "center", backgroundColor: '#164B61', color: '#FFF', padding: '15px 35px', objectFit: 'fill'}}> 
-        //     <div style={{display: 'flex', flexDirection: "column", alignItems: "center", backgroundColor: '#164B61', color: '#FFF', padding: '15px 35px'}}>
-        //         <h3>Research Group:</h3>
-        //         <h5>Research Group Name</h5>
-        //         <p style={{width: '300px', textAlign: 'justify'}}>
-        //             Updates: 
-        //             Bio: Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
-        //             sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-        //             Diam quam nulla porttitor massa id neque aliquam.                 
-        //         </p>             
-        //     </div>
-        // </Card>
-        // : 
-        <Card style={{display: 'flex', flexDirection: "column", alignItems: "center", backgroundColor: '#164B61', color: '#FFF', padding: '15px 35px', objectFit: 'fill'}}>
-            <p>You are currently not part of any research groups</p>
-            <hr style={{color: '#FFF', width: '100%'}}></hr>
-            <Button style={{ color: '#FFF', backgroundColor: '#019CDD', margin: '25px'}} >Join Group</Button>
-            <Button style={{ color: '#FFF', backgroundColor: '#019CDD', margin: '25px'}} >Create Group</Button>
+        <div>
+        <Modal
+        open={ openModal }
+        onClose={() => setOpenModal(false)}
+        >     
+          <Card>
+              <div style={ modalStyle } 
+              className={ classes.paper }
+              >
+                { joinGroup ? 
+                <JoinGroupForm setOpenModal={ setOpenModal }/>
+                :
+                <CreateGroupForm setOpenModal={ setOpenModal }/> 
+              }
+              </div>
+          </Card>
+        </Modal>
+
+        {/* {
+            NEED TO CHECK IF THERE A USER ID IS PRESENT IN A RESEARCH GROUP OR NOT AND DISPLAY ACCORDINGLY
+        } */}
+        { user ?
+            <Card style={{display: 'flex', flexDirection: "column", alignItems: "center", backgroundColor: '#164B61', color: '#FFF', padding: '15px 35px', objectFit: 'fill'}}> 
+                <div style={{display: 'flex', flexDirection: "column", alignItems: "center", backgroundColor: '#164B61', color: '#FFF', padding: '15px 35px'}}>
+                    <h3>Research Group:</h3>
+                    <h5 style={{margin: '20px'}}><em>Research Group Name</em></h5>
+                    <p style={{width: '300px', textAlign: 'justify'}}>
+                        Updates: 
+                        Bio: Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
+                        sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                        Diam quam nulla porttitor massa id neque aliquam.                 
+                    </p>             
+                </div>
+            </Card>
+            : 
+            <Card style={{display: 'flex', flexDirection: "column", alignItems: "center", backgroundColor: '#164B61', color: '#FFF', padding: '15px 35px', objectFit: 'fill'}}>
+                <p>You are currently not part of any research groups</p>
+                <hr style={{color: '#FFF', width: '100%'}}></hr>
+                <Button style={ buttonStyle } onClick={() => {
+                    setOpenModal(true)
+                    setJoinGroup(true)
+                }}>Join Group</Button>
+
+                <Button style={ buttonStyle } onClick={() => {
+                    setOpenModal(true)
+                    setJoinGroup(false)
+                }}>Create Group</Button>
+
+                {
+                    // For Create Group. need logic to create research group by name and give a reference value for joining. 
+
+                }
         </Card>
+        }
+        </div>
     )
 }
 
