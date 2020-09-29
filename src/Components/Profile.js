@@ -42,9 +42,13 @@ function Profile() {
         
     }, [user])
 
-    // const filteredCollaborators = collaborators.filter(user => 
+    console.log(researchGroup.groupmembers)
+
+    // const filteredCollaborators = researchGroup.groupmembers.filter(user => 
     //         user.displayName.toLowercase().includes(searchValue.toLowerCase())
     //     )
+    //
+    //Need to grab users based upon their displayName - apparently need to create a separate database where userID, photo, displayName are stored
 
     const buttonStyle = { color: '#FFF', backgroundColor: '#019CDD', margin: '25px'}
 
@@ -69,14 +73,11 @@ function Profile() {
 
                         { 
                             researchGroup.groupmembers.map((member) => (
-                                <div>
-                                <UserCard key={member.id} user={member}/>
-                                </div>
+                                <UserCard key={member} user={member}/>
                             ))
                         }
                         </div> 
-                        : null   
-         
+                        : null      
                     }  
 
                 </div>
