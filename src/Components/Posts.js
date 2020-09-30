@@ -27,11 +27,11 @@ function Posts() {
 
     return (
         <div>
-            <div className="posts">
+            <div style={{display: 'grid', grid: 'auto-flow dense / repeat(2, 50%)', placeItems: 'center', margin: '85px 0'}}>
                 {
                     posts.map(({ post, id }) => (
                             //the post belongs to this username
-                    <Post className="postComponent" username={ post.username }
+                    <Post  username={ post.username }
                             //this is the signed in user 
                             user={ user } 
                             key={ id } 
