@@ -1,8 +1,8 @@
 import { Button, Card } from '@material-ui/core'
-import React, { useState, useContext, useEffect } from 'react'
-import firebase from 'firebase'
+import React, { useState, useContext } from 'react'
 import { UserContext } from '../Contexts/UserContext'
 import { storage, db } from '../firebase'
+import uuid from 'uuid'
 
 
 function ProfilePic({ buttonStyle }) {
@@ -12,21 +12,18 @@ function ProfilePic({ buttonStyle }) {
     const [profileUpdate, setProfileUpdate] = useState(false)
     const [image, setImage] = useState(null)
 
-    // useEffect(() => {
-
-    // }, [profileUpdate])
-
     const handleChange = (e) => {
         if(e.target.files[0]){
             setImage(e.target.files[0])
         }
     }
 
-    const handleUpload = () => {
-        //change filename to timestamp?
-        let name = firebase.firestore.FieldValue.serverTimestamp()
-        name = name.toString()
 
+    const handleUpload = () => {
+        let name = uuid.v4() 
+        
+
+        
         storage.ref(`profileImages/${ name }`).put(image)
         .then(snapshot => {
             storage.ref('profileImages')
@@ -35,10 +32,10 @@ function ProfilePic({ buttonStyle }) {
             .then(url => {
                 user.updateProfile({
                     photoURL: url
-                  }).then(function() {
+                  }).then(() => {
                     console.log('success', url)
-                  }).catch(function(error) {
-                    // An error happened.
+                  }).catch(err => {
+                    console.log(err)
                   });
                 return url
             }).then(url => {

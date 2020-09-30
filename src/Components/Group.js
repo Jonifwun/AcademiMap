@@ -1,5 +1,5 @@
 import { Button, Card, Modal } from '@material-ui/core'
-import React, { useContext, useState } from 'react'
+import React, { useState } from 'react'
 import { UserContext } from '../Contexts/UserContext'
 import JoinGroupForm from './JoinGroupForm'
 import CreateGroupForm from './CreateGroupForm'
@@ -7,12 +7,9 @@ import { makeStyles } from '@material-ui/core/styles';
 
 function Group({ buttonStyle, researchGroup }) {
 
-    const user = useContext(UserContext)
-
     const [joinGroup, setJoinGroup] = useState(true)
     const [openModal, setOpenModal] = useState(false)
     const [modalStyle] = useState(getModalStyle)
-
 
     function getModalStyle() {
         const top = 50
@@ -76,7 +73,7 @@ function Group({ buttonStyle, researchGroup }) {
         </Modal>
 
 
-        { user ?
+        { researchGroup ?
             <Card style={ groupStyles }> 
                 <div style={ groupStyles }>
                     <h3>Research Group:</h3>
@@ -108,7 +105,7 @@ function Group({ buttonStyle, researchGroup }) {
 
                 }
             </Card>
-        }
+            }  
         </div>
     )
 }

@@ -25,30 +25,31 @@ function Profile() {
              //Match the users id to any groups
             db.collection('researchgroups').where('groupmembers', 'array-contains', user.uid).get()
             .then(function(querySnapshot) {
-            querySnapshot.forEach(function(doc) {
-                // doc.data() is never undefined for query doc snapshots
-                console.log(doc.id, " => ", doc.data())
-                //set the research group to state
-                const res = doc.data()
-                setResearchGroup(res)
-            });
-        })
+                querySnapshot.forEach(doc => {
+                    // doc.data() is never undefined for query doc snapshots
+                    console.log(doc.id, " => ", doc.data())
+                    //set the research group to state
+                    const res = doc.data()
+                    setResearchGroup(res)
+                })
+            })
         .catch(function(error) {
             console.log("Error getting documents: ", error);
         });
         } catch (err){
             console.log(err)
         }
+
+       
+        
         
     }, [user])
-
-    console.log(researchGroup.groupmembers)
 
     // const filteredCollaborators = researchGroup.groupmembers.filter(user => 
     //         user.displayName.toLowercase().includes(searchValue.toLowerCase())
     //     )
     //
-    //Need to grab users based upon their displayName - apparently need to create a separate database where userID, photo, displayName are stored
+    //Need to grab users based upon their userID - apparently need to create a separate database where userID, photo, displayName are stored
 
     const buttonStyle = { color: '#FFF', backgroundColor: '#019CDD', margin: '25px'}
 
@@ -73,7 +74,7 @@ function Profile() {
 
                         { 
                             researchGroup.groupmembers.map((member) => (
-                                <UserCard key={member} user={member}/>
+                                <UserCard key={ member } userID={ member }/>
                             ))
                         }
                         </div> 

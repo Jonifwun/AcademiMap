@@ -14,19 +14,25 @@ function JoinGroupForm({ setOpenModal }) {
         e.preventDefault()
         //Match the passcode first and get the doc.id
         db.collection('researchgroups').where('Group Passcode', '==', 'abcdef').get()
-        .then(function(querySnapshot) {
-            querySnapshot.forEach(function(doc) {
-                // doc.data() is never undefined for query doc snapshots
-                console.log(doc.id, " => ", doc.data())
+        .then(querySnapshot => {
+            querySnapshot.forEach(researchDoc => {
                 //Using the doc id, add new user id to array of users
-                db.collection('researchgroups').doc(doc.id).update({
+                db.collection('researchgroups').doc(researchDoc.id).update({
                     groupmembers: firebase.firestore.FieldValue.arrayUnion(user.uid)
                 })
                 
-            });
+                db.collection('users').where('userID', '==', user.uid).get()
+                .then(querySnapshot => {
+                    querySnapshot.forEach(userDoc => {
+                        db.collection('users').doc(userDoc.id).update({
+                            researchGroup: researchDoc.id
+                        })
+                    })
+                })
+            })
         })
-        .catch(function(error) {
-            console.log("Error getting documents: ", error);
+        .catch(err => {
+            console.log("Error getting documents: ", err);
         });
 
 
