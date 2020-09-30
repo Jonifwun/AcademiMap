@@ -39,10 +39,6 @@ function Profile() {
         } catch (err){
             console.log(err)
         }
-
-       
-        
-        
     }, [user])
 
     // const filteredCollaborators = researchGroup.groupmembers.filter(user => 

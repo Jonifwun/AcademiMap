@@ -25,9 +25,6 @@ function UserCard({ userID }) {
     }, [userID])
     console.log('console user:', userData)  
         
-
-
-
     return (
         <div>
             <Card style={{display: 'flex', flexDirection: "column", alignItems: "center", backgroundColor: '#164B61', color: '#FFF', padding: '15px 35px'}}>
