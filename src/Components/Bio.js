@@ -3,17 +3,18 @@ import { Card } from '@material-ui/core'
 import { UserContext } from '../Contexts/UserContext'
 
 
-function Bio() {
+function Bio({ collaborators, posts }) {
 
     const user = useContext(UserContext)
+
 
     return (
 
         <Card style={{display: 'flex', flexDirection: "column", alignItems: "center", backgroundColor: '#164B61', color: '#FFF', padding: '15px 35px'}}>
             <h5>{user?.displayName }</h5>
                 <div style={{display: 'flex', justifyContent: 'space-between', width: '100%', margin: '20px 50px'}}> 
-                    <h5>10 posts</h5>
-                    <h5>10 collaborators</h5>
+                    {posts ? <h5>{ posts.length } posts</h5> : null}
+                    {collaborators ? <h5>{ collaborators.length -1 } collaborators</h5> : null}
                     <h5>20 following</h5>
                             
                 </div>

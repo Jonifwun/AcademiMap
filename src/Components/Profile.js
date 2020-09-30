@@ -14,6 +14,7 @@ function Profile() {
     
     const [researchGroup, setResearchGroup] = useState({})
     const [searchValue, setSearchValue] = useState('')
+    const [userData, setUserData] = useState({})
     
     const handleChange = (e) => {
         e.preventDefault()
@@ -36,16 +37,25 @@ function Profile() {
         .catch(function(error) {
             console.log("Error getting documents: ", error);
         });
+
+        db.collection('users').where('userID', '==', user.uid).get()
+        .then(querySnapshot => {
+            let memberData = querySnapshot.docs[0].data()
+            setUserData(memberData)               
+        })
+        .catch(err => {
+            console.log("Error getting documents: ", err);
+        });
+
         } catch (err){
             console.log(err)
         }
-    }, [user])
+    }, [user, userData])
 
     // const filteredCollaborators = researchGroup.groupmembers.filter(user => 
     //         user.displayName.toLowercase().includes(searchValue.toLowerCase())
     //     )
-    //
-    //Need to grab users based upon their userID - apparently need to create a separate database where userID, photo, displayName are stored
+
 
     const buttonStyle = { color: '#FFF', backgroundColor: '#019CDD', margin: '25px'}
 
@@ -55,7 +65,7 @@ function Profile() {
                 <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-around'}}>
 
                 <ProfilePic buttonStyle={ buttonStyle }/>    
-                <Bio />
+                <Bio collaborators={ researchGroup.groupmembers } posts={ userData.posts } />
                 <Group buttonStyle={ buttonStyle } researchGroup={ researchGroup }/>
 
 
