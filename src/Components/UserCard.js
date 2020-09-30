@@ -6,24 +6,16 @@ function UserCard({ userID }) {
 
     const [userData, setUserData] = useState({})
 
-    console.log( 'props User Id',userID )
-
     useEffect(() => {
         db.collection('users').where('userID', '==', userID).get()
         .then(querySnapshot => {
-            let memberData;
-            querySnapshot.forEach(doc => {
-                memberData = doc.data()
-                console.log('memberData:', memberData)
-            })
-            setUserData(memberData) 
-                      
+            let memberData = querySnapshot.docs[0].data()
+            setUserData(memberData)               
         })
         .catch(err => {
             console.log("Error getting documents: ", err);
         });
     }, [userID])
-    console.log('console user:', userData)  
         
     return (
         <div>

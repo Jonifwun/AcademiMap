@@ -20,13 +20,12 @@ function JoinGroupForm({ setOpenModal }) {
                 db.collection('researchgroups').doc(researchDoc.id).update({
                     groupmembers: firebase.firestore.FieldValue.arrayUnion(user.uid)
                 })
-                
+                //I need to get the user from db (not the )
                 db.collection('users').where('userID', '==', user.uid).get()
                 .then(querySnapshot => {
-                    querySnapshot.forEach(userDoc => {
-                        db.collection('users').doc(userDoc.id).update({
-                            researchGroup: researchDoc.id
-                        })
+                    const userDoc = querySnapshot.docs[0].data()
+                    db.collection('users').doc(userDoc.id).update({
+                        researchGroup: researchDoc.id
                     })
                 })
             })

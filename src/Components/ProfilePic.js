@@ -22,10 +22,8 @@ function ProfilePic({ buttonStyle }) {
     const handleUpload = () => {
         let name = uuid.v4() 
         
-
-        
         storage.ref(`profileImages/${ name }`).put(image)
-        .then(snapshot => {
+        .then(() => {
             storage.ref('profileImages')
             .child(name)
             .getDownloadURL()
@@ -41,15 +39,14 @@ function ProfilePic({ buttonStyle }) {
             }).then(url => {
                 db.collection('users').where('userID', '==', user.uid).get()
                 .then(querySnapshot => {
-                    querySnapshot.forEach(doc => {
-                        //Using the doc id, add new user id to array of users
-                        db.collection('users').doc(doc.id).update({
-                            photoURL: url
-                        }).then(() => {
-                            setImage(null)
-                            setProfileUpdate(false)
-                        })
-                    })
+                    const doc = querySnapshot.docs[0].data()
+                    //Using the doc id, add new user id to array of users
+                    db.collection('users').doc(doc.id).update({
+                        photoURL: url
+                    }).then(() => {
+                        setImage(null)
+                        setProfileUpdate(false)
+                    })    
                 }).catch(err => {
                     console.log(err)
                 })
