@@ -2,12 +2,14 @@ import React, { useEffect, useState } from 'react'
 import { Card } from '@material-ui/core'
 import { db } from '../firebase'
 
-function UserCard({ userID }) {
+function UserCard({ username }) {
 
     const [userData, setUserData] = useState({})
 
+    console.log(username)
+
     useEffect(() => {
-        db.collection('users').where('userID', '==', userID).get()
+        db.collection('users').where('username', '==', username).get()
         .then(querySnapshot => {
             let memberData = querySnapshot.docs[0].data()
             setUserData(memberData)               
@@ -15,7 +17,7 @@ function UserCard({ userID }) {
         .catch(err => {
             console.log("Error getting documents: ", err);
         });
-    }, [userID])
+    }, [username])
         
     return (
         <div>
