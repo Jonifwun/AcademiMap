@@ -21,15 +21,21 @@ function SignUpForm({setOpenModal}) {
             authUser.user.updateProfile({
                 displayName: username
             })
-            return authUser.user.uid
+            return {
+                uid: authUser.user.uid,
+                username: username
+            }
               
-        }).then((uid) => {
+        }).then(({uid, username}) => {
             //Create separate database for querying later - no credentials etc.
-            return db.collection('users').add({
+            return db.collection('users').doc(username).set({
                 userID: uid,
                 username: username,
-                posts: [],
                 photoURL: ''
+            }).then(() => {
+                console.log('User document set!')
+            }).catch(err => {
+                console.error('Error:', err)
             })
         }) 
         .catch((err) => {

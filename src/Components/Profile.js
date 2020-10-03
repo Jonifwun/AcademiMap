@@ -63,7 +63,7 @@ function Profile() {
     return (
         <div>{ user ? 
             <div>
-                <Card style={{margin: '100px 30px 40px', backgroundColor: '#0c3141', color: '#FFF', padding: '25px'}}>
+                <Card style={{margin: '80px 30px 30px', backgroundColor: '#0c3141', color: '#FFF', padding: '25px'}}>
                     <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-around'}}>
                         <ProfilePic buttonStyle={ buttonStyle }/>    
                         <Bio collaborators={ researchGroup.groupmembers } posts={ userData.posts } />

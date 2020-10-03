@@ -37,22 +37,28 @@ function ProfilePic({ buttonStyle }) {
                   });
                 return url
             }).then(url => {
-                db.collection('users').where('userID', '==', user.uid).get()
-                .then(querySnapshot => {
-                    const doc = querySnapshot.docs[0].data()
-                    //Using the doc id, add new user id to array of users
-                    db.collection('users').doc(doc.id).update({
-                        photoURL: url
-                    }).then(() => {
+
+                db.collection('users').doc(user.displayName).update({
+                    photoURL: url
+                }).then(() => {
                         setImage(null)
                         setProfileUpdate(false)
-                    })    
+                    }) 
+
+                // db.collection('users').where('userID', '==', user.uid).get()
+                // .then(querySnapshot => {
+                //     const doc = querySnapshot.docs[0].data()
+                //     //Using the doc id, add new user id to array of users
+                //     db.collection('users').doc(doc.id).update({
+                //         photoURL: url
+                //     })
+                       
                 }).catch(err => {
                     console.log(err)
                 })
 
             })
-        })
+        // })
     }
 
     const profilePicStyles = {

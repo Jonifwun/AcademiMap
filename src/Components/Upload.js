@@ -3,7 +3,8 @@ import { Button, Card, Input, Fab } from '@material-ui/core';
 import '../Upload.css'
 import { storage, db } from '../firebase'
 import firebase from "firebase"
-import AddIcon from '@material-ui/icons/Add';
+import AddIcon from '@material-ui/icons/Add'
+import uuid from 'uuid'
 
 function Upload( {username} ) {
 
@@ -14,7 +15,9 @@ function Upload( {username} ) {
     
 
     const handleUpload = () => {
-        const upload = storage.ref(`images/${ image.name }`).put(image)
+        let name = uuid.v4()
+
+        const upload = storage.ref(`images/${ name }`).put(image)
 
         upload.on("state_changed", (snapshot) => {
             const progress = Math.round((snapshot.bytesTransferred)/(snapshot.totalBytes)*100)
@@ -29,12 +32,13 @@ function Upload( {username} ) {
             .child(image.name)
             .getDownloadURL()
             .then(url => {
-                db.collection('posts').add({
-                    caption: caption,
-                    imgsrc: url,
-                    timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-                    username: username
-                })
+                //WHEN CREATING A NEW USER, NEED TO HAVE DOCUMENT ID AS USERNAME/DISPLAYNAME
+                db.collection('users').doc('jonifwun').collection('posts').add({
+                            caption: caption,
+                            imgsrc: url,
+                            timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+                            username: username
+                        })           
                 setProgressBar(0)
                 setCaption('')
                 setImage(null)
