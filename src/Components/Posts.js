@@ -19,28 +19,32 @@ function Posts() {
       if(user){
 
         db.collection('users').doc(user.displayName).get()
-          .then((doc) => {
-            if (doc.exists) {
-              console.log("Document data:", doc.data());
+          .then((userDoc) => {
+
+            let user;
+            if (userDoc.exists) {
+              user = userDoc.data()
             } else {
                 console.log("No such document!");
             }
-          }).catch(function(error) {
-              console.log("Error getting document:", error);
-          });
-          
+            
+          return user.researchGroup
 
-        db.collection('researchgroups').doc('researchgroupID')
-          .collection('posts')
-          .orderBy('timestamp', 'desc')
-          .onSnapshot(snapshot => {
-            setPosts(snapshot.docs.map(doc => ({
-              id: doc.id,
-              post: doc.data()
-            }
-          )))
+          }).then((researchGroupID) => {
+
+            db.collection('researchgroups').doc('researchgroupID')
+              .collection('posts')
+              .orderBy('timestamp', 'desc')
+              .onSnapshot(snapshot => {
+                setPosts(snapshot.docs.map(doc => ({
+                  id: doc.id,
+                  post: doc.data()
+                }
+              )))
+            })
+          }).catch((error) => {
+            console.log("Error getting document:", error);
         })
-
       }
 
         // if(user){
