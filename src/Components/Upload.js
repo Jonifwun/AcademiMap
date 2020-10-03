@@ -6,7 +6,7 @@ import firebase from "firebase"
 import AddIcon from '@material-ui/icons/Add'
 import uuid from 'uuid'
 
-function Upload( {username} ) {
+function Upload({ username, researchGroupID }) {
 
     const [caption, setCaption] = useState('')
     const [image, setImage] = useState(null)
@@ -32,20 +32,23 @@ function Upload( {username} ) {
             .child(image.name)
             .getDownloadURL()
             .then(url => {
-                //WHEN CREATING A NEW USER, NEED TO HAVE DOCUMENT ID AS USERNAME/DISPLAYNAME
-                db.collection('users').doc('jonifwun').collection('posts').add({
-                            caption: caption,
-                            imgsrc: url,
-                            timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-                            username: username
-                        })           
+                
+
+                const post = {
+                    caption: caption,
+                    imgsrc: url,
+                    timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+                    username: username
+                }
+
+                db.collection('users').doc(username).collection('posts').add(post) 
+                db.collection('researchgroups').doc(researchGroupID).collection('posts').add(post)          
                 setProgressBar(0)
                 setCaption('')
                 setImage(null)
                 setUploadDisplay(false)
             })
-        }
-        )
+        })
     }
 
     const handleChange = (e) => {

@@ -9,6 +9,7 @@ import { UserContext } from '../Contexts/UserContext'
 function Posts() {
     
     const [posts, setPosts] = useState([])
+    const [researchGroupID, setResearchGroupID] = useState('')
 
     const user = useContext(UserContext)
 
@@ -27,12 +28,12 @@ function Posts() {
             } else {
                 console.log("No such document!");
             }
-            
+
           return user.researchGroup
 
           }).then((researchGroupID) => {
 
-            db.collection('researchgroups').doc('researchgroupID')
+            db.collection('researchgroups').doc(researchGroupID)
               .collection('posts')
               .orderBy('timestamp', 'desc')
               .onSnapshot(snapshot => {
@@ -42,19 +43,11 @@ function Posts() {
                 }
               )))
             })
+            setResearchGroupID(researchGroupID)
           }).catch((error) => {
             console.log("Error getting document:", error);
         })
       }
-
-        // if(user){
-        //   db.collection('users').where('researchGroup', 'array-contains', user.displayName).get()
-        //   .then((querySnapshot) => {
-        //     querySnapshot.forEach((doc))
-        //     console.log(doc.data())
-        //   })
-        // }
-
       }, [user])
 
     return (
@@ -70,13 +63,14 @@ function Posts() {
                             postID={ id } 
                             caption={ post.caption } 
                             imgsrc={ post.imgsrc }
+                            researchGroupID={ researchGroupID }
                             />
                             
                     ))
                     
                 }
             </div>
-            { user?.displayName ? <Upload username={ user.displayName }/> : null }
+            { user?.displayName ? <Upload username={ user.displayName } researchGroupID={ researchGroupID }/> : null }
         </div>
     )
 }

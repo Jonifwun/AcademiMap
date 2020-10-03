@@ -10,7 +10,7 @@ import DropDownPostMenu from './DropDownPostMenu'
 import CommentBox from './CommentBox';
 import { UserContext } from '../Contexts/UserContext'
 
-function Post({ postID, username, imgsrc, caption}) {
+function Post({ postID, username, imgsrc, caption, researchGroupID }) {
     const [comments, setComments] = useState([])
     
     const [openComment, setOpenComment] = useState(false)
@@ -61,6 +61,19 @@ function Post({ postID, username, imgsrc, caption}) {
         }).catch(function(error) {
             console.error("Error removing document: ", error);
         });
+
+        //Delete post from research group posts collection
+        db.collection('researchgroups')
+          .doc(researchGroupID)
+          .collection('posts')
+          .doc(postID)
+          .delete()
+          .then(()=>{
+              console.log("Document successfully deleted!")
+          }).catch(function(error) {
+            console.error("Error removing document: ", error);
+        });
+
     }
 
     return (
