@@ -12,30 +12,34 @@ function JoinGroupForm({ setOpenModal }) {
 
     const joinGroup = (e) => {
         e.preventDefault()
-        //Match the passcode first and get the doc.id
-        db.collection('researchgroups').where('Group Passcode', '==', 'abcdef').get()
-        .then(querySnapshot => {
-            querySnapshot.forEach(researchDoc => {
-                //Using the doc id, add new user id to array of users
-                db.collection('researchgroups').doc(researchDoc.id).update({
-                    groupmembers: firebase.firestore.FieldValue.arrayUnion(user.uid)
-                })
-                //I need to get the user from db (not the )
-                db.collection('users').where('userID', '==', user.uid).get()
-                .then(querySnapshot => {
-                    const userDoc = querySnapshot.docs[0].data()
-                    db.collection('users').doc(userDoc.id).update({
-                        researchGroup: researchDoc.id
+
+        if(user){
+
+            db.collection('researchgroups').where('groupPasscode', '==', passcode).get()
+            .then(querySnapshot => {
+                querySnapshot.forEach(researchDoc => {
+                    //Using the doc id, add new user id to array of users
+                    db.collection('researchgroups').doc(researchDoc.id).update({
+                        groupmembers: firebase.firestore.FieldValue.arrayUnion(user.displayName)
+                    })
+                    //I need to get the user from db - NEED TO CHANGE THIS BELOW TO REFACTORED VERSION, IT WORKS BUT IT'S OVERLY COMPLICATED
+                    db.collection('users').where('userID', '==', user.uid).get()
+                    .then(querySnapshot => {
+                        const userDoc = querySnapshot.docs[0].data()
+                        db.collection('users').doc(userDoc.id).update({
+                            researchGroup: researchDoc.id
+                        })
                     })
                 })
             })
-        })
-        .catch(err => {
-            console.log("Error getting documents: ", err);
-        });
-
-
-        setOpenModal(false)  
+            .catch(err => {
+                console.log("Error getting documents: ", err);
+            });
+    
+            setOpenModal(false)  
+        }
+        
+        //Match the passcode first and get the doc.id
     }
 
     return (

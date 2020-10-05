@@ -8,6 +8,9 @@ function CommentBox({postID, user}) {
 
     const postComment = (e) => {
         e.preventDefault()
+
+        //Need to save comments to both research group posts and also to user posts
+
         db.collection('posts')
           .doc(postID)
           .collection('comments')

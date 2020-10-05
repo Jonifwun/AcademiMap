@@ -46,6 +46,9 @@ function Post({ postID, username, imgsrc, caption, researchGroupID }) {
 
     const deleteComment = (commentID) => {
 
+
+        //this needs to be changed to posts on research group and user etc, not the posts collection
+
         db.collection('posts').doc(postID).collection('comments').doc(commentID).delete().then(function() {
             console.log("Document successfully deleted!");
         }).catch(function(error) {

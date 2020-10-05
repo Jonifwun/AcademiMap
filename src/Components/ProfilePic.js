@@ -67,7 +67,7 @@ function ProfilePic({ buttonStyle }) {
         alignItems: "center",
         backgroundColor: '#164B61',
         color: '#FFF',
-        padding: '15px 15px'
+        padding: '15px 15px',
     }
 
     return (

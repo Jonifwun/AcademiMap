@@ -65,7 +65,7 @@ function Profile() {
             <div>
                 <Card style={{margin: '80px 30px 30px', backgroundColor: '#0c3141', color: '#FFF', padding: '25px'}}>
                     <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-around'}}>
-                        <ProfilePic buttonStyle={ buttonStyle }/>    
+                        <ProfilePic buttonStyle={ buttonStyle } />    
                         <Bio collaborators={ researchGroup.groupmembers } posts={ userData.posts } />
                         <Group buttonStyle={ buttonStyle } researchGroup={ researchGroup }/>
                     </div>
