@@ -5,7 +5,7 @@ import firebase from 'firebase'
 import { UserContext } from '../Contexts/UserContext'
 import generator from 'generate-password'
 
-function CreateGroupForm() {
+function CreateGroupForm({ setOpenModal }) {
 
     const user = useContext(UserContext)
 
@@ -18,15 +18,19 @@ function CreateGroupForm() {
             length: 10,
             numbers: true
         })
-    
-        db.collection('researchgroups').doc().set({
+        //Figure out how to have the user who created the group as the leader
+        db.collection('researchgroups').doc().add({
             groupName: groupName,
             groupmembers: [user.displayName],
             groupCreated: firebase.firestore.FieldValue.serverTimestamp(),
-            groupPasscode: groupPasscode
+            groupPasscode: groupPasscode,
+            groupLeader: user.displayName
+        }).then((docRef)=>{
+            db.collection('users').doc(user.displayName).set({
+                researchGroup: docRef.id
+            })
         }).then(()=>{
-             //Need to also grab user from DB and add research group to list of owned research groups.
-             setOpenModal(false) 
+            setOpenModal(false) 
         }).catch((err) => {
             console.log(err)
         })
