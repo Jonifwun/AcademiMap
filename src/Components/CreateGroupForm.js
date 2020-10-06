@@ -18,16 +18,20 @@ function CreateGroupForm({ setOpenModal }) {
             length: 10,
             numbers: true
         })
-        //Figure out how to have the user who created the group as the leader
-        db.collection('researchgroups').doc().add({
+        //Create the new group and store as a reference
+        const newGroup = db.collection('researchgroups').doc()
+        //Set the initial data of the group
+        newGroup.set({
             groupName: groupName,
             groupmembers: [user.displayName],
             groupCreated: firebase.firestore.FieldValue.serverTimestamp(),
             groupPasscode: groupPasscode,
             groupLeader: user.displayName
-        }).then((docRef)=>{
+        })
+        .then(()=>{
+            //Add the research group to the user who created it
             db.collection('users').doc(user.displayName).set({
-                researchGroup: docRef.id
+                researchGroup: newGroup.id
             })
         }).then(()=>{
             setOpenModal(false) 
@@ -61,6 +65,7 @@ function CreateGroupForm({ setOpenModal }) {
                         id="groupName"
                         value={ groupName }
                         onChange={(e) => setGroupName(e.target.value)}
+                        style={{color: '#FFF'}}
                     />
                 </FormControl>
                
