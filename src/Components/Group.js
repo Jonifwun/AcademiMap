@@ -79,7 +79,7 @@ function Group({ buttonStyle, researchGroup }) {
                     <h5 style={{margin: '20px'}}><em>{researchGroup.groupName}</em></h5>
                     <p style={{width: '300px', textAlign: 'justify'}}>
                         Updates: 
-                        Bio: Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
                         sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
                         Diam quam nulla porttitor massa id neque aliquam.                 
                     </p>             

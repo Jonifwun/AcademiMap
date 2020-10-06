@@ -1,16 +1,23 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState, useEffect, useRef } from 'react'
 import { Card } from '@material-ui/core'
 import { UserContext } from '../Contexts/UserContext'
-import SettingsTwoToneIcon from '@material-ui/icons/SettingsTwoTone';
-// import InlineTextEdit from './InlineTextEdit';
+import SettingsTwoToneIcon from '@material-ui/icons/SettingsTwoTone'
+import InlineTextEdit from './InlineTextEdit'
 
 
-function Bio({ collaborators, posts }) {
+function Bio({ collaborators, posts, userData }) {
 
     const user = useContext(UserContext)
+    const [bioText, setBioText] = useState('')
+
+    useEffect(()=> {
+        setBioText(userData)
+    }, [userData])
+
+    const textareaRef = useRef()
 
     // const [inputValue, setInputValue] = useState('')
-    // const [bio, setBio] = useState('')
+    // const [bioText, setBioText] = useState('')
 
 
     return (
@@ -34,23 +41,22 @@ function Bio({ collaborators, posts }) {
                 </div>
                 <hr style={{width: '100%', margin: '15px'}}></hr>
                 
-                <label htmlFor="Bio" style={{alignSelf: 'start'}}><strong>Bio:</strong></label>
-                <p name="Bio" style={{width: '300px', textAlign: 'justify'}}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
-                    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                    Diam quam nulla porttitor massa id neque aliquam. Elementum curabitur
-                    vitae nunc sed velit. Neque convallis a cras semper auctor neque vitae
-                    tempus. Maecenas sed enim ut sem viverra aliquet.</p>
+                <label htmlFor="bioText" style={{alignSelf: 'start'}}><strong>Bio:</strong></label>
+                {/* <p name="Bio" style={{width: '300px', textAlign: 'justify'}}>{userData.bio}</p> */}
 
-            {/* <InLineTextEdit>
+            <InlineTextEdit 
+                text={ userData.bio }
+                type='textarea'
+                childRef={ textareaRef }
+            >
                 <textarea
-                    name="description"
-                    placeholder="Description for the task"
+                    name="bioText"
                     rows="5"
-                    value={ bio }
+                    value={ bioText }
                     style={{width: '300px', textAlign: 'justify'}}
-                    onChange={e => setBio(e.target.value)}
+                    onChange={e => setBioText(e.target.value)}
                 />
-            </InLineTextEdit>     */}
+            </InlineTextEdit>    
 
         </Card>
     )
