@@ -3,6 +3,7 @@ import { Card } from '@material-ui/core'
 import { UserContext } from '../Contexts/UserContext'
 import SettingsTwoToneIcon from '@material-ui/icons/SettingsTwoTone'
 import InlineTextEdit from './InlineTextEdit'
+import '../Editable.css'
 
 
 function Bio({ collaborators, posts, userData }) {
@@ -22,7 +23,7 @@ function Bio({ collaborators, posts, userData }) {
 
     return (
 
-        <Card style={{display: 'flex', flexDirection: "column", alignItems: "center", backgroundColor: '#164B61', color: '#FFF', padding: '15px 35px'}}>
+        <Card style={{display: 'flex', flexDirection: "column", alignItems: "center", backgroundColor: '#164B61', color: '#FFF', padding: '15px 35px', width: '350px', height: '275px'}}>
             <SettingsTwoToneIcon 
             style={{
                 position:'relative',
@@ -41,7 +42,7 @@ function Bio({ collaborators, posts, userData }) {
                 </div>
                 <hr style={{width: '100%', margin: '15px'}}></hr>
                 
-                <label htmlFor="bioText" style={{alignSelf: 'start'}}><strong>Bio:</strong></label>
+                <label htmlFor="bioText" style={{alignSelf: 'start', marginBottom: '10px'}}><strong>Bio:</strong></label>
                 {/* <p name="Bio" style={{width: '300px', textAlign: 'justify'}}>{userData.bio}</p> */}
 
             <InlineTextEdit 
@@ -51,9 +52,11 @@ function Bio({ collaborators, posts, userData }) {
             >
                 <textarea
                     name="bioText"
-                    rows="5"
-                    value={ bioText }
-                    style={{width: '300px', textAlign: 'justify'}}
+                    rows="6"
+                    cols='5'
+                    value={ userData.bio }
+                    style={{width: '330px', textAlign: 'justify', resize: 'none'}}
+                    className='Editable'
                     onChange={e => setBioText(e.target.value)}
                 />
             </InlineTextEdit>    
