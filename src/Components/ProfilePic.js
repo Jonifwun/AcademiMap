@@ -40,19 +40,11 @@ function ProfilePic({ buttonStyle }) {
 
                 db.collection('users').doc(user.displayName).update({
                     photoURL: url
-                }).then(() => {
+                })
+                .then(() => {
                         setImage(null)
                         setProfileUpdate(false)
-                    }) 
-
-                // db.collection('users').where('userID', '==', user.uid).get()
-                // .then(querySnapshot => {
-                //     const doc = querySnapshot.docs[0].data()
-                //     //Using the doc id, add new user id to array of users
-                //     db.collection('users').doc(doc.id).update({
-                //         photoURL: url
-                //     })
-                       
+                }) 
                 }).catch(err => {
                     console.log(err)
                 })
@@ -76,7 +68,16 @@ function ProfilePic({ buttonStyle }) {
             <div style={ profilePicStyles }>
                 { !profileUpdate && user ?
                 <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
-                    <img src={ user.photoURL } alt="profilepicture" style={{width: '160px', height: "160px", borderRadius: '80px'}}></img>
+                    {user.photoURL ? 
+                        <img src={ user.photoURL } 
+                        alt="profilepicture" 
+                        style={{width: '160px', height: "160px", borderRadius: '80px'}}>
+                        </img>
+                    : 
+                    <div>
+                        <h5>No current profile picture</h5>
+                    </div>
+                    }
                     <Button style={ buttonStyle } onClick={() => setProfileUpdate(true) }>Update Profile Picture</Button>
                 </div>
                 : 

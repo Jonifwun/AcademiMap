@@ -72,7 +72,7 @@ function Group({ buttonStyle, researchGroup }) {
         </Modal>
 
 
-        { researchGroup ?
+        { researchGroup.groupName ?
             <Card style={ groupStyles }> 
                 <div style={ groupStyles }>
                     <h3>Research Group:</h3>

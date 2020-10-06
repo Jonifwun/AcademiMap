@@ -34,7 +34,7 @@ function Bio({ collaborators, posts }) {
                 </div>
                 <hr style={{width: '100%', margin: '15px'}}></hr>
                 
-                <label for="Bio" style={{alignSelf: 'start'}}><strong>Bio:</strong></label>
+                <label htmlFor="Bio" style={{alignSelf: 'start'}}><strong>Bio:</strong></label>
                 <p name="Bio" style={{width: '300px', textAlign: 'justify'}}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
                     sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
                     Diam quam nulla porttitor massa id neque aliquam. Elementum curabitur
