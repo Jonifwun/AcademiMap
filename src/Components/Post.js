@@ -11,21 +11,21 @@ import CommentBox from './CommentBox';
 import { UserContext } from '../Contexts/UserContext'
 
 function Post({ postID, username, imgsrc, caption, researchGroupID }) {
+
     const [comments, setComments] = useState([])
-    
     const [openComment, setOpenComment] = useState(false)
     const [userData, setUserData] = useState({})
-
-    // const userContext = useContext(UserContext)
-    // const { user } = userContext
 
     const user = useContext(UserContext)
 
     useEffect(() => {
-        let unsubscribe
-        if(postID && username){
-            unsubscribe = () => {
-                db.collection('posts')
+        // let unsubscribe;
+        if(postID && username && researchGroupID){
+            // unsubscribe = () => {
+                //Grab all of the comments from researchgroups collection
+                db.collection('researchgroups')
+                            .doc(researchGroupID)
+                            .collection('posts')
                             .doc(postID)
                             .collection('comments')
                             .orderBy('timestamp', 'asc')
@@ -33,24 +33,24 @@ function Post({ postID, username, imgsrc, caption, researchGroupID }) {
                                setComments(snapshot.docs.map(doc => ({
                                    id: doc.id,
                                    comment: doc.data()
-                            })
-                               
+                            })                          
                         ))
-                    })  
-            } 
+                    }) 
+                
+            // } 
+            //Grab the user data for the individual post
             db.collection('users').doc(username).get()
             .then((userObj)=>{
                 const data = userObj.data()
                 setUserData(data)
             })     
         }
-        
-                        
+        // return (() => {
+        //     unsubscribe()
+        // })
+    }, [postID, researchGroupID, username])
 
-        return (() => {
-            unsubscribe()
-        })
-    }, [postID, username])
+    console.log('Comments:', comments)
 
     const deleteComment = (commentID) => {
         //this needs to be changed to posts on research group and user etc, not the posts collection
@@ -124,7 +124,7 @@ function Post({ postID, username, imgsrc, caption, researchGroupID }) {
             </div>
             <div>
                 { user && openComment && (
-                    <CommentBox postID={ postID } user={ user }/>
+                    <CommentBox postID={ postID } user={ user } researchGroupID={ researchGroupID }/>
                 )}
             </div>
         </Card>

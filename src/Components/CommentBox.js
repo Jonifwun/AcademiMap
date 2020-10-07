@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import firebase from 'firebase'
 import { db } from '../firebase'
 
-function CommentBox({postID, user}) {
+function CommentBox({ postID, user, researchGroupID }) {
 
     const [comment, setComment] = useState('')
 
@@ -10,8 +10,19 @@ function CommentBox({postID, user}) {
         e.preventDefault()
 
         //Need to save comments to both research group posts and also to user posts
+        //Post ID's do not match
+        db.collection('researchgroups').doc(researchGroupID)
+          .collection('posts')
+          .doc(postID)
+          .collection('comments')
+          .add({
+              text: comment,
+              username: user.displayName,
+              timestamp: firebase.firestore.FieldValue.serverTimestamp()
+          })
 
-        db.collection('posts')
+        db.collection('users').doc(user.displayName)
+          .collection('posts')
           .doc(postID)
           .collection('comments')
           .add({

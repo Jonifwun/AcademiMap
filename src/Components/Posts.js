@@ -14,11 +14,8 @@ function Posts() {
     const user = useContext(UserContext)
 
     useEffect(() => {
-        //GOTTA CHANGE THIS FETCHING OF POSTS TO BE DETERMINED BY GROUP?
 
-        //Grab user from db, user.researchGroup
       if(user){
-
         db.collection('users').doc(user.displayName).get()
           .then((userDoc) => {
 
@@ -28,11 +25,9 @@ function Posts() {
             } else {
                 console.log("No such document!");
             }
-
           return user.researchGroup
 
           }).then((researchGroupID) => {
-
             db.collection('researchgroups').doc(researchGroupID)
               .collection('posts')
               .orderBy('timestamp', 'desc')

@@ -41,7 +41,8 @@ function Upload({ username, researchGroupID }) {
                     username: username
                 }
 
-                db.collection('users').doc(username).collection('posts').add(post) 
+                db.collection('users').doc(username).collection('posts').add(post)
+
                 db.collection('researchgroups').doc(researchGroupID).collection('posts').add(post)          
                 setProgressBar(0)
                 setCaption('')
