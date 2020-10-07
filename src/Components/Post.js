@@ -14,6 +14,7 @@ function Post({ postID, username, imgsrc, caption, researchGroupID }) {
     const [comments, setComments] = useState([])
     
     const [openComment, setOpenComment] = useState(false)
+    const [userData, setUserData] = useState({})
 
     // const userContext = useContext(UserContext)
     // const { user } = userContext
@@ -22,8 +23,9 @@ function Post({ postID, username, imgsrc, caption, researchGroupID }) {
 
     useEffect(() => {
         let unsubscribe
-        if(postID){
-            unsubscribe = db.collection('posts')
+        if(postID && username){
+            unsubscribe = () => {
+                db.collection('posts')
                             .doc(postID)
                             .collection('comments')
                             .orderBy('timestamp', 'asc')
@@ -34,19 +36,23 @@ function Post({ postID, username, imgsrc, caption, researchGroupID }) {
                             })
                                
                         ))
-                    })
+                    })  
+            } 
+            db.collection('users').doc(username).get()
+            .then((userObj)=>{
+                const data = userObj.data()
+                setUserData(data)
+            })     
         }
+        
+                        
 
         return (() => {
             unsubscribe()
         })
-    }, [postID])
-
-
+    }, [postID, username])
 
     const deleteComment = (commentID) => {
-
-
         //this needs to be changed to posts on research group and user etc, not the posts collection
 
         db.collection('posts').doc(postID).collection('comments').doc(commentID).delete().then(function() {
@@ -84,10 +90,11 @@ function Post({ postID, username, imgsrc, caption, researchGroupID }) {
             <div className="post">
                 <div className='postHeader'>
                     <div className="postUserAvatar">
-                       <Avatar
+                    <Avatar
                         className="postAvatar"
                         alt={ username }
-                        src="/static/images/avatar/1.jpg"
+                        src={ userData.photoURL }
+                        style={{borderRadius: '80px', border: '3px solid #019CDD'}}
                     />
                     <h4>{ username }</h4>  
                     </div>

@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect, useRef } from 'react'
-import { Card } from '@material-ui/core'
+import { Avatar, Card } from '@material-ui/core'
 import { UserContext } from '../Contexts/UserContext'
 import InlineTextEdit from './InlineTextEdit'
 import '../Editable.css'
@@ -35,6 +35,11 @@ function Bio({ collaborators, posts, userData }) {
     return (
 
         <Card style={{display: 'flex', flexDirection: "column", alignItems: "center", backgroundColor: '#164B61', color: '#FFF', padding: '15px 35px', width: '350px', height: '275px'}}>
+            <Avatar
+                alt={ user.displayName }
+                src={ user.photoURL }
+                style={{height: '70px', width: '70px', marginBottom: '10px', borderRadius: '80px', border: '3px solid #019CDD'}}
+            />
             <h5>{user?.displayName }</h5>
                 <div style={{display: 'flex', justifyContent: 'space-between', width: '100%', margin: '20px 50px'}}> 
                     {posts ? <h5>{ posts.length } posts</h5> : null}
