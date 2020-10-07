@@ -35,12 +35,15 @@ function Bio({ collaborators, posts, userData }) {
     return (
 
         <Card style={{display: 'flex', flexDirection: "column", alignItems: "center", backgroundColor: '#164B61', color: '#FFF', padding: '15px 35px', width: '350px', height: '275px'}}>
-            <Avatar
-                alt={ user.displayName }
-                src={ user.photoURL }
-                style={{height: '70px', width: '70px', marginBottom: '10px', borderRadius: '80px', border: '3px solid #019CDD'}}
-            />
-            <h5>{user?.displayName }</h5>
+            <div style={{display: 'flex', alignItems: 'center'}}>
+                <Avatar
+                    alt={ user.displayName }
+                    src={ user.photoURL }
+                    style={{marginRight: '10px', borderRadius: '80px', border: '3px solid #019CDD'}}
+                />
+                <h5>{user?.displayName }</h5>
+            </div>
+            
                 <div style={{display: 'flex', justifyContent: 'space-between', width: '100%', margin: '20px 50px'}}> 
                     {posts ? <h5>{ posts.length } posts</h5> : null}
                     {collaborators ? <h5>{ collaborators.length -1 } collaborators</h5> : null}
