@@ -5,7 +5,7 @@ import Avatar from '@material-ui/core/Avatar'
 import Card from '@material-ui/core/Card';
 import QuestionAnswerTwoToneIcon from '@material-ui/icons/QuestionAnswerTwoTone'
 import FavoriteTwoToneIcon from '@material-ui/icons/FavoriteTwoTone';
-import DeleteForeverTwoToneIcon from '@material-ui/icons/DeleteForeverTwoTone';
+import ClearSharpIcon from '@material-ui/icons/ClearSharp';
 import DropDownPostMenu from './DropDownPostMenu'
 import CommentBox from './CommentBox';
 import { UserContext } from '../Contexts/UserContext'
@@ -52,20 +52,20 @@ function Post({ postID, username, imgsrc, caption, researchGroupID }) {
 
     console.log('Comments:', comments)
 
-    const deleteComment = (commentID) => {
+    const deleteComment = (commentID, commentUser) => {
         //this needs to be changed to posts on research group and user etc, not the posts collection
-
-        db.collection('researchgroups')
-          .doc(researchGroupID)
-          .collection('posts')
-          .doc(postID)
-          .collection('comments')
-          .doc(commentID).delete().then(function() {
-            console.log("Document successfully deleted!");
-        }).catch(function(error) {
+        if(user.displayName === commentUser){
+            db.collection('researchgroups')
+              .doc(researchGroupID)
+              .collection('posts')
+              .doc(postID)
+              .collection('comments')
+              .doc(commentID).delete().then(function() {
+                    console.log("Document successfully deleted!");
+            }).catch(function(error) {
             console.error("Error removing document: ", error);
         });
-
+        }
     }
 
     const deletePost = () => {
@@ -119,7 +119,8 @@ function Post({ postID, username, imgsrc, caption, researchGroupID }) {
                             <h5 className="commentUsername"><strong>{ comment.username }</strong></h5>
                             <h5 className="commentText">{ comment.text }</h5>
                         </div>
-                        <DeleteForeverTwoToneIcon className="icon" onClick={() => deleteComment(id) }/>
+                        
+                        { comment.username === user?.displayName ? <ClearSharpIcon className="icon" onClick={() => deleteComment(id, comment.username) }/> : null}
 
                     </div>    
                     )
