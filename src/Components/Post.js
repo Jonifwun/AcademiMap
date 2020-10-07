@@ -55,7 +55,12 @@ function Post({ postID, username, imgsrc, caption, researchGroupID }) {
     const deleteComment = (commentID) => {
         //this needs to be changed to posts on research group and user etc, not the posts collection
 
-        db.collection('posts').doc(postID).collection('comments').doc(commentID).delete().then(function() {
+        db.collection('researchgroups')
+          .doc(researchGroupID)
+          .collection('posts')
+          .doc(postID)
+          .collection('comments')
+          .doc(commentID).delete().then(function() {
             console.log("Document successfully deleted!");
         }).catch(function(error) {
             console.error("Error removing document: ", error);
@@ -65,11 +70,11 @@ function Post({ postID, username, imgsrc, caption, researchGroupID }) {
 
     const deletePost = () => {
 
-        db.collection('posts').doc(postID).delete().then(function() {
-            console.log("Document successfully deleted!");
-        }).catch(function(error) {
-            console.error("Error removing document: ", error);
-        });
+        // db.collection('posts').doc(postID).delete().then(function() {
+        //     console.log("Document successfully deleted!");
+        // }).catch(function(error) {
+        //     console.error("Error removing document: ", error);
+        // });
 
         //Delete post from research group posts collection
         db.collection('researchgroups')
