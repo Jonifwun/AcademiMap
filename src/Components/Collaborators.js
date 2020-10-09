@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import UserCard from './UserCard'
+import { MemoizedUserCard } from './UserCard'
 import SearchBox from './SearchBox'
 
 function Collaborators({ collaborators }) {
@@ -23,7 +23,7 @@ function Collaborators({ collaborators }) {
                 
                         {filteredCollaborators.length ? 
                             filteredCollaborators.map((member) => (
-                                <UserCard key={ member } username={ member }/>
+                                <MemoizedUserCard key={ member } username={ member }/>
                             ))
                          : 
                             <p>No users found</p>
