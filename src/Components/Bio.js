@@ -44,16 +44,14 @@ function Bio({ collaborators, posts, userData }) {
                 <h5>{user?.displayName }</h5>
             </div>
             
-                <div style={{display: 'flex', justifyContent: 'space-between', width: '100%', margin: '20px 50px'}}> 
-                    {posts ? <h5>{ posts.length } posts</h5> : null}
-                    {collaborators ? <h5>{ collaborators.length -1 } collaborators</h5> : null}
-                    <h5>20 following</h5>
-                            
-                </div>
-                <hr style={{width: '100%', margin: '15px'}}></hr>
+            <div style={{display: 'flex', justifyContent: 'space-between', width: '100%', margin: '20px 50px'}}> 
+                {posts ? <h5>{ posts.length } posts</h5> : null}
+                {collaborators ? <h5>{ collaborators.length -1 } collaborators</h5> : null}
+                <h5>20 following</h5>                        
+            </div>
+            <hr style={{width: '100%', margin: '10px'}}></hr>
                 
-                <label htmlFor="bioText" style={{alignSelf: 'start', marginBottom: '10px'}}><strong>Bio</strong><small> - (Click to edit)</small></label>
-                {/* <p name="Bio" style={{width: '300px', textAlign: 'justify'}}>{userData.bio}</p> */}
+            <label htmlFor="bioText" style={{alignSelf: 'start', marginBottom: '10px'}}><strong>Bio</strong><small> - (Click to edit)</small></label>
 
             <InlineTextEdit 
                 text={ bioText }
@@ -67,13 +65,12 @@ function Bio({ collaborators, posts, userData }) {
                     rows='5'
                     cols='5'
                     value={ bioText }
-                    style={{width: '300px', textAlign: 'justify', resize: 'none', border: 'none', alignSelf:'center'}}
+                    style={{width: '300px', resize: 'none', border: 'none'}}
                     className='Editable'
                     onChange={(e) => setBioText(e.target.value)}
                     autoFocus={true}
                 />
             </InlineTextEdit>    
-
         </Card>
     )
 }
