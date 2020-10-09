@@ -71,12 +71,10 @@ function Group({ buttonStyle, researchGroup }) {
                     <h3>Research Group:</h3>
                     <h5 style={{margin: '20px'}}><em>{researchGroup.groupName}</em></h5>
                     <p style={{width: '300px', textAlign: 'justify'}}>
-                        Updates:
+                        Updates: 
                         {//HAVE THIS AS EDIT IN PLACE TEXT TOO (IF GROUP LEADER) - DYNAMICALLY SHOWN 
 }
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
-                        sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                        Diam quam nulla porttitor massa id neque aliquam.                 
+                        { researchGroup.groupUpdates }                
                     </p>             
                 </div>
                 <hr style={{width: '100%'}}></hr>
