@@ -33,7 +33,6 @@ function Upload({ username, researchGroupID }) {
             .getDownloadURL()
             .then(url => {
                 
-
                 const post = {
                     caption: caption,
                     imgsrc: url,
@@ -56,7 +55,6 @@ function Upload({ username, researchGroupID }) {
                   }).catch((err) => {
                       console.log(err)
                   })
-
             })
         })
     }
