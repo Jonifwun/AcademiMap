@@ -14,6 +14,7 @@ import Posts from './Components/Posts'
 import Profile from './Components/Profile';
 import { Link } from 'react-router-dom'
 import { UserContextProvider } from './Contexts/UserContext'
+import UserFeed from './Components/UserFeed';
 
 function App() {
   
@@ -131,6 +132,10 @@ function App() {
         />
         <Route path='/profile' render={() => (
           <Profile />
+        )}
+        />
+        <Route path='/users/:id' render={() => (
+          <UserFeed />
         )}
         />
         
