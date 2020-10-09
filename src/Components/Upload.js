@@ -42,12 +42,21 @@ function Upload({ username, researchGroupID }) {
                 }
 
                 db.collection('users').doc(username).collection('posts').add(post)
+                  .then((docRef) => {
+                      console.log(docRef.id)
+                      const postID = docRef.id
+                      return postID
+                  }).then((postID) => {
 
-                db.collection('researchgroups').doc(researchGroupID).collection('posts').add(post)          
-                setProgressBar(0)
-                setCaption('')
-                setImage(null)
-                setUploadDisplay(false)
+                      db.collection('researchgroups').doc(researchGroupID).collection('posts').doc(postID).set(post)          
+                      setProgressBar(0)
+                      setCaption('')
+                      setImage(null)
+                      setUploadDisplay(false)
+                  }).catch((err) => {
+                      console.log(err)
+                  })
+
             })
         })
     }
