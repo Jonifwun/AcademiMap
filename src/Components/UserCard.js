@@ -3,7 +3,7 @@ import { Card } from '@material-ui/core'
 import { db } from '../firebase'
 
 export function UserCard({ username }) {
-console.log('RUNNING!')
+
     const [userData, setUserData] = useState({})
 
     useEffect(() => {

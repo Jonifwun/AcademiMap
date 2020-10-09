@@ -81,8 +81,6 @@ function Upload({ username, researchGroupID }) {
             justifyContent:"center",
             display: 'flex',
             backgroundColor: '#019CDD',
-          
-            
             width: '100%'
             }}>
                     <Fab style={{backgroundColor:  '#164B61', height: '55px', width: '55px'}} color="primary" onClick={() => setUploadDisplay(true)}>
