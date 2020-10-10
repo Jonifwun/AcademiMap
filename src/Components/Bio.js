@@ -10,6 +10,7 @@ function Bio({ collaborators, posts, userData }) {
 
     const user = useContext(UserContext)
     const [bioText, setBioText] = useState('')
+    const [editing, setEditing] = useState(false)
 
     useEffect(()=> {
         setBioText(userData.bio)
@@ -59,7 +60,9 @@ function Bio({ collaborators, posts, userData }) {
             </div>
             <hr style={{width: '100%', margin: '10px'}}></hr>
                 
-            <label htmlFor="bioText" style={{alignSelf: 'start', marginBottom: '10px'}}><strong>Bio</strong><small> - (Click to edit)</small></label>
+            <label htmlFor="bioText" style={{alignSelf: 'start', marginBottom: '10px'}}><strong>Bio</strong>
+                <small> - ({editing ? 'Editing' : 'Click to edit'})</small>
+            </label>
 
             <InlineTextEdit 
                 text={ bioText }
@@ -77,6 +80,8 @@ function Bio({ collaborators, posts, userData }) {
                     className='Editable'
                     onChange={(e) => setBioText(e.target.value)}
                     autoFocus={true}
+                    onFocus={() => setEditing(true)}
+                    onBlur={() => setEditing(false)}
                 />
             </InlineTextEdit>    
         </Card>
