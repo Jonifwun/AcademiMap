@@ -45,7 +45,7 @@ function Bio({ collaborators, posts, userData }) {
             </div>
             
             <div style={{display: 'flex', justifyContent: 'space-between', width: '100%', margin: '20px 50px'}}> 
-                {posts ? <h5>{ posts.length } posts</h5> : null}
+                {posts ? <h5>{ posts } posts</h5> : null}
                 {collaborators ? <h5>{ collaborators.length -1 } collaborators</h5> : null}
                 <h5>20 following</h5>                        
             </div>

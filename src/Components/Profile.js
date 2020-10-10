@@ -14,41 +14,48 @@ function Profile() {
     
     const [researchGroup, setResearchGroup] = useState({})
     const [userData, setUserData] = useState({})
-    
-
-    console.log(user)
+    // const [posts, setPosts] = useState([])
+    const [postCount, setPostCount] = useState('')
 
     useEffect(() => {
         
         if(user){
             try {
-                    //Match the users id to any groups
-                   db.collection('researchgroups').where('groupmembers', 'array-contains', user.displayName).get()
-                   .then(function(querySnapshot) {
-                       querySnapshot.forEach(doc => {
-                           // doc.data() is never undefined for query doc snapshots
-                           console.log(doc.id, " => ", doc.data())
-                           //set the research group to state
-                           const res = doc.data()
-                           setResearchGroup(res)
-                       })
-                   })
+                //Match the users id to any groups
+                db.collection('researchgroups').where('groupmembers', 'array-contains', user.displayName).get()
+                .then(function(querySnapshot) {
+                    querySnapshot.forEach(doc => {
+                        // doc.data() is never undefined for query doc snapshots
+                        console.log(doc.id, " => ", doc.data())
+                        //set the research group to state
+                        const res = doc.data()
+                        setResearchGroup(res)
+                    })
+                })
                .catch(function(error) {
                    console.log("Error getting documents: ", error);
                });
             } catch (err){
                 console.log(err)
             }
-
             try {
-                db.collection('users').where('userID', '==', user.uid).get()
-               .then(querySnapshot => {
-                   let memberData = querySnapshot.docs[0].data()
-                   setUserData(memberData)               
-               })
-               .catch(err => {
-                   console.log("Error getting documents: ", err);
-               });
+                db.collection('users').doc(user.displayName).get()
+                  .then(doc => {
+                      let memberData = doc.data()
+                      setUserData(memberData)               
+                  }).then(()=> {
+                    db.collection('users')
+                      .doc(user.displayName)
+                      .collection('posts')
+                      .get()
+                      .then((posts) => {
+                        // setPosts(posts)
+                        setPostCount(posts.docs.length)
+                      })                      
+                  })
+                  .catch(err => {
+                      console.log("Error getting documents: ", err);
+                  });
             }
             catch (err) {
                 console.log(err)
@@ -66,7 +73,7 @@ function Profile() {
                 <Card style={{margin: '80px 30px 30px', backgroundColor: '#0c3141', color: '#FFF', padding: '25px'}}>
                     <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-around'}}>
                         <ProfilePic buttonStyle={ buttonStyle } />    
-                        <Bio collaborators={ researchGroup.groupmembers } posts={ userData.posts } userData={ userData } />
+                        <Bio collaborators={ researchGroup.groupmembers } posts={ postCount } userData={ userData } />
                         <MemoizedGroup buttonStyle={ buttonStyle } researchGroup={ researchGroup }/>
                     </div>
                 </Card>
