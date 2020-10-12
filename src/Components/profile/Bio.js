@@ -1,9 +1,9 @@
 import React, { useContext, useState, useEffect, useRef } from 'react'
 import { Avatar, Card } from '@material-ui/core'
-import { UserContext } from '../Contexts/UserContext'
-import InlineTextEdit from './InlineTextEdit'
-import '../Editable.css'
-import { db } from '../firebase'
+import { UserContext } from '../../Contexts/UserContext'
+import InlineTextEdit from '../InlineTextEdit'
+import './Editable.css'
+import { db } from '../../firebase'
 
 
 function Bio({ collaborators, posts, userData, userFeedData }) {

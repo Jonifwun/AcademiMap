@@ -1,8 +1,8 @@
 import { Button, Card, FormControl, Input, InputLabel } from '@material-ui/core'
 import React, { useState, useContext } from 'react'
-import { db } from '../firebase'
+import { db } from '../../firebase'
 import firebase from 'firebase'
-import { UserContext } from '../Contexts/UserContext'
+import { UserContext } from '../../Contexts/UserContext'
 
 function JoinGroupForm({ setOpenModal }) {
 

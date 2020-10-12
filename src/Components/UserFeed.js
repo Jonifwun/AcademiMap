@@ -1,6 +1,6 @@
 import React, {  useState, useEffect } from 'react'
 import { useParams } from "react-router-dom"
-import Bio from './Bio'
+import Bio from './profile/Bio'
 import { db } from '../firebase'
 import Post from './Post'
 

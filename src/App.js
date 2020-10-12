@@ -11,7 +11,7 @@ import LockOpenTwoToneIcon from '@material-ui/icons/LockOpenTwoTone';
 import CreateTwoToneIcon from '@material-ui/icons/CreateTwoTone';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import Posts from './Components/Posts'
-import Profile from './Components/Profile';
+import Profile from './Components/profile/Profile';
 import { Link } from 'react-router-dom'
 import { UserContextProvider } from './Contexts/UserContext'
 import UserFeed from './Components/UserFeed';

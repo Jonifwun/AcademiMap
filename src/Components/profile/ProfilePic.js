@@ -1,7 +1,7 @@
 import { Button, Card } from '@material-ui/core'
 import React, { useState, useContext } from 'react'
-import { UserContext } from '../Contexts/UserContext'
-import { storage, db } from '../firebase'
+import { UserContext } from '../../Contexts/UserContext'
+import { storage, db } from '../../firebase'
 import uuid from 'uuid'
 
 

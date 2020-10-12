@@ -1,9 +1,9 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { Card } from '@material-ui/core'
 import Bio from './Bio'
-import { UserContext } from '../Contexts/UserContext'
+import { UserContext } from '../../Contexts/UserContext'
 import { MemoizedGroup } from './Group'
-import { db } from '../firebase'
+import { db } from '../../firebase'
 import ProfilePic from './ProfilePic'
 import Collaborators from './Collaborators'
 

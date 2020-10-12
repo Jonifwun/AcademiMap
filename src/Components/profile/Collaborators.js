@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { MemoizedUserCard } from './UserCard'
+import { MemoizedUserCard } from '../UserCard'
 import SearchBox from './SearchBox'
 
 function Collaborators({ collaborators }) {
