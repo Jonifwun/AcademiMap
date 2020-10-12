@@ -70,12 +70,6 @@ function Post({ postID, username, imgsrc, caption, researchGroupID }) {
 
     const deletePost = () => {
 
-        // db.collection('posts').doc(postID).delete().then(function() {
-        //     console.log("Document successfully deleted!");
-        // }).catch(function(error) {
-        //     console.error("Error removing document: ", error);
-        // });
-
         //Delete post from research group posts collection
         db.collection('researchgroups')
           .doc(researchGroupID)

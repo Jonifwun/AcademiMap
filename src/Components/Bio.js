@@ -13,7 +13,7 @@ function Bio({ collaborators, posts, userData }) {
     const [editing, setEditing] = useState(false)
 
     useEffect(()=> {
-        setBioText(userData.bio)
+        setBioText(userData?.bio)
     }, [userData])
 
     const textareaRef = useRef()
@@ -29,26 +29,23 @@ function Bio({ collaborators, posts, userData }) {
         })
     }
 
-    // const [inputValue, setInputValue] = useState('')
-    // const [bioText, setBioText] = useState('')
-
 
     return (
-
+        
         <Card style={{display: 'flex', flexDirection: "column", alignItems: "center", backgroundColor: '#164B61', color: '#FFF', padding: '15px 25px', width: '350px', height: '275px'}}>
             <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
                 <div style={{display: 'flex', alignItems: 'center', marginRight: "25px"}}>
                     <Avatar
-                        alt={ user.displayName }
-                        src={ user.photoURL }
+                        alt={ user?.displayName }
+                        src={ user?.photoURL }
                         style={{marginRight: '10px', borderRadius: '80px', border: '3px solid #019CDD'}}
                     />
                     <h5>{user?.displayName }</h5>
                 </div>
                 <div style={{display: 'flex', flexDirection: 'column', backgroundColor: '#0D3140', borderRadius: '5px', padding:'7px', fontSize: '13px', alignItems: 'start'}}>
-                    <p>Affiliation: { userData.affiliation }</p>
-                    <p>Position: { userData.position }</p>
-                    <p>Location: { userData.location }</p>
+                    <p>Affiliation: { userData?.affiliation }</p>
+                    <p>Position: { userData?.position }</p>
+                    <p>Location: { userData?.location }</p>
 
                 </div>
             </div>
