@@ -25,8 +25,6 @@ function Profile() {
                 db.collection('researchgroups').where('groupmembers', 'array-contains', user.displayName).get()
                 .then(function(querySnapshot) {
                     querySnapshot.forEach(doc => {
-                        // doc.data() is never undefined for query doc snapshots
-                        console.log(doc.id, " => ", doc.data())
                         //set the research group to state
                         const res = doc.data()
                         setResearchGroup(res)
@@ -60,8 +58,7 @@ function Profile() {
             catch (err) {
                 console.log(err)
             }
-            } 
-    
+            }     
         }, [user])
 
 

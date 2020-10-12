@@ -13,7 +13,7 @@ import { UserContext } from '../Contexts/UserContext'
 function Post({ postID, username, imgsrc, caption, researchGroupID }) {
 
     const [comments, setComments] = useState([])
-    const [openComment, setOpenComment] = useState(false)
+    const [openComment, setOpenComment] = useState(true)
     const [userData, setUserData] = useState({})
 
     const user = useContext(UserContext)

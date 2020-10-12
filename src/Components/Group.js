@@ -42,7 +42,7 @@ function Group({ buttonStyle, researchGroup }) {
         alignItems: "center",
         backgroundColor: '#164B61',
         color: '#FFF',
-        padding: '15px 30px'
+        padding: '15px 25px'
     }
 
     return (
@@ -69,7 +69,7 @@ function Group({ buttonStyle, researchGroup }) {
             <Card style={ groupStyles }> 
                 <div style={ groupStyles }>
                     <h3>Research Group:</h3>
-                    <h5 style={{margin: '20px'}}><em>{researchGroup.groupName}</em></h5>
+                    <h5 style={{margin: '5px 20px'}}><em>{researchGroup.groupName}</em></h5>
                     <p style={{width: '300px', textAlign: 'justify'}}>
                         Updates: 
                         {//HAVE THIS AS EDIT IN PLACE TEXT TOO (IF GROUP LEADER) - DYNAMICALLY SHOWN 
