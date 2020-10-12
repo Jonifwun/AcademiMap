@@ -10,7 +10,7 @@ import DropDownPostMenu from './DropDownPostMenu'
 import CommentBox from './CommentBox';
 import { UserContext } from '../Contexts/UserContext'
 
-function Post({ postID, username, imgsrc, caption, researchGroupID }) {
+function Post({ postID, username, imgsrc, caption, researchGroupID, userFeedData }) {
 
     const [comments, setComments] = useState([])
     const [openComment, setOpenComment] = useState(true)
@@ -39,18 +39,19 @@ function Post({ postID, username, imgsrc, caption, researchGroupID }) {
                 
             // } 
             //Grab the user data for the individual post
-            db.collection('users').doc(username).get()
-            .then((userObj)=>{
-                const data = userObj.data()
-                setUserData(data)
-            })     
+            if(!userFeedData){
+
+                db.collection('users').doc(username).get()
+                .then((userObj)=>{
+                    const data = userObj.data()
+                    setUserData(data)
+                })     
+            }
         }
         // return (() => {
         //     unsubscribe()
         // })
-    }, [postID, researchGroupID, username])
-
-    console.log('Comments:', comments)
+    }, [postID, researchGroupID, username, userFeedData])
 
     const deleteComment = (commentID, commentUser) => {
         //this needs to be changed to posts on research group and user etc, not the posts collection
@@ -92,7 +93,7 @@ function Post({ postID, username, imgsrc, caption, researchGroupID }) {
                     <Avatar
                         className="postAvatar"
                         alt={ username }
-                        src={ userData.photoURL }
+                        src={ userFeedData ? userFeedData.photoURL : userData.photoURL }
                         style={{borderRadius: '80px', border: '3px solid #019CDD'}}
                     />
                     <h4>{ username }</h4>  
