@@ -134,7 +134,7 @@ function App() {
           <Profile />
         )}
         />
-        <Route path='/users/:id' render={() => (
+        <Route path='/users/:username' render={() => (
           <UserFeed />
         )}
         />
