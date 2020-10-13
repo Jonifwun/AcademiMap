@@ -72,7 +72,7 @@ useEffect(() => {
                         postID={ id } 
                         caption={ post.caption } 
                         imgsrc={ post.imgsrc }
-                        researchGroupID={ userData.researchGroupID }
+                        researchGroupID={ userData.researchGroup }
                         />
                     ))
                 }
