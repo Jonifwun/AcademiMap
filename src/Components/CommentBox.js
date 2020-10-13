@@ -8,9 +8,7 @@ function CommentBox({ postID, user, researchGroupID }) {
 
     const postComment = (e) => {
         e.preventDefault()
-
         //Need to save comments to both research group posts and also to user posts
-        //Post ID's do not match
         db.collection('researchgroups').doc(researchGroupID)
           .collection('posts')
           .doc(postID)
@@ -32,7 +30,6 @@ function CommentBox({ postID, user, researchGroupID }) {
           })
 
           setComment('')
-
     } 
 
     return (
