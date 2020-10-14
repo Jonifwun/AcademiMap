@@ -4,6 +4,7 @@ import { UserContext } from '../../Contexts/UserContext'
 import InlineTextEdit from '../InlineTextEdit'
 import './Editable.css'
 import { db } from '../../firebase'
+import { Link } from 'react-router-dom'
 
 
 function Bio({ collaborators, posts, userData, userFeedData }) {
@@ -45,11 +46,13 @@ function Bio({ collaborators, posts, userData, userFeedData }) {
         <Card style={{display: 'flex', flexDirection: "column", alignItems: "center", backgroundColor: backgroundStyle, color: '#FFF', padding: '15px 25px', width: '350px', height: '275px'}}>
             <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
                 <div style={{display: 'flex', alignItems: 'center', marginRight: "25px"}}>
+                <Link to={`/users/${user?.displayName}`}>
                     <Avatar
                         alt={ userBioData?.displayName }
                         src={ userBioData?.photoURL }
                         style={{marginRight: '10px', borderRadius: '80px', border: '3px solid #019CDD'}}
                     />
+                </Link>
                     <h5>{user?.displayName }</h5>
                 </div>
                 <div style={{display: 'flex', flexDirection: 'column', backgroundColor: '#0D3140', borderRadius: '5px', padding:'7px', fontSize: '13px', alignItems: 'start'}}>
