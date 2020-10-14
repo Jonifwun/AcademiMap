@@ -1,17 +1,40 @@
 import { Button, Card, Modal } from '@material-ui/core'
-import React, { useState, memo } from 'react'
+import React, { useState, useEffect, memo, useRef } from 'react'
 import JoinGroupForm from './JoinGroupForm'
 import CreateGroupForm from './CreateGroupForm'
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles'
+import InlineTextEdit from '../InlineTextEdit'
+import './Editable.css'
+import { db } from '../../firebase'
 
-function Group({ buttonStyle, researchGroup }) {
+function Group({ buttonStyle, researchGroup, userData }) {
    
     const [joinGroup, setJoinGroup] = useState(true)
     const [passcodeDisplay, setPasscodeDisplay] = useState(false)
+    const [groupUpdatesText, setGroupUpdatesText] = useState('')
+    const [editing, setEditing] = useState(false)
     const [openModal, setOpenModal] = useState(false)
-    const [modalStyle] = useState(getModalStyle)
+    
 
-    function getModalStyle() {
+    const textareaRef = useRef()
+
+    useEffect(()=> {
+       
+        setGroupUpdatesText(researchGroup?.groupUpdates)
+        
+    }, [researchGroup])
+
+    const updateGroupUpdates = () => {
+        db.collection('researchgroups').doc(userData.researchGroup).update({
+            groupUpdates: groupUpdatesText
+        }).then(()=> {
+            console.log('Bio updated!')
+        }).catch((err) => {
+            console.log(err)
+        })
+    }
+
+    const getModalStyle = () => {
         const top = 50
         const left = 50
       
@@ -21,20 +44,22 @@ function Group({ buttonStyle, researchGroup }) {
           transform: `translate(-${top}%, -${left}%)`,
         };
       };
+    
+    const [modalStyle] = useState(getModalStyle)
       
-        const useStyles = makeStyles((theme) => ({
-            paper: {
-            position: 'absolute',
-            width: 400,
-            backgroundColor: '#164B61',
-            color: '#FFF',
-            borderRadius: 5,
-            boxShadow: theme.shadows[5],
-            padding: theme.spacing(2, 4, 3)
-            },
-        }));
-       
-        const classes = useStyles();
+    const useStyles = makeStyles((theme) => ({
+        paper: {
+        position: 'absolute',
+        width: 400,
+        backgroundColor: '#164B61',
+        color: '#FFF',
+        borderRadius: 5,
+        boxShadow: theme.shadows[5],
+        padding: theme.spacing(2, 4, 3)
+        },
+    }));
+    
+    const classes = useStyles();
 
     const groupStyles = {
         display: 'flex',
@@ -42,7 +67,9 @@ function Group({ buttonStyle, researchGroup }) {
         alignItems: "center",
         backgroundColor: '#164B61',
         color: '#FFF',
-        padding: '15px 25px'
+        padding: '10px 25px',
+        width: '350px',
+        height: '275px'
     }
 
     return (
@@ -67,29 +94,52 @@ function Group({ buttonStyle, researchGroup }) {
 
         { researchGroup.groupName ?
             <Card style={ groupStyles }> 
-                <div style={ groupStyles }>
-                    <h3>Research Group:</h3>
+            
+                    <h5>Research Group:</h5>
                     <h5 style={{margin: '5px 20px'}}><em>{researchGroup.groupName}</em></h5>
-                    <p style={{width: '300px', textAlign: 'justify'}}>
-                        Updates: 
-                        {//HAVE THIS AS EDIT IN PLACE TEXT TOO (IF GROUP LEADER) - DYNAMICALLY SHOWN 
-}
-                        { researchGroup.groupUpdates }                
-                    </p>             
-                </div>
+
+                    <label htmlFor="groupUpdates" style={{alignSelf: 'start', marginBottom: '10px'}}><strong>Updates</strong>
+                        { researchGroup ? <small> - ({editing ? 'Editing' : 'Click to edit'})</small> : null}
+                    </label>
+                    
+                    <div>
+                        <InlineTextEdit 
+                            text={ groupUpdatesText }
+                            type='textarea'
+                            childRef={ textareaRef }
+                            updateText={ updateGroupUpdates }
+                        >       
+                            <textarea
+                                name="groupUpdates"
+                                placeholder="Add update..."
+                                rows='5'
+                                cols='5'
+                                value={ groupUpdatesText }
+                                style={{width: '300px', resize: 'none', border: 'none'}}
+                                className='Editable'
+                                onChange={(e) => setGroupUpdatesText(e.target.value)}
+                                autoFocus={true}
+                                onFocus={() => setEditing(true)}
+                                onBlur={() => setEditing(false)}
+                            />
+                        </InlineTextEdit>
+                    </div>
+                
+                <div style={{width: '100%', alignSelf: 'flex-end'}}>
                 <hr style={{width: '100%'}}></hr>
-                <div style={{display: 'flex'}}>
-                    <Button style={ buttonStyle } onClick={() => setPasscodeDisplay(!passcodeDisplay)}>
-                        {passcodeDisplay ? 'Hide Passcode' : 'Show Passcode'}
-                    </Button>
-                    {passcodeDisplay ? 
-                        <div style={{display: 'flex', flexDirection: 'column', marginTop: '5px',backgroundColor: '#0D3140', borderRadius: '5px', padding:'7px', fontSize: '13px', alignItems: 'center'}}>
-                            <p><em>Group Passcode: { researchGroup.groupPasscode }</em></p>
-                            <br></br>
-                            <p>Give this passcode to any user<br></br> 
-                                you wish to join the group</p>
-                        </div> 
-                        : null}                    
+                    <div style={{display: 'flex', justifyContent: "center"}}>
+                        <Button style={ buttonStyle } onClick={() => setPasscodeDisplay(!passcodeDisplay)}>
+                            {passcodeDisplay ? 'Hide Passcode' : 'Show Passcode'}
+                        </Button>
+                        {passcodeDisplay ? 
+                            <div style={{display: 'flex', flexDirection: 'column', marginTop: '5px',backgroundColor: '#0D3140', borderRadius: '5px', padding:'7px', fontSize: '13px', alignItems: 'center'}}>
+                                <p><em>Group Passcode: { researchGroup.groupPasscode }</em></p>
+                                <br></br>
+                                <p>Give this passcode to any user<br></br> 
+                                    you wish to join the group</p>
+                            </div> 
+                            : null}                    
+                    </div>
                 </div>
             </Card>
             : 

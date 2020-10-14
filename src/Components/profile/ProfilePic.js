@@ -11,6 +11,7 @@ function ProfilePic({ buttonStyle }) {
 
     const [profileUpdate, setProfileUpdate] = useState(false)
     const [image, setImage] = useState(null)
+    // const [userData, setUserData]
 
     const handleChange = (e) => {
         if(e.target.files[0]){

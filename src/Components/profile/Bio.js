@@ -76,7 +76,7 @@ function Bio({ collaborators, posts, userData, userFeedData }) {
                 text={ bioText }
                 type='textarea'
                 childRef={ textareaRef }
-                updateBio={ updateBio }
+                updateText={ updateBio }
             >
                 <textarea
                     name="bioText"

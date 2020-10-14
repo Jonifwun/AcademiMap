@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react'
 
-function InlineTextEdit({childRef, text, type, children, updateBio }) {
+function InlineTextEdit({childRef, text, type, children, updateText }) {
 
     const [isEditing, setIsEditing] = useState(false)
 
     useEffect(()=>{
         if(childRef && childRef.current && isEditing === true){
-            console.log(childRef)
             childRef.current.focus()
         }
     }, [isEditing, childRef])
@@ -22,18 +21,19 @@ function InlineTextEdit({childRef, text, type, children, updateBio }) {
         (type !== 'textarea' && allKeys.indexOf(key) > -1)){
             //If any of these keys is pressed, state set to false (-1 means not found)
             setIsEditing(false)
-            updateBio()
+            updateText()
         }
     }
 
     return (
     <section>
         {isEditing ? (
-            <div style={{width: '330px', height: '300px'}}
+            <div 
+            style={{width: '330px'}}
             //Click away from text, editing is set to false
                 onBlur={() => {
                     setIsEditing(false)
-                    updateBio()
+                    updateText()
                 }}
                 onKeyDown={e => handleKeyDown(e, type)}
             >

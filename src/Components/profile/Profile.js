@@ -62,7 +62,7 @@ function Profile() {
         }, [user])
 
 
-    const buttonStyle = { color: '#FFF', backgroundColor: '#019CDD', margin: '25px 5px'}
+    const buttonStyle = { color: '#FFF', backgroundColor: '#019CDD', margin: '15px 5px'}
 
     return (
         <div>{ user ? 
@@ -71,7 +71,7 @@ function Profile() {
                     <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-around'}}>
                         <ProfilePic buttonStyle={ buttonStyle } />    
                         <Bio collaborators={ researchGroup.groupmembers } posts={ postCount } userData={ userData } />
-                        <MemoizedGroup buttonStyle={ buttonStyle } researchGroup={ researchGroup }/>
+                        <MemoizedGroup buttonStyle={ buttonStyle } researchGroup={ researchGroup } userData={ userData }/>
                     </div>
                 </Card>
                 <Card style={{margin: '0 30px 30px', backgroundColor: '#0c3141', color: '#FFF', padding: '25px'}}>
