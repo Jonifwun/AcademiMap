@@ -93,7 +93,10 @@ function App() {
       <UserContextProvider user={ user }>
 
       <div className="header">
-        <img src="logo.png" alt="logo" className="headerLogo"></img>
+        <Link to={'../'}>
+          <img src="logo.png" alt="logo" className="headerLogo"></img>
+        </Link>
+        
         { user ?
         <div style={{  marginRight: '25px',
           display: 'flex',

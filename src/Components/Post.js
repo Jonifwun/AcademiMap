@@ -9,6 +9,7 @@ import ClearSharpIcon from '@material-ui/icons/ClearSharp';
 import DropDownPostMenu from './DropDownPostMenu'
 import CommentBox from './CommentBox';
 import { UserContext } from '../Contexts/UserContext'
+import { Link } from 'react-router-dom' 
 
 function Post({ postID, username, imgsrc, caption, researchGroupID, userFeedData }) {
 
@@ -90,12 +91,14 @@ function Post({ postID, username, imgsrc, caption, researchGroupID, userFeedData
             <div className="post">
                 <div className='postHeader'>
                     <div className="postUserAvatar">
-                    <Avatar
-                        className="postAvatar"
-                        alt={ username }
-                        src={ userFeedData ? userFeedData.photoURL : userData.photoURL }
-                        style={{borderRadius: '80px', border: '3px solid #019CDD'}}
-                    />
+                    <Link to={`/users/${username}`}>   
+                        <Avatar
+                            className="postAvatar"
+                            alt={ username }
+                            src={ userFeedData ? userFeedData.photoURL : userData.photoURL }
+                            style={{borderRadius: '80px', border: '3px solid #019CDD'}}
+                        />
+                    </Link> 
                     <h4>{ username }</h4>  
                     </div>
                     <DropDownPostMenu deletePost={ deletePost } postID={ postID }/>
