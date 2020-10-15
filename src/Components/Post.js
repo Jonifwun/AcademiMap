@@ -80,9 +80,22 @@ function Post({ postID, username, imgsrc, caption, researchGroupID, userFeedData
           .delete()
           .then(()=>{
               console.log("Document successfully deleted!")
-          }).catch(function(error) {
+        }).catch(function(error) {
             console.error("Error removing document: ", error);
         });
+
+        //Delete post from individual user posts collection
+        db.collection('users')
+          .doc(username)
+          .collection('posts')
+          .doc(postID)
+          .delete()
+          .then(()=>{
+            console.log("Document successfully deleted!")
+        }).catch(function(error) {
+          console.error("Error removing document: ", error);
+        });
+
 
     }
 
