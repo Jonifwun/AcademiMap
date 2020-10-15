@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function MenuListComposition({ deletePost }) {
+export default function MenuListComposition({ deletePost, editPost }) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef(null);
@@ -71,7 +71,10 @@ export default function MenuListComposition({ deletePost }) {
               <Paper>
                 <ClickAwayListener onClickAway={handleClose}>
                   <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
-                    <MenuItem onClick={handleClose}>Edit Post</MenuItem>
+                    <MenuItem onClick={() => {
+                      editPost()
+                      handleClose()
+                      } }>Edit Post</MenuItem>
                     <MenuItem onClick={ deletePost }>Delete Post</MenuItem>
                   </MenuList>
                 </ClickAwayListener>
