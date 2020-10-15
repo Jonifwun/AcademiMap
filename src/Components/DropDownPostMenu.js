@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function MenuListComposition({ deletePost, editPost }) {
+export default function MenuListComposition({ deletePost, setOpenEditCaption }) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef(null);
@@ -26,17 +26,17 @@ export default function MenuListComposition({ deletePost, editPost }) {
     setOpen((prevOpen) => !prevOpen);
   };
 
-  const handleClose = (event) => {
-    if (anchorRef.current && anchorRef.current.contains(event.target)) {
+  const handleClose = (e) => {
+    if (anchorRef.current && anchorRef.current.contains(e.target)) {
       return;
     }
 
     setOpen(false);
   };
 
-  function handleListKeyDown(event) {
-    if (event.key === 'Tab') {
-      event.preventDefault();
+  function handleListKeyDown(e) {
+    if (e.key === 'Tab') {
+      e.preventDefault();
       setOpen(false);
     }
   }
@@ -71,9 +71,9 @@ export default function MenuListComposition({ deletePost, editPost }) {
               <Paper>
                 <ClickAwayListener onClickAway={handleClose}>
                   <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
-                    <MenuItem onClick={() => {
-                      editPost()
-                      handleClose()
+                    <MenuItem onClick={(e) => {
+                      setOpenEditCaption(true)
+                      handleClose(e)
                       } }>Edit Post</MenuItem>
                     <MenuItem onClick={ deletePost }>Delete Post</MenuItem>
                   </MenuList>

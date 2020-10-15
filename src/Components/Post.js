@@ -9,20 +9,24 @@ import ClearSharpIcon from '@material-ui/icons/ClearSharp';
 import DropDownPostMenu from './DropDownPostMenu'
 import CommentBox from './CommentBox';
 import { UserContext } from '../Contexts/UserContext'
-import { Link } from 'react-router-dom' 
+import { Link } from 'react-router-dom'
+import Modal from '@material-ui/core/Modal';
+import CaptionEdit from './CaptionEdit' 
+import { makeStyles } from '@material-ui/core';
 
 function Post({ postID, username, imgsrc, caption, researchGroupID, userFeedData }) {
 
     const [comments, setComments] = useState([])
     const [openComment, setOpenComment] = useState(true)
     const [userData, setUserData] = useState({})
+    const [openModal, setOpenModal] = useState(false)
+
 
     const user = useContext(UserContext)
 
     useEffect(() => {
-        // let unsubscribe;
-        if(postID && username && researchGroupID){
-            // unsubscribe = () => {
+      
+        if(postID && username && researchGroupID){            
                 //Grab all of the comments from researchgroups collection
                 db.collection('researchgroups')
                             .doc(researchGroupID)
@@ -37,8 +41,6 @@ function Post({ postID, username, imgsrc, caption, researchGroupID, userFeedData
                             })                          
                         ))
                     }) 
-                
-            // } 
             //Grab the user data for the individual post
             if(!userFeedData){
 
@@ -49,9 +51,6 @@ function Post({ postID, username, imgsrc, caption, researchGroupID, userFeedData
                 })     
             }
         }
-        // return (() => {
-        //     unsubscribe()
-        // })
     }, [postID, researchGroupID, username, userFeedData])
 
     const deleteComment = (commentID, commentUser) => {
@@ -71,7 +70,6 @@ function Post({ postID, username, imgsrc, caption, researchGroupID, userFeedData
     }
 
     const deletePost = () => {
-
         //Delete post from research group posts collection
         db.collection('researchgroups')
           .doc(researchGroupID)
@@ -95,56 +93,85 @@ function Post({ postID, username, imgsrc, caption, researchGroupID, userFeedData
         }).catch(function(error) {
           console.error("Error removing document: ", error);
         });
-
-
     }
 
-    return (
-        <Card id="postCard">
-            <div className="post">
-                <div className='postHeader'>
-                    <div className="postUserAvatar">
-                    <Link to={`/users/${username}`}>   
-                        <Avatar
-                            className="postAvatar"
-                            alt={ username }
-                            src={ userFeedData ? userFeedData.photoURL : userData.photoURL }
-                            style={{borderRadius: '80px', border: '3px solid #019CDD'}}
-                        />
-                    </Link> 
-                    <h4>{ username }</h4>  
-                    </div>
-                    <DropDownPostMenu deletePost={ deletePost } postID={ postID }/>
-                    
-                </div>
-                <img className="postImage" src={ imgsrc } alt="postimg"></img>
-                <div className="icons">
-                    <FavoriteTwoToneIcon className="icon"/>
-                    <QuestionAnswerTwoToneIcon className ="icon" onClick={() => setOpenComment(!openComment) }/>
-                </div>
-                <h4 className="postText"><span className="username">{ username }</span> { caption }</h4>
-                { comments ? comments.map(({comment, id}) => {
-                    return (
-                    <div className="commentDisplay" key={ id } >
-                        <div style={{display: 'flex'}}>                           
-                            <h5 className="commentUsername"><strong>{ comment.username }</strong></h5>
-                            <h5 className="commentText">{ comment.text }</h5>
-                        </div>
-                        
-                        { comment.username === user?.displayName ? <ClearSharpIcon className="icon" onClick={() => deleteComment(id, comment.username) }/> : null}
+   
+      const useStyles = makeStyles((theme) => ({
+        paper: {
+          position: 'absolute',
+          width: 400,
+          backgroundColor: '#164B61',
+          color: '#FFF',
+          borderRadius: 5,
+          boxShadow: theme.shadows[5],
+          padding: theme.spacing(2, 4, 3)
+        },
+      }));
+       
+      const classes = useStyles()
 
-                    </div>    
-                    )
-                })
-                : null
-            }
-            </div>
-            <div>
-                { user && openComment && (
-                    <CommentBox postID={ postID } user={ user } researchGroupID={ researchGroupID }/>
-                )}
-            </div>
-        </Card>
+
+    return (
+        <div>
+            <Modal
+            open={ openModal }
+            onClose={() => setOpenModal(false)}
+            >     
+            <Card>
+                <div 
+                style={{position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)'}} className={ classes.paper }
+                >
+                    <CaptionEdit setOpenModal={ setOpenModal }/> 
+                
+                </div>
+            </Card>
+            </Modal>
+            <Card id="postCard">
+                <div className="post">
+                    <div className='postHeader'>
+                        <div className="postUserAvatar">
+                        <Link to={`/users/${username}`}>   
+                            <Avatar
+                                className="postAvatar"
+                                alt={ username }
+                                src={ userFeedData ? userFeedData.photoURL : userData.photoURL }
+                                style={{borderRadius: '80px', border: '3px solid #019CDD'}}
+                            />
+                        </Link> 
+                        <h4>{ username }</h4>  
+                        </div>
+                        <DropDownPostMenu deletePost={ deletePost } postID={ postID } setOpenEditCaption={ setOpenModal }/>
+                        
+                    </div>
+                    <img className="postImage" src={ imgsrc } alt="postimg"></img>
+                    <div className="icons">
+                        <FavoriteTwoToneIcon className="icon"/>
+                        <QuestionAnswerTwoToneIcon className ="icon" onClick={() => setOpenComment(!openComment) }/>
+                    </div>
+                    <h4 className="postText"><span className="username">{ username }</span> { caption }</h4>
+                    { comments ? comments.map(({comment, id}) => {
+                        return (
+                        <div className="commentDisplay" key={ id } >
+                            <div style={{display: 'flex'}}>                           
+                                <h5 className="commentUsername"><strong>{ comment.username }</strong></h5>
+                                <h5 className="commentText">{ comment.text }</h5>
+                            </div>
+                            
+                            { comment.username === user?.displayName ? <ClearSharpIcon className="icon" onClick={() => deleteComment(id, comment.username) }/> : null}
+
+                        </div>    
+                        )
+                    })
+                    : null
+                }
+                </div>
+                <div>
+                    { user && openComment && (
+                        <CommentBox postID={ postID } user={ user } researchGroupID={ researchGroupID }/>
+                    )}
+                </div>
+            </Card>
+        </div>
     )
 }
 
