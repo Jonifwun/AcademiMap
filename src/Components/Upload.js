@@ -73,8 +73,9 @@ function Upload({ username, researchGroupID }) {
             backgroundColor: '#019CDD',
             position: 'fixed',
             bottom: 0,
-            width: '100%',
-            height: '55px',
+            right: '0',
+            width: uploadDisplay ? '100%' : '10%',
+            height: '55px'
             }}>
             
             {uploadDisplay ? <div className="uploadCard">
