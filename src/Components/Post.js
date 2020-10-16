@@ -1,20 +1,18 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { db } from '../firebase'
 import '../Post.css'
-import Avatar from '@material-ui/core/Avatar'
 import Card from '@material-ui/core/Card';
 import QuestionAnswerTwoToneIcon from '@material-ui/icons/QuestionAnswerTwoTone'
 import FavoriteTwoToneIcon from '@material-ui/icons/FavoriteTwoTone';
 import ClearSharpIcon from '@material-ui/icons/ClearSharp';
 import NoteAddOutlinedIcon from '@material-ui/icons/NoteAddOutlined';
 import DescriptionOutlinedIcon from '@material-ui/icons/DescriptionOutlined';
-import DropDownPostMenu from './DropDownPostMenu'
 import CommentBox from './CommentBox';
 import { UserContext } from '../Contexts/UserContext'
-import { Link } from 'react-router-dom'
 import Modal from '@material-ui/core/Modal';
 import CaptionEdit from './CaptionEdit' 
 import { makeStyles } from '@material-ui/core';
+import PostHeader from './PostHeader';
 
 
 function Post({ postID, username, imgsrc, caption, researchGroupID, userFeedData }) {
@@ -72,31 +70,7 @@ function Post({ postID, username, imgsrc, caption, researchGroupID, userFeedData
         }
     }
 
-    const deletePost = () => {
-        //Delete post from research group posts collection
-        db.collection('researchgroups')
-          .doc(researchGroupID)
-          .collection('posts')
-          .doc(postID)
-          .delete()
-          .then(()=>{
-              console.log("Document successfully deleted!")
-        }).catch(function(error) {
-            console.error("Error removing document: ", error);
-        });
-
-        //Delete post from individual user posts collection
-        db.collection('users')
-          .doc(username)
-          .collection('posts')
-          .doc(postID)
-          .delete()
-          .then(()=>{
-            console.log("Document successfully deleted!")
-        }).catch(function(error) {
-          console.error("Error removing document: ", error);
-        });
-    }
+    
 
    
       const useStyles = makeStyles((theme) => ({
@@ -130,6 +104,8 @@ function Post({ postID, username, imgsrc, caption, researchGroupID, userFeedData
                     postID={ postID }
                     caption={ caption}
                     researchGroupID={ researchGroupID }
+                    userData={ userData }
+                    userFeedData={ userFeedData }
                     /> 
                 
                 </div>
@@ -137,26 +113,15 @@ function Post({ postID, username, imgsrc, caption, researchGroupID, userFeedData
             </Modal>
             <Card id="postCard">
                 <div className="post">
-                    <div className='postHeader'>
-                        <div className="postUserAvatar">
-                        <Link to={`/users/${username}`}>   
-                            <Avatar
-                                className="postAvatar"
-                                alt={ username }
-                                src={ userFeedData ? userFeedData.photoURL : userData.photoURL }
-                                style={{borderRadius: '80px', border: '3px solid #019CDD'}}
-                            />
-                        </Link> 
-                        <h4>{ username }</h4>  
-                        </div>
-                        { username === user.displayName ? 
-                        <DropDownPostMenu 
-                        deletePost={ deletePost } 
-                        postID={ postID } 
-                        setOpenEditCaption={ setOpenModal }
-                        />
-                        : null }
-                    </div>
+                        <PostHeader 
+                        username={ username } 
+                        userFeedData={ userFeedData }
+                        user={ user }
+                        userData={ userData }
+                        postID={ postID }
+                        setOpenModal={ setOpenModal }
+                        researchGroupID={ researchGroupID }
+                        />                    
                     <img className="postImage" src={ imgsrc } alt="postimg"></img>
                     <div className="icons">
                         <FavoriteTwoToneIcon className="icon" />
