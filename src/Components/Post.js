@@ -121,7 +121,13 @@ function Post({ postID, username, imgsrc, caption, researchGroupID, userFeedData
                 <div 
                 style={{position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)'}} className={ classes.paper }
                 >
-                    <CaptionEdit setOpenModal={ setOpenModal }/> 
+                    <CaptionEdit 
+                    setOpenModal={ setOpenModal } 
+                    username={ username } 
+                    postID={ postID }
+                    caption={ caption}
+                    researchGroupID={ researchGroupID }
+                    /> 
                 
                 </div>
             </Card>
@@ -140,8 +146,13 @@ function Post({ postID, username, imgsrc, caption, researchGroupID, userFeedData
                         </Link> 
                         <h4>{ username }</h4>  
                         </div>
-                        <DropDownPostMenu deletePost={ deletePost } postID={ postID } setOpenEditCaption={ setOpenModal }/>
-                        
+                        { username === user.displayName ? 
+                        <DropDownPostMenu 
+                        deletePost={ deletePost } 
+                        postID={ postID } 
+                        setOpenEditCaption={ setOpenModal }
+                        />
+                        : null }
                     </div>
                     <img className="postImage" src={ imgsrc } alt="postimg"></img>
                     <div className="icons">
