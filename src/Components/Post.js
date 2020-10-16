@@ -6,6 +6,8 @@ import Card from '@material-ui/core/Card';
 import QuestionAnswerTwoToneIcon from '@material-ui/icons/QuestionAnswerTwoTone'
 import FavoriteTwoToneIcon from '@material-ui/icons/FavoriteTwoTone';
 import ClearSharpIcon from '@material-ui/icons/ClearSharp';
+import NoteAddOutlinedIcon from '@material-ui/icons/NoteAddOutlined';
+import DescriptionOutlinedIcon from '@material-ui/icons/DescriptionOutlined';
 import DropDownPostMenu from './DropDownPostMenu'
 import CommentBox from './CommentBox';
 import { UserContext } from '../Contexts/UserContext'
@@ -13,6 +15,7 @@ import { Link } from 'react-router-dom'
 import Modal from '@material-ui/core/Modal';
 import CaptionEdit from './CaptionEdit' 
 import { makeStyles } from '@material-ui/core';
+
 
 function Post({ postID, username, imgsrc, caption, researchGroupID, userFeedData }) {
 
@@ -156,8 +159,10 @@ function Post({ postID, username, imgsrc, caption, researchGroupID, userFeedData
                     </div>
                     <img className="postImage" src={ imgsrc } alt="postimg"></img>
                     <div className="icons">
-                        <FavoriteTwoToneIcon className="icon"/>
+                        <FavoriteTwoToneIcon className="icon" />
                         <QuestionAnswerTwoToneIcon className ="icon" onClick={() => setOpenComment(!openComment) }/>
+                        <DescriptionOutlinedIcon className="icon" />
+                        <NoteAddOutlinedIcon className="icon" />
                     </div>
                     <h4 className="postText"><span className="username">{ username }</span> { caption }</h4>
                     { comments ? comments.map(({comment, id}) => {
