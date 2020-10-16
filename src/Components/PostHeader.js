@@ -15,8 +15,8 @@ function PostHeader({username, user, postID, setOpenModal, userData, userFeedDat
           .delete()
           .then(()=>{
               console.log("Document successfully deleted!")
-        }).catch(function(error) {
-            console.error("Error removing document: ", error);
+        }).catch(err => {
+            console.error("Error removing document: ", err);
         });
 
         //Delete post from individual user posts collection
@@ -27,8 +27,8 @@ function PostHeader({username, user, postID, setOpenModal, userData, userFeedDat
           .delete()
           .then(()=>{
             console.log("Document successfully deleted!")
-        }).catch(function(error) {
-          console.error("Error removing document: ", error);
+        }).catch(err => {
+          console.error("Error removing document: ", err);
         });
     }
     return (
