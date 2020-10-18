@@ -55,6 +55,7 @@ function Post({ postID, username, imgsrc, caption, researchGroupID, userFeedData
     }, [postID, researchGroupID, username, userFeedData])
 
     const deleteComment = (commentID, commentUser) => {
+        //DELETE COMMENT NEEDS TO ALSO DELETE COMMENT FROM USERS DB
         //this needs to be changed to posts on research group and user etc, not the posts collection
         if(user.displayName === commentUser){
             db.collection('researchgroups')
