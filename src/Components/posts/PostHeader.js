@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import DropDownPostMenu from './DropDownPostMenu'
 import Avatar from '@material-ui/core/Avatar'
-import { db } from '../firebase'
+import { db } from '../../firebase'
 
 function PostHeader({username, user, postID, setOpenModal, userData, userFeedData, researchGroupID}) {
 

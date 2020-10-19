@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react'
-import { db } from '../firebase'
-import '../Post.css'
+import { db } from '../../firebase'
+import '../../Post.css'
 import Card from '@material-ui/core/Card';
 import QuestionAnswerTwoToneIcon from '@material-ui/icons/QuestionAnswerTwoTone'
 import FavoriteTwoToneIcon from '@material-ui/icons/FavoriteTwoTone';
@@ -8,9 +8,9 @@ import ClearSharpIcon from '@material-ui/icons/ClearSharp';
 import NoteAddOutlinedIcon from '@material-ui/icons/NoteAddOutlined';
 import DescriptionOutlinedIcon from '@material-ui/icons/DescriptionOutlined';
 import CommentBox from './CommentBox';
-import { UserContext } from '../Contexts/UserContext'
+import { UserContext } from '../../Contexts/UserContext'
 import Modal from '@material-ui/core/Modal';
-import CaptionEdit from './CaptionEdit' 
+import CaptionEdit from '../CaptionEdit' 
 import { makeStyles } from '@material-ui/core';
 import PostHeader from './PostHeader';
 import PaperDisplay from './PaperDisplay';

@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import firebase from 'firebase'
-import { db } from '../firebase'
+import { db } from '../../firebase'
 
 function CommentBox({ postID, user, researchGroupID }) {
 

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import PaperDisplayCard from './PaperDisplayCard'
-import { db } from '../firebase'
+import { db } from '../../firebase'
 
 function PaperDisplay({postID, username, researchGroupID}) {
 
@@ -20,7 +20,7 @@ function PaperDisplay({postID, username, researchGroupID}) {
             paper: doc.data()
         })))
     })
-    
+
     }, [papers, postID, researchGroupID, username])
 
     return (

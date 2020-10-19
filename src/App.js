@@ -10,7 +10,7 @@ import ExitToAppTwoToneIcon from '@material-ui/icons/ExitToAppTwoTone';
 import LockOpenTwoToneIcon from '@material-ui/icons/LockOpenTwoTone';
 import CreateTwoToneIcon from '@material-ui/icons/CreateTwoTone';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
-import Posts from './Components/Posts'
+import Posts from './Components/posts/Posts'
 import Profile from './Components/profile/Profile';
 import { Link } from 'react-router-dom'
 import { UserContextProvider } from './Contexts/UserContext'
