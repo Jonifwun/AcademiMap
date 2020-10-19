@@ -13,6 +13,7 @@ import Modal from '@material-ui/core/Modal';
 import CaptionEdit from './CaptionEdit' 
 import { makeStyles } from '@material-ui/core';
 import PostHeader from './PostHeader';
+import PaperDisplay from './PaperDisplay';
 
 
 function Post({ postID, username, imgsrc, caption, researchGroupID, userFeedData }) {
@@ -21,6 +22,8 @@ function Post({ postID, username, imgsrc, caption, researchGroupID, userFeedData
     const [openComment, setOpenComment] = useState(true)
     const [userData, setUserData] = useState({})
     const [openModal, setOpenModal] = useState(false)
+    const [paperDisplay, setPaperDisplay] = useState(false)
+    
 
 
     const user = useContext(UserContext)
@@ -41,7 +44,24 @@ function Post({ postID, username, imgsrc, caption, researchGroupID, userFeedData
                                    comment: doc.data()
                             })                          
                         ))
-                    }) 
+                    })
+                    
+                // db.collection('researchgroups')
+                //             .doc(researchGroupID)
+                //             .collection('posts')
+                //             .doc(postID)
+                //             .collection('papers')
+                //             .orderBy('timestamp', 'asc')
+                //             .onSnapshot((snapshot) => {
+                //                setPapers(snapshot.docs.map(doc => ({
+                //                    id: doc.id,
+                //                    paper: doc.data()
+                //             })                          
+                //         ))
+                //     }) 
+
+               
+                
             //Grab the user data for the individual post
             if(!userFeedData){
 
@@ -70,9 +90,6 @@ function Post({ postID, username, imgsrc, caption, researchGroupID, userFeedData
         });
         }
     }
-
-    
-
    
       const useStyles = makeStyles((theme) => ({
         paper: {
@@ -127,11 +144,14 @@ function Post({ postID, username, imgsrc, caption, researchGroupID, userFeedData
                     <div className="icons">
                         <FavoriteTwoToneIcon className="icon" />
                         <QuestionAnswerTwoToneIcon className ="icon" onClick={() => setOpenComment(!openComment) }/>
-                        <DescriptionOutlinedIcon className="icon" />
+                        <DescriptionOutlinedIcon className="icon" onClick={() => setPaperDisplay(!paperDisplay)}/>
                         <NoteAddOutlinedIcon className="icon" />
                     </div>
                     <h4 className="postText"><span className="username">{ username }</span> { caption }</h4>
-                    { comments ? comments.map(({comment, id}) => {
+
+                    {paperDisplay && <PaperDisplay username={username} postID={ postID } researchGroupID={ researchGroupID }/>}
+                    
+                    { comments && comments.map(({comment, id}) => {
                         return (
                         <div className="commentDisplay" key={ id } >
                             <div style={{display: 'flex'}}>                           
@@ -144,7 +164,6 @@ function Post({ postID, username, imgsrc, caption, researchGroupID, userFeedData
                         </div>    
                         )
                     })
-                    : null
                 }
                 </div>
                 <div>
