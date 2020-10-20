@@ -14,6 +14,7 @@ import CaptionEdit from '../CaptionEdit'
 import { makeStyles } from '@material-ui/core';
 import PostHeader from './PostHeader';
 import PaperDisplay from './PaperDisplay';
+import AddPaperCard from '../AddPaperCard';
 
 
 function Post({ postID, username, imgsrc, caption, researchGroupID, userFeedData }) {
@@ -23,6 +24,7 @@ function Post({ postID, username, imgsrc, caption, researchGroupID, userFeedData
     const [userData, setUserData] = useState({})
     const [openModal, setOpenModal] = useState(false)
     const [paperDisplay, setPaperDisplay] = useState(false)
+    const [addPaperDisplay, setAddPaperDisplay] = useState(false)
     
 
 
@@ -145,12 +147,12 @@ function Post({ postID, username, imgsrc, caption, researchGroupID, userFeedData
                         <FavoriteTwoToneIcon className="icon" />
                         <QuestionAnswerTwoToneIcon className ="icon" onClick={() => setOpenComment(!openComment) }/>
                         <DescriptionOutlinedIcon className="icon" onClick={() => setPaperDisplay(!paperDisplay)}/>
-                        <NoteAddOutlinedIcon className="icon" />
+                        <NoteAddOutlinedIcon className="icon" onClick={() => setAddPaperDisplay(!addPaperDisplay)}/>
                     </div>
                     <h4 className="postText"><span className="username">{ username }</span> { caption }</h4>
 
-                    {paperDisplay && <PaperDisplay username={username} postID={ postID } researchGroupID={ researchGroupID }/>}
-                    
+                    {paperDisplay && <PaperDisplay username={ username } postID={ postID } researchGroupID={ researchGroupID } setPaperDisplay={ setPaperDisplay }/>}
+                    {addPaperDisplay && <AddPaperCard setAddPaperDisplay={ setAddPaperDisplay }/>}
                     { comments && comments.map(({comment, id}) => {
                         return (
                         <div className="commentDisplay" key={ id } >
