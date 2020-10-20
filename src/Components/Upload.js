@@ -42,7 +42,6 @@ function Upload({ username, researchGroupID }) {
 
                 db.collection('users').doc(username).collection('posts').add(post)
                   .then((docRef) => {
-                      console.log(docRef.id)
                       const postID = docRef.id
                       return postID
                   }).then((postID) => {

@@ -151,8 +151,18 @@ function Post({ postID, username, imgsrc, caption, researchGroupID, userFeedData
                     </div>
                     <h4 className="postText"><span className="username">{ username }</span> { caption }</h4>
 
-                    {paperDisplay && <PaperDisplay username={ username } postID={ postID } researchGroupID={ researchGroupID } setPaperDisplay={ setPaperDisplay }/>}
-                    {addPaperDisplay && <AddPaperCard setAddPaperDisplay={ setAddPaperDisplay }/>}
+                    {paperDisplay && <PaperDisplay username={ username } 
+                                                   postID={ postID }
+                                                   researchGroupID={ researchGroupID } 
+                                                   setPaperDisplay={ setPaperDisplay }
+                                     />
+                    }
+                    {addPaperDisplay && <AddPaperCard setAddPaperDisplay={ setAddPaperDisplay } 
+                                                      username={ username}
+                                                      postID={ postID }
+                                                      researchGroupID = { researchGroupID }
+                                        />
+                    }
                     { comments && comments.map(({comment, id}) => {
                         return (
                         <div className="commentDisplay" key={ id } >
