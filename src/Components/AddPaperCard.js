@@ -3,7 +3,6 @@ import { Button, Card, FormControl, TextField } from '@material-ui/core'
 import { db } from '../firebase'
 import { UserContext } from '../Contexts/UserContext'
 import firebase from 'firebase'
-import './AddPaper.css'
 
 function AddPaperCard({setAddPaperDisplay, username, postID, researchGroupID}) {
 

@@ -91,66 +91,57 @@ function App() {
       </Modal>
 
       <UserContextProvider user={ user }>
+        <div className="header">
+          <Link to={'../'}>
+            <img src="logo.png" alt="logo" className="headerLogo"></img>
+          </Link>
+          
+          { user ?
+          <div style={{  marginRight: '25px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between'
+            }}>
+          
+            <Link style={linkStyles} to="/">Feed</Link>
+            <Link style={linkStyles} to="/profile">Profile</Link>
+            <p className="loggedInDisplay"> Signed in as { user.displayName }</p> 
+            <Button className="logInBtns" onClick={() => auth.signOut()}><ExitToAppTwoToneIcon/>Log Out</Button>
+          </div>
+          :
+          <div className="logInContainer">
+            <Button className="logInBtns" onClick={() => {
+              setOpenModal({open: true})
+              setLogin(true)
+            }}><LockOpenTwoToneIcon/>Log In</Button>
 
-      <div className="header">
-        <Link to={'../'}>
-          <img src="logo.png" alt="logo" className="headerLogo"></img>
-        </Link>
-        
-        { user ?
-        <div style={{  marginRight: '25px',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between'
-          }}>
-         
-          <Link style={linkStyles} to="/">Feed</Link>
-          <Link style={linkStyles} to="/profile">Profile</Link>
-          <p className="loggedInDisplay"> Signed in as { user.displayName }</p> 
-          <Button className="logInBtns" onClick={() => auth.signOut()}><ExitToAppTwoToneIcon/>Log Out</Button>
+            <Button className="logInBtns" onClick={() => {
+              setOpenModal({open: true})
+              setLogin(false)
+            }}><CreateTwoToneIcon/>Sign Up</Button>
+          </div>
+          }
+          
         </div>
-        :
-        <div className="logInContainer">
-          <Button className="logInBtns" onClick={() => {
-            setOpenModal({open: true})
-            setLogin(true)
-          }}><LockOpenTwoToneIcon/>Log In</Button>
 
-          <Button className="logInBtns" onClick={() => {
-            setOpenModal({open: true})
-            setLogin(false)
-          }}><CreateTwoToneIcon/>Sign Up</Button>
-        </div>
-        }
-        
-      </div>
-
-      <Switch>   
-
-      
-        
-        <Route path='/' exact render={() => (
-          <Posts />
-        )}
-        />
-        <Route path='/profile' render={() => (
-          <Profile />
-        )}
-        />
-        <Route path='/group' render={() => (
-          <GroupFeed />
-        )}
-        />
-        <Route path='/users/:username' render={() => (
-          <UserFeed />
-        )}
-        />
-        
-        
-    
-      
-      </Switch>
-     
+        <Switch>             
+          <Route path='/' exact render={() => (
+            <Posts />
+          )}
+          />
+          <Route path='/profile' render={() => (
+            <Profile />
+          )}
+          />
+          <Route path='/group' render={() => (
+            <GroupFeed />
+          )}
+          />
+          <Route path='/users/:username' render={() => (
+            <UserFeed />
+          )}
+          />
+        </Switch>
       </UserContextProvider>    
     </div>
     </Router>
