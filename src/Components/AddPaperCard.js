@@ -1,8 +1,9 @@
 import React, { useContext, useState } from 'react'
-import { Button, Card, FormControl, InputLabel, OutlinedInput } from '@material-ui/core'
+import { Button, Card, FormControl, TextField } from '@material-ui/core'
 import { db } from '../firebase'
 import { UserContext } from '../Contexts/UserContext'
 import firebase from 'firebase'
+import './AddPaper.css'
 
 function AddPaperCard({setAddPaperDisplay, username, postID, researchGroupID}) {
 
@@ -59,8 +60,8 @@ function AddPaperCard({setAddPaperDisplay, username, postID, researchGroupID}) {
     }
 
     const inputStyle = {
-        margin: '15px 5px',
-        color: '#FFF'
+        margin: '15px 25px',
+        color: '#FFF',
     }
 
     return (
@@ -68,21 +69,21 @@ function AddPaperCard({setAddPaperDisplay, username, postID, researchGroupID}) {
             <h5 style={{marginTop: '5px'}}>Add Paper</h5>
             <form autoComplete='off' style={{display: 'flex', flexDirection: 'column', width: '100%'}}>
                 <FormControl variant="outlined">
-                    <InputLabel htmlFor="title" style={{color: "#FFF"}}>Title</InputLabel>
-                    <OutlinedInput id="title" value={title} onChange={(e) => setTitle(e.target.value)} label="Name" style={inputStyle} />
+
+                    <TextField id="title" value={ title } onChange={(e) => setTitle(e.target.value)} label="Title" style={inputStyle} />
                 </FormControl>
                 <FormControl variant="outlined">
-                    <InputLabel htmlFor="doi" style={{color: "#FFF"}}>DOI</InputLabel>
-                    <OutlinedInput id="doi" value={doi} onChange={(e) => setDoi(e.target.value)} label="Name" style={inputStyle}/>
+                    
+                    <TextField value={ doi } onChange={(e) => setDoi(e.target.value)} label="DOI" style={inputStyle}/>
                 </FormControl>
                 <FormControl variant="outlined">
-                    <InputLabel htmlFor="component-outlined" style={{color: "#FFF"}}>Description</InputLabel>
-                    <OutlinedInput id="description" value={description} onChange={(e) => setDescription(e.target.value)} label="Name" style={inputStyle} />
+                    
+                    <TextField value={ description } onChange={(e) => setDescription(e.target.value)} label="Description" style={inputStyle}/>
                 </FormControl>
-                <Button onClick={ submitPaper } style={{color: '#FFF', backgroundColor: '#0582b3'}}>Submit</Button>
+                <Button onClick={ submitPaper } style={{color: '#FFF', backgroundColor: '#0582b3', margin: '25px 0'}}>Submit</Button>
             </form>
             
-            <button onClick={ handleClose } style={{marginBottom: '3px', outline: 'none', border: 'none', backgroundColor: '#009DDC', color: '#FFF', cursor: 'pointer'}}><h5>x</h5> close</button>
+            <button onClick={ handleClose } style={{marginBottom: '3px', outline: 'none', border: 'none', backgroundColor: '#009DDC', color: '#FFF', cursor: 'pointer'}}>close</button>
         </Card>
     )
 }
