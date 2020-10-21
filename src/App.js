@@ -15,6 +15,7 @@ import Profile from './Components/profile/Profile';
 import { Link } from 'react-router-dom'
 import { UserContextProvider } from './Contexts/UserContext'
 import UserFeed from './Components/UserFeed';
+import GroupFeed from './Components/GroupFeed'
 
 function App() {
   
@@ -134,6 +135,10 @@ function App() {
         />
         <Route path='/profile' render={() => (
           <Profile />
+        )}
+        />
+        <Route path='/group' render={() => (
+          <GroupFeed />
         )}
         />
         <Route path='/users/:username' render={() => (
