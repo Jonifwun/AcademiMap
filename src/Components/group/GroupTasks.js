@@ -1,31 +1,15 @@
 import { Card } from '@material-ui/core'
 import React, { useState, useReducer } from 'react'
 import TaskModal from './TaskModal'
+import { reducer } from './taskReducer'
 
 function GroupTasks({data}) {
 
-    const reducer = (state, action) => {
-        if(action.type === 'ADD_TASK'){
-            const newTasks = [...state.tasks, action.payload]
-            return {
-                ...state,
-                tasks: newTasks,
-                isModalOpen: true,
-                modalContent: 'Task Added'
-             }
-        }
-        if(action.type === 'NO_TASK'){
-            return {...state, isModalOpen: true, modalContent: 'No value entered'}
-        }
-        if(action.type === 'CLOSE_MODAL'){
-            return {...state, isModalOpen: false}
-        }
-    }
 
     const defaultState = {
         tasks: [],
         isModalOpen: false,
-        modalContent: 'Hello World'
+        modalContent: ''
     }
     
     const [taskName, setTaskName] = useState('') 

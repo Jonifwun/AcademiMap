@@ -15,7 +15,7 @@ import Profile from './Components/profile/Profile';
 import { Link } from 'react-router-dom'
 import { UserContextProvider } from './Contexts/UserContext'
 import UserFeed from './Components/UserFeed';
-import GroupFeed from './Components/GroupFeed'
+import GroupFeed from './Components/group/GroupFeed'
 
 function App() {
   
