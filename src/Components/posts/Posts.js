@@ -51,15 +51,13 @@ function Posts() {
                 {
                     posts.map(({ post, id }) => (
                             //the post belongs to this username
-                    <Post  username={ post.username }
-                            //this is the signed in user 
-                            user={ user } 
-                            key={ id } 
-                            postID={ id } 
-                            caption={ post.caption } 
-                            imgsrc={ post.imgsrc }
-                            researchGroupID={ researchGroupID }
-                            />
+                    <Post                            //this is the signed in user 
+                      user={ user } 
+                      key={ id } 
+                      postID={ id }
+                      researchGroupID={ researchGroupID }
+                      {...post}
+                    />
                             
                     ))
                     
