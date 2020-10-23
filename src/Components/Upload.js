@@ -15,9 +15,9 @@ function Upload({ username, researchGroupID }) {
     
 
     const handleUpload = () => {
-        let name = uuid.v4()
+        let uuidName = uuid.v4()
 
-        const upload = storage.ref(`images/${ name }`).put(image)
+        const upload = storage.ref(`images/${ uuidName }`).put(image)
 
         upload.on("state_changed", (snapshot) => {
             const progress = Math.round((snapshot.bytesTransferred)/(snapshot.totalBytes)*100)
@@ -29,7 +29,7 @@ function Upload({ username, researchGroupID }) {
         },
         () => {
             storage.ref('images')
-            .child(image.name)
+            .child(uuidName)
             .getDownloadURL()
             .then(url => {
                 
@@ -60,9 +60,7 @@ function Upload({ username, researchGroupID }) {
 
     const handleChange = (e) => {
         if(e.target.files[0]){
-            console.log(e.target.files[0].name)
             setImage(e.target.files[0])
-            console.log(e.target.files[0])
         }
     }
 
