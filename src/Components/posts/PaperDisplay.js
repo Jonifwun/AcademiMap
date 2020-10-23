@@ -32,7 +32,7 @@ function PaperDisplay({postID, username, researchGroupID, setPaperDisplay}) {
         <Card style={{backgroundColor: '#009DDC', marginBottom: '20px', color: '#FFF', display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
             <h5 style={{marginTop: '5px'}}>Papers</h5>
             {papers && papers.map(({paper, id}) => {                
-                return <PaperDisplayCard key= { id } doi={ paper.doi } description={ paper.description } title={ paper.title }/>
+                return <PaperDisplayCard key= { id } {...paper}/>
             })}
             <button onClick={ handleClick } style={{marginBottom: '3px', outline: 'none', border: 'none', backgroundColor: '#009DDC', color: '#FFF', cursor: 'pointer'}}>close</button>
         </Card>
