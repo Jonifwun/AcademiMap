@@ -1,10 +1,14 @@
-import React, {  useState, useEffect } from 'react'
+import React, {  useState, useEffect, useContext } from 'react'
 import { useParams } from "react-router-dom"
 import Bio from './profile/Bio'
 import { db } from '../firebase'
 import Post from './posts/Post'
+import { UserContext } from '../Contexts/UserContext'
+import { Card } from '@material-ui/core'
 
 function UserFeed() {
+
+const user = useContext(UserContext)  
 
 let { username } = useParams()
 
@@ -56,27 +60,38 @@ useEffect(() => {
     }}, [username])
 
     return (
-        <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '100px'}}>            
-            <Bio 
-            userFeedData={ userData }
-            posts={ posts.length }
-            collaborators={ researchGroup?.groupmembers }
-            />
-            { 
+      
+
+        <div> 
+        {user ?
+          <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '100px'}}>
+              <Bio 
+              userFeedData={ userData }
+              posts={ posts.length }
+              collaborators={ researchGroup?.groupmembers }
+              />
+              { 
                 posts.map(({ post, id }) => (
                         //the post belongs to this username
                 <Post  username={ userData.username }
                         //this is the signed in user 
+                        {...post}
                         userFeedData={ userData } 
                         key={ id } 
                         postID={ id } 
-                        caption={ post.caption } 
-                        imgsrc={ post.imgsrc }
                         researchGroupID={ userData.researchGroup }
                         />
                     ))
-                }
-        </div>        
+              }
+          </div>
+              : 
+              <Card style={{margin: '100px 30px 40px', backgroundColor: '#0c3141', color: '#FFF', padding: '25px', display: 'flex', justifyContent: 'center'}}>
+                  <h5>Please Log In To View UserFeed</h5>
+              </Card>
+        }
+        </div>
+               
+      
     )
 }
 
