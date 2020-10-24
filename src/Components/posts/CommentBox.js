@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import firebase from 'firebase'
 import { db } from '../../firebase'
 
-function CommentBox({ postID, user, researchGroupID }) {
+const CommentBox = ({ postID, user, researchGroupID }) => {
 
     const [comment, setComment] = useState('')
 

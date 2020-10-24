@@ -4,7 +4,7 @@ import DropDownPostMenu from './DropDownPostMenu'
 import Avatar from '@material-ui/core/Avatar'
 import { db } from '../../firebase'
 
-function PostHeader({username, user, postID, setOpenModal, userData, userFeedData, researchGroupID}) {
+const PostHeader = ({username, user, postID, setOpenModal, userData, userFeedData, researchGroupID}) => {
 
     const deletePost = () => {
         //Delete post from research group posts collection

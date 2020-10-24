@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function MenuListComposition({ deletePost, setOpenEditCaption }) {
+export default const MenuListComposition = ({ deletePost, setOpenEditCaption }) => {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef(null);
@@ -34,7 +34,7 @@ export default function MenuListComposition({ deletePost, setOpenEditCaption }) 
     setOpen(false);
   };
 
-  function handleListKeyDown(e) {
+  const handleListKeyDown = (e) => {
     if (e.key === 'Tab') {
       e.preventDefault();
       setOpen(false);

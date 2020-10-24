@@ -1,7 +1,7 @@
 import React from 'react'
 import { Card } from '@material-ui/core'
 
-function PaperDisplayCard({ doi, description, title}) {
+const PaperDisplayCard = ({ doi, description, title}) => {
 
     return (
         <Card style={{padding: '5px', margin: '10px', backgroundColor: '#174B61', color: '#FFF'}}> 

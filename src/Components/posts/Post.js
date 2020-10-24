@@ -17,7 +17,7 @@ import PaperDisplay from './PaperDisplay';
 import AddPaperCard from '../AddPaperCard';
 
 
-function Post({ postID, username, imgsrc, caption, researchGroupID, userFeedData }) {
+const Post = ({ postID, username, imgsrc, caption, researchGroupID, userFeedData }) => {
 
     const [comments, setComments] = useState([])
     const [openComment, setOpenComment] = useState(true)

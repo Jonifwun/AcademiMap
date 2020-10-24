@@ -3,7 +3,7 @@ import PaperDisplayCard from './PaperDisplayCard'
 import { db } from '../../firebase'
 import { Card } from '@material-ui/core'
 
-function PaperDisplay({postID, username, researchGroupID, setPaperDisplay}) {
+const PaperDisplay = ({postID, username, researchGroupID, setPaperDisplay}) => {
 
     const [papers, setPapers] = useState([])
 

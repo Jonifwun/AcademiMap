@@ -6,7 +6,7 @@ import { UserContext } from '../../Contexts/UserContext'
 
 
 
-function Posts() {
+const Posts = () => {
     
     const [posts, setPosts] = useState([])
     const [researchGroupID, setResearchGroupID] = useState('')
