@@ -7,7 +7,7 @@ import { db } from '../../firebase'
 import { Link } from 'react-router-dom'
 
 
-function Bio({ collaborators, posts, userData, userFeedData }) {
+const Bio = ({ collaborators, posts, userData, userFeedData }) => {
 
     const user = useContext(UserContext)
     const [bioText, setBioText] = useState('')

@@ -5,7 +5,6 @@ import { reducer } from './taskReducer'
 
 function GroupTasks({data}) {
 
-
     const defaultState = {
         tasks: [],
         isModalOpen: false,

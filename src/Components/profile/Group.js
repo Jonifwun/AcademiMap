@@ -7,7 +7,7 @@ import InlineTextEdit from '../InlineTextEdit'
 import './Editable.css'
 import { db } from '../../firebase'
 
-function Group({ buttonStyle, researchGroup, userData }) {
+const Group = ({ buttonStyle, researchGroup, userData }) => {
    
     const [joinGroup, setJoinGroup] = useState(true)
     const [passcodeDisplay, setPasscodeDisplay] = useState(false)

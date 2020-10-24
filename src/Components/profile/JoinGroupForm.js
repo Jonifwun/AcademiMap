@@ -4,7 +4,7 @@ import { db } from '../../firebase'
 import firebase from 'firebase'
 import { UserContext } from '../../Contexts/UserContext'
 
-function JoinGroupForm({ setOpenModal }) {
+const JoinGroupForm = ({ setOpenModal }) => {
 
     const user = useContext(UserContext)
 

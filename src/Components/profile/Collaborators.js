@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { MemoizedUserCard } from '../UserCard'
 import SearchBox from './SearchBox'
 
-function Collaborators({ collaborators }) {
+const Collaborators = ({ collaborators }) => {
 
     const [searchValue, setSearchValue] = useState('')
 

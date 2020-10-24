@@ -8,13 +8,12 @@ import ProfilePic from './ProfilePic'
 import Collaborators from './Collaborators'
 
 
-function Profile() {
+const Profile = () => {
    
     const user = useContext(UserContext)
     
     const [researchGroup, setResearchGroup] = useState({})
     const [userData, setUserData] = useState({})
-    // const [posts, setPosts] = useState([])
     const [postCount, setPostCount] = useState('')
 
     useEffect(() => {
@@ -23,15 +22,15 @@ function Profile() {
             try {
                 //Match the users id to any groups
                 db.collection('researchgroups').where('groupmembers', 'array-contains', user.displayName).get()
-                .then(function(querySnapshot) {
+                .then(querySnapshot => {
                     querySnapshot.forEach(doc => {
                         //set the research group to state
                         const res = doc.data()
                         setResearchGroup(res)
                     })
                 })
-               .catch(function(error) {
-                   console.log("Error getting documents: ", error);
+               .catch(err => {
+                   console.log("Error getting documents: ", err);
                });
             } catch (err){
                 console.log(err)
@@ -84,6 +83,8 @@ function Profile() {
                 </Card>
             </div>
             : 
+
+            //Please login card - separate into it's own component and conditionally render message
             <Card style={{margin: '100px 30px 40px', backgroundColor: '#0c3141', color: '#FFF', padding: '25px', display: 'flex', justifyContent: 'center'}}>
                 <h5>Please Log In To View Profile</h5>
             </Card>

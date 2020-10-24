@@ -5,7 +5,7 @@ import { storage, db } from '../../firebase'
 import uuid from 'uuid'
 
 
-function ProfilePic({ buttonStyle }) {
+const ProfilePic = ({ buttonStyle }) => {
 
     const user = useContext(UserContext)
 

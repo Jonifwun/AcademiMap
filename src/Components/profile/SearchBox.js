@@ -1,6 +1,6 @@
 import React from 'react'
 
-function SearchBox({ handleChange, searchValue }) {
+const SearchBox = ({ handleChange, searchValue }) => {
     return (
         <input type='search' onChange={ handleChange } 
                value= { searchValue } 

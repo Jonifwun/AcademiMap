@@ -5,7 +5,7 @@ import firebase from 'firebase'
 import { UserContext } from '../../Contexts/UserContext'
 import generator from 'generate-password'
 
-function CreateGroupForm({ setOpenModal }) {
+const CreateGroupForm = ({ setOpenModal }) => {
 
     const user = useContext(UserContext)
 
