@@ -1,6 +1,6 @@
 import React from 'react'
 
-function LogInSignUpHeader() {
+const LogInSignUpHeader = () => {
     return (
         <div style={{
             backgroundColor: '#019CDD',

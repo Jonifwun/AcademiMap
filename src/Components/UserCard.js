@@ -3,7 +3,7 @@ import { Card } from '@material-ui/core'
 import { db } from '../firebase'
 import { Link } from 'react-router-dom'
 
-export function UserCard({ username }) {
+export const UserCard = ({ username }) => {
 
     const [userData, setUserData] = useState({})
 

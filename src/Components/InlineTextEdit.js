@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 
-function InlineTextEdit({childRef, text, type, children, updateText }) {
+const InlineTextEdit = ({childRef, text, type, children, updateText }) => {
 
     const [isEditing, setIsEditing] = useState(false)
 
@@ -51,9 +51,7 @@ function InlineTextEdit({childRef, text, type, children, updateText }) {
             </div>
       )}
     </section>
-  );
-
-    
+  )    
 }
 
 export default InlineTextEdit

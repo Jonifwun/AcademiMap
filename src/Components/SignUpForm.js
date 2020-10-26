@@ -6,7 +6,7 @@ import LogInSignUpHeader from './LogInSignUpHeader'
 import { db } from '../firebase'
 
 
-function SignUpForm({setOpenModal}) {
+const SignUpForm = ({setOpenModal}) => {
     const [email, setEmail] = useState('')
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')

@@ -6,7 +6,7 @@ import firebase from "firebase"
 import AddIcon from '@material-ui/icons/Add'
 import uuid from 'uuid'
 
-function Upload({ username, researchGroupID }) {
+const Upload = ({ username, researchGroupID }) => {
 
     const [caption, setCaption] = useState('')
     const [image, setImage] = useState(null)
@@ -88,7 +88,13 @@ function Upload({ username, researchGroupID }) {
             backgroundColor: '#019CDD',
             width: '100%'
             }}>
-                    <Fab style={{backgroundColor:  '#164B61', height: '55px', width: '55px'}} color="primary" onClick={() => setUploadDisplay(true)}>
+                    <Fab style={{backgroundColor:  '#164B61',
+                                 height: '55px',
+                                 width: '55px'
+                                }} 
+                          color="primary" 
+                          onClick={() => setUploadDisplay(true)}
+                    >
                         <AddIcon />
                     </Fab>
                 </div> 

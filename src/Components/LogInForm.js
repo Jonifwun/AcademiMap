@@ -4,7 +4,7 @@ import '../SignUpForm.css'
 import { auth } from 'firebase'
 import LogInSignUpHeader from './LogInSignUpHeader'
 
-function LogInForm({ setOpenModal }) {
+const LogInForm = ({ setOpenModal }) => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
@@ -52,12 +52,9 @@ function LogInForm({ setOpenModal }) {
                 </FormControl>
                 </Card>
                 <Button type="submit" onClick={ logIn } variant="contained" color="primary" className="logInBtn">Log In</Button>
-            </form>
-           
-            
+            </form>            
         </div>
     )
-
 }
 
 

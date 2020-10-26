@@ -4,7 +4,7 @@ import { db } from '../firebase'
 import { UserContext } from '../Contexts/UserContext'
 import firebase from 'firebase'
 
-function AddPaperCard({setAddPaperDisplay, username, postID, researchGroupID}) {
+const AddPaperCard = ({setAddPaperDisplay, username, postID, researchGroupID}) => {
 
     const user = useContext(UserContext)
 

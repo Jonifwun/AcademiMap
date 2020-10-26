@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default const MenuListComposition = ({ deletePost, setOpenEditCaption }) => {
+export default function MenuListComposition ({ deletePost, setOpenEditCaption }) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef(null);

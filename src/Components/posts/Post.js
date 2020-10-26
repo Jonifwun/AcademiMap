@@ -10,7 +10,7 @@ import DescriptionOutlinedIcon from '@material-ui/icons/DescriptionOutlined';
 import CommentBox from './CommentBox';
 import { UserContext } from '../../Contexts/UserContext'
 import Modal from '@material-ui/core/Modal';
-import CaptionEdit from '../CaptionEdit' 
+import CaptionEdit from './CaptionEdit' 
 import { makeStyles } from '@material-ui/core';
 import PostHeader from './PostHeader';
 import PaperDisplay from './PaperDisplay';

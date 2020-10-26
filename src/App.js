@@ -17,7 +17,7 @@ import { UserContextProvider } from './Contexts/UserContext'
 import UserFeed from './Components/UserFeed';
 import GroupFeed from './Components/group/GroupFeed'
 
-function App() {
+const App = () => {
   
   const [openModal, setOpenModal] = useState(false)
   const [logIn, setLogin] = useState(true)

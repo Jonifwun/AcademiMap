@@ -6,7 +6,7 @@ import Post from './posts/Post'
 import { UserContext } from '../Contexts/UserContext'
 import { Card } from '@material-ui/core'
 
-function UserFeed() {
+const UserFeed = () => {
 
 const user = useContext(UserContext)  
 
