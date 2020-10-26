@@ -25,6 +25,7 @@ const Post = ({ postID, username, imgsrc, caption, researchGroupID, userFeedData
     const [openModal, setOpenModal] = useState(false)
     const [paperDisplay, setPaperDisplay] = useState(false)
     const [addPaperDisplay, setAddPaperDisplay] = useState(false)
+    const [submitNewPaperDisplay, setSubmitNewPaperDisplay] = useState(false)
     
 
 
@@ -155,6 +156,7 @@ const Post = ({ postID, username, imgsrc, caption, researchGroupID, userFeedData
                                                    postID={ postID }
                                                    researchGroupID={ researchGroupID } 
                                                    setPaperDisplay={ setPaperDisplay }
+                                                   setSubmitNewPaperDisplay={ setSubmitNewPaperDisplay }
                                      />
                     }
                     {addPaperDisplay && <AddPaperCard setAddPaperDisplay={ setAddPaperDisplay } 
