@@ -7,5 +7,11 @@ export const postComment = (typeArr, {postID, comment}) => {
             .doc(postID)
             .collection('comments')
             .add(comment)
+            .then(() => {
+                console.log('Comment successfully added')
+            })
+            .catch(err => {
+                console.log('Comment upload error:', err)
+            })
     })
 }
