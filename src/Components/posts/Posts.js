@@ -46,25 +46,24 @@ const Posts = () => {
       }, [user])
 
     return (
-        <div>
-            <div style={{display: 'grid', grid: 'auto-flow dense / repeat(2, 50%)', placeItems: 'center', margin: '85px 0'}}>
-                {
-                    posts.map(({ post, id }) => (
-                            //the post belongs to this username
-                    <Post                            //this is the signed in user 
-                      user={ user } 
-                      key={ id } 
-                      postID={ id }
-                      researchGroupID={ researchGroupID }
-                      {...post}
-                    />
-                            
-                    ))
-                    
-                }
-            </div>
-            { user?.displayName ? <Upload username={ user.displayName } researchGroupID={ researchGroupID }/> : null }
+      <React.Fragment> 
+        <div style={{display: 'grid', grid: 'auto-flow dense / repeat(2, 50%)', placeItems: 'center', margin: '85px 0'}}>
+            {
+              posts.map(({ post, id }) => (
+                      //the post belongs to this username
+              <Post                            //this is the signed in user 
+                user={ user } 
+                key={ id } 
+                postID={ id }
+                researchGroupID={ researchGroupID }
+                {...post}
+              />
+                      
+              ))
+            }
         </div>
+        { user?.displayName ? <Upload username={ user.displayName } researchGroupID={ researchGroupID }/> : null }
+      </React.Fragment> 
     )
 }
 

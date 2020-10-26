@@ -64,7 +64,8 @@ const Profile = () => {
     const buttonStyle = { color: '#FFF', backgroundColor: '#019CDD', margin: '15px 5px'}
 
     return (
-        <div>{ user ? 
+        <React.Fragment> 
+            { user ? 
             <div>
                 <Card style={{margin: '80px 30px 30px', backgroundColor: '#0c3141', color: '#FFF', padding: '25px'}}>
                     <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-around'}}>
@@ -88,8 +89,8 @@ const Profile = () => {
             <Card style={{margin: '100px 30px 40px', backgroundColor: '#0c3141', color: '#FFF', padding: '25px', display: 'flex', justifyContent: 'center'}}>
                 <h5>Please Log In To View Profile</h5>
             </Card>
-        }
-        </div>
+            }
+        </React.Fragment> 
     )
 }
 

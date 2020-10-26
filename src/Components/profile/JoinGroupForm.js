@@ -43,17 +43,7 @@ const JoinGroupForm = ({ setOpenModal }) => {
     }
 
     return (
-        <div 
-        // style={{     
-        // margin: '25px',
-        // width: '400px',
-        // maxWidth: '650px',
-        // color: '#FFF',
-        // display: 'flex',
-        // flexDirection: 'column',
-        // alignItems: 'center'
-        // }}
-        >
+        <React.Fragment>
             <Card style={{     backgroundColor: '#0c3141',
             margin: '25px',
             width: '300px',
@@ -77,7 +67,7 @@ const JoinGroupForm = ({ setOpenModal }) => {
                 </FormControl>
                 </Card>
                 <Button type="submit" onClick={ joinGroup } variant="contained" color="primary" className="logInBtn">Join</Button>
-        </div>
+        </React.Fragment>
     )
 }
 

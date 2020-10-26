@@ -73,23 +73,23 @@ const Group = ({ buttonStyle, researchGroup, userData }) => {
     }
 
     return (
-        <div>
-        <Modal
-        open={ openModal }
-        onClose={() => setOpenModal(false)}
-        >     
-          <Card>
-              <div style={ modalStyle } 
-              className={ classes.paper }
-              >
-                { joinGroup ? 
-                <JoinGroupForm setOpenModal={ setOpenModal }/>
-                :
-                <CreateGroupForm setOpenModal={ setOpenModal }/> 
-              }
-              </div>
-          </Card>
-        </Modal>
+        <React.Fragment>
+            <Modal
+            open={ openModal }
+            onClose={() => setOpenModal(false)}
+            >     
+            <Card>
+                <div style={ modalStyle } 
+                className={ classes.paper }
+                >
+                    { joinGroup ? 
+                    <JoinGroupForm setOpenModal={ setOpenModal }/>
+                    :
+                    <CreateGroupForm setOpenModal={ setOpenModal }/> 
+                }
+                </div>
+            </Card>
+            </Modal>
 
 
         { researchGroup.groupName ?
@@ -156,7 +156,7 @@ const Group = ({ buttonStyle, researchGroup, userData }) => {
                 }}>Create Group</Button>
             </Card>
             }  
-        </div>
+        </React.Fragment>
     )
 }
 

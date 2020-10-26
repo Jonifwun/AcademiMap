@@ -109,7 +109,7 @@ const Post = ({ postID, username, imgsrc, caption, researchGroupID, userFeedData
 
 
     return (
-        <div>
+        <React.Fragment>
             <Modal
             open={ openModal }
             onClose={() => setOpenModal(false)}
@@ -184,7 +184,7 @@ const Post = ({ postID, username, imgsrc, caption, researchGroupID, userFeedData
                     )}
                 </div>
             </Card>
-        </div>
+        </React.Fragment>
     )
 }
 

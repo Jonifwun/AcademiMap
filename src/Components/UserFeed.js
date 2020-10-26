@@ -60,9 +60,7 @@ useEffect(() => {
     }}, [username])
 
     return (
-      
-
-        <div> 
+      <React.Fragment>
         {user ?
           <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '100px'}}>
               <Bio 
@@ -89,7 +87,7 @@ useEffect(() => {
                   <h5>Please Log In To View UserFeed</h5>
               </Card>
         }
-        </div>
+      </React.Fragment> 
                
       
     )

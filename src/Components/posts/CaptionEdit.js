@@ -13,7 +13,7 @@ const CaptionEdit = ({ setOpenModal, username, caption, postID, researchGroupID 
     }
 
     return (
-        <div>            
+        <React.Fragment>           
           <h5>Edit Caption</h5>            
           <FormControl className="input">
               <Input
@@ -25,7 +25,7 @@ const CaptionEdit = ({ setOpenModal, username, caption, postID, researchGroupID 
               />
           </FormControl>               
           <Button type="submit" onClick={ handleUpdate } style={{marginTop: '15px'}} variant="contained" color="primary" className="logInBtn">Submit</Button>            
-        </div>
+        </React.Fragment> 
     )
 }
 
