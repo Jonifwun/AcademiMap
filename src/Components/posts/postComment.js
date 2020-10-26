@@ -1,0 +1,11 @@
+import { db } from "../../firebase"
+
+export const postComment = (typeArr, {postID, comment}) => {
+    typeArr.forEach(({type, id}) => {
+        db.collection(type).doc(id)
+            .collection('posts')
+            .doc(postID)
+            .collection('comments')
+            .add(comment)
+    })
+}

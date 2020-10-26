@@ -1,35 +1,22 @@
 import React, { useState } from 'react'
 import firebase from 'firebase'
-import { db } from '../../firebase'
+import { postComment } from './postComment'
 
 const CommentBox = ({ postID, user, researchGroupID }) => {
 
-    const [comment, setComment] = useState('')
+    const [commentText, setComment] = useState('')
 
-    const postComment = (e) => {
+    const handleClick = (e) => {
         e.preventDefault()
-        //Need to save comments to both research group posts and also to user posts
-        db.collection('researchgroups').doc(researchGroupID)
-          .collection('posts')
-          .doc(postID)
-          .collection('comments')
-          .add({
-              text: comment,
-              username: user.displayName,
-              timestamp: firebase.firestore.FieldValue.serverTimestamp()
-          })
 
-        db.collection('users').doc(user.displayName)
-          .collection('posts')
-          .doc(postID)
-          .collection('comments')
-          .add({
-              text: comment,
-              username: user.displayName,
-              timestamp: firebase.firestore.FieldValue.serverTimestamp()
-          })
-
-          setComment('')
+        const comment = {
+            text: commentText,
+            username: user.displayName,
+            timestamp: firebase.firestore.FieldValue.serverTimestamp()
+        }
+        
+        postComment([{type: 'users', id: user.displayName}, {type: 'researchgroups', id: researchGroupID}], {postID, comment})
+        setComment('')
     } 
 
     return (
@@ -38,14 +25,14 @@ const CommentBox = ({ postID, user, researchGroupID }) => {
                 className="commentInput"
                 type="text"
                 placeholder="Add comment"
-                value={ comment }
+                value={ commentText }
                 onChange={(e) => setComment(e.target.value)}
             />            
             <button
                 className="commentBtn" 
                 type="submit" 
-                onClick={ postComment } 
-                disabled={!comment}
+                onClick={ handleClick } 
+                disabled={!commentText}
             >
             Post
             </button>                
