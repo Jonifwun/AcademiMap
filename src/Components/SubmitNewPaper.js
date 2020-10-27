@@ -4,6 +4,7 @@ import { useFetch } from './useFetch'
 import firebase from 'firebase'
 import { UserContext } from '../Contexts/UserContext'
 import { Button, Card, FormControl, TextField } from '@material-ui/core'
+import Loader from 'react-loader-spinner'
 
 const SubmitNewPaper = ({doi, username, postID, researchGroupID, setNewPaperDisplay}) => {
 
@@ -67,12 +68,15 @@ const SubmitNewPaper = ({doi, username, postID, researchGroupID, setNewPaperDisp
 
     return (
         <div>
-            {data.message && 
+            {data.message ? 
                 <Card style={{backgroundColor: '#009DDC', marginBottom: '20px', color: '#FFF', display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
                     <h5 style={{marginTop: '5px'}}>Add Paper</h5>
-                    <h5>{data.message.title[0]}</h5>
-                    <h5>{data.message.URL}</h5>
-                    <h5>{`${data.message.author[0].family} et al`}</h5>
+                    <Card style={{padding: '5px', margin: '10px', backgroundColor: '#174B61', color: '#FFF'}}> 
+                        <h5><em>{ data.message.title[0] }</em></h5>
+                        <a href={data.message.URL || `https://doi.org/${doi}`} target="_blank" rel="noopener noreferrer" style={{color: "#FFF", display: 'inline-block'}}><h5>DOI: { doi }</h5></a>
+                        <h5><em>{`${data.message.author[0].family} et al`}</em></h5>
+                        <p>{ description }</p>
+                    </Card>
                     <form autoComplete='off' style={{display: 'flex', flexDirection: 'column', width: '100%'}}>
                         <FormControl variant="outlined">                   
                             <TextField value={ description } onChange={(e) => setDescription(e.target.value)} label="Description" style={inputStyle}/>
@@ -80,6 +84,16 @@ const SubmitNewPaper = ({doi, username, postID, researchGroupID, setNewPaperDisp
                         <Button onClick={ submitPaper } style={{color: '#FFF', backgroundColor: '#0582b3', margin: '25px 0'}}>Submit</Button>
                     </form>
                     <button onClick={ handleClose } style={{marginBottom: '3px', outline: 'none', border: 'none', backgroundColor: '#009DDC', color: '#FFF', cursor: 'pointer'}}>close</button>
+                </Card>
+                : 
+                <Card style={{backgroundColor: '#009DDC', marginBottom: '20px', color: '#FFF', display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '25px 0'}}>
+                    <Loader
+                        type="Grid"
+                        color='#174B61'
+                        height={50}
+                        width={50}
+                        timeout={5000} //5 secs
+                    />
                 </Card>
             }
             
