@@ -5,7 +5,7 @@ export const useFetch = (url) => {
 
     const getData = async () => {
         const response = await fetch(url)
-        const data = response.json()
+        const data = await response.json()
         setData(data)
     }
 
@@ -13,6 +13,6 @@ export const useFetch = (url) => {
         getData()
     }, [url])
 
-    return data
+    return {data}
 
 }

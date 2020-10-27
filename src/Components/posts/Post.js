@@ -15,6 +15,7 @@ import { makeStyles } from '@material-ui/core';
 import PostHeader from './PostHeader';
 import PaperDisplay from './PaperDisplay';
 import AddPaperCard from '../AddPaperCard';
+import SubmitNewPaper from '../SubmitNewPaper';
 
 
 const Post = ({ postID, username, imgsrc, caption, researchGroupID, userFeedData }) => {
@@ -25,7 +26,8 @@ const Post = ({ postID, username, imgsrc, caption, researchGroupID, userFeedData
     const [openModal, setOpenModal] = useState(false)
     const [paperDisplay, setPaperDisplay] = useState(false)
     const [addPaperDisplay, setAddPaperDisplay] = useState(false)
-    const [submitNewPaperDisplay, setSubmitNewPaperDisplay] = useState(false)
+    const [newPaperDisplay, setNewPaperDisplay] = useState(false)
+    const [doi, setDoi] = useState('')
     
 
 
@@ -48,22 +50,6 @@ const Post = ({ postID, username, imgsrc, caption, researchGroupID, userFeedData
                             })                          
                         ))
                     })
-                    
-                // db.collection('researchgroups')
-                //             .doc(researchGroupID)
-                //             .collection('posts')
-                //             .doc(postID)
-                //             .collection('papers')
-                //             .orderBy('timestamp', 'asc')
-                //             .onSnapshot((snapshot) => {
-                //                setPapers(snapshot.docs.map(doc => ({
-                //                    id: doc.id,
-                //                    paper: doc.data()
-                //             })                          
-                //         ))
-                //     }) 
-
-               
                 
             //Grab the user data for the individual post
             if(!userFeedData){
@@ -156,13 +142,23 @@ const Post = ({ postID, username, imgsrc, caption, researchGroupID, userFeedData
                                                    postID={ postID }
                                                    researchGroupID={ researchGroupID } 
                                                    setPaperDisplay={ setPaperDisplay }
-                                                   setSubmitNewPaperDisplay={ setSubmitNewPaperDisplay }
+                                                   setNewPaperDisplay={ setNewPaperDisplay }
                                      />
                     }
                     {addPaperDisplay && <AddPaperCard setAddPaperDisplay={ setAddPaperDisplay } 
                                                       username={ username}
                                                       postID={ postID }
+                                                      researchGroupID ={ researchGroupID }
+                                                      setDoi={ setDoi }
+                                                      doi={ doi }
+                                                      setNewPaperDisplay={ setNewPaperDisplay }
+                                        />
+                    }
+                    {newPaperDisplay && <SubmitNewPaper setNewPaperDisplay={ setNewPaperDisplay } 
+                                                      username={ username}
+                                                      postID={ postID }
                                                       researchGroupID = { researchGroupID }
+                                                      doi={ doi }
                                         />
                     }
                     { comments && comments.map(({comment, id}) => {

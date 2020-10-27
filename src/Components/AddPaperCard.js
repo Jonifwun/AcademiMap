@@ -1,18 +1,21 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Button, Card, FormControl, TextField } from '@material-ui/core'
 
 
-const AddPaperCard = ({setAddPaperDisplay, setSubmitNewPaperDisplay}) => {
-    
-    const [doi, setDoi] = useState('')
+const AddPaperCard = ({setAddPaperDisplay, setNewPaperDisplay, doi, setDoi}) => {
     
     const handleClose = () => {
         setAddPaperDisplay(false) 
     }
 
-    const submitDOI = (doi) => {
-        setAddPaperDisplay(false)
-        setSubmitNewPaperDisplay(true)
+    const submitDOI = () => {
+        const regex = RegExp("10.\\d{4,9}/[-._;()/:a-z0-9A-Z]+")
+        if(regex.test(doi.trim()) === true){
+            
+            setAddPaperDisplay(false)
+            setNewPaperDisplay(true)
+            
+        }
     }
     
 
@@ -35,7 +38,7 @@ const AddPaperCard = ({setAddPaperDisplay, setSubmitNewPaperDisplay}) => {
                     <TextField value={ doi } onChange={(e) => setDoi(e.target.value)} label="DOI" style={inputStyle}/>
                 </FormControl>
                 
-                <Button onClick={ submitDOI(doi) } style={{color: '#FFF', backgroundColor: '#0582b3', margin: '25px 0'}}>Submit</Button>
+                <Button onClick={ submitDOI } style={{color: '#FFF', backgroundColor: '#0582b3', margin: '25px 0'}}>Submit</Button>
             </form>
             
             <button onClick={ handleClose } style={{marginBottom: '3px', outline: 'none', border: 'none', backgroundColor: '#009DDC', color: '#FFF', cursor: 'pointer'}}>close</button>
