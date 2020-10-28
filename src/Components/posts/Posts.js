@@ -13,33 +13,49 @@ const Posts = () => {
     const [posts, setPosts] = useState([])
     const [researchGroupID, setResearchGroupID] = useState('')
     const [lastVisible, setLastVisible] = useState({})
+    const [loading, setLoading] = useState(true)
+    const [hasMore, setHasMore] = useState(true)
 
     // Last post ref
     const observer = useRef()
     const lastPostRef = useCallback(node => {
+      //If loading, do nothing
+      if (loading) return
+      //Want to disconnect from the previous last post and then reconnect to the new last post
+      if(observer.current) observer.current.disconnect()
+      observer.current = new IntersectionObserver(entries => {
+        if(entries[0].isIntersecting){
+          console.log('Post is visible')
+          //Here we want to run getMorePosts
+          getMorePosts()
+        }
+      })
+      if(node) observer.current.observe(node)
       console.log(node)
-    })
+    }, [loading])
 
     
 
     const getMorePosts = () => {
+      setLoading(true)
       db.collection('researchgroups').doc(researchGroupID)
               .collection('posts')
               .orderBy('timestamp', 'desc')
               .startAfter(lastVisible)
-              .limit(10)
+              .limit(4)
               .onSnapshot(snapshot => {
 
                 const lastVisible = snapshot.docs[snapshot.docs.length-1]
-                setLastVisible(lastVisible)
-
+                if(lastVisible) setLastVisible(lastVisible)
+                
+                const newPosts = snapshot.docs.map(doc => ({
+                  id: doc.id,
+                  post: doc.data()
+                }))
                 setPosts(prevPosts => {
-                  const newPosts = snapshot.docs.map((doc, index) => ({
-                    id: doc.id,
-                    post: doc.data()
-                  }))
-                  return [...prevPosts, newPosts]
+                  return [...prevPosts, ...newPosts]
                 })
+                setLoading(false)
             })
     }
 
@@ -61,7 +77,7 @@ const Posts = () => {
             db.collection('researchgroups').doc(researchGroupID)
               .collection('posts')
               .orderBy('timestamp', 'desc')
-              .limit(10)
+              .limit(4)
               .onSnapshot(snapshot => {
 
                 const lastVisible = snapshot.docs[snapshot.docs.length-1]
@@ -74,6 +90,7 @@ const Posts = () => {
               )))
             })
             setResearchGroupID(researchGroupID)
+            setLoading(false)
           }).catch((error) => {
             console.log("Error getting document:", error);
         })
@@ -81,7 +98,9 @@ const Posts = () => {
       }, [user])
 
     return (
-      <React.Fragment> 
+      <React.Fragment>
+        {!loading ?
+        <div>  
         <div style={{display: 'grid', grid: 'auto-flow dense / repeat(2, 50%)', placeItems: 'center', margin: '85px 0'}}>
             {
               posts.map(({ post, id }, index) => {
@@ -112,6 +131,11 @@ const Posts = () => {
             }
         </div>
         { user?.displayName ? <Upload username={ user.displayName } researchGroupID={ researchGroupID }/> : null }
+        </div>
+        :
+        'Loading'
+        }
+        
       </React.Fragment> 
     )
 }
