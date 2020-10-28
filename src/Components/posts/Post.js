@@ -28,6 +28,12 @@ const Post = React.forwardRef(({ postID, username, imgsrc, caption, researchGrou
     const [addPaperDisplay, setAddPaperDisplay] = useState(false)
     const [newPaperDisplay, setNewPaperDisplay] = useState(false)
     const [doi, setDoi] = useState('')
+
+    const idData = {
+        postID,
+        username,
+        researchGroupID
+    }
     
 
 
@@ -107,10 +113,8 @@ const Post = React.forwardRef(({ postID, username, imgsrc, caption, researchGrou
                 >
                     <CaptionEdit 
                     setOpenModal={ setOpenModal } 
-                    username={ username } 
-                    postID={ postID }
+                    {...idData}
                     caption={ caption}
-                    researchGroupID={ researchGroupID }
                     userData={ userData }
                     userFeedData={ userFeedData }
                     /> 
@@ -118,16 +122,16 @@ const Post = React.forwardRef(({ postID, username, imgsrc, caption, researchGrou
                 </div>
             </Card>
             </Modal>
+            {//Reference to last post below here if last post
+            }
             <Card ref={ ref } id="postCard">
                 <div  className="post">
                         <PostHeader 
-                        username={ username } 
+                        {...idData}
                         userFeedData={ userFeedData }
                         user={ user }
-                        userData={ userData }
-                        postID={ postID }
-                        setOpenModal={ setOpenModal }
-                        researchGroupID={ researchGroupID }
+                        userData={ userData }                        
+                        setOpenModal={ setOpenModal }                        
                         />                    
                     <img className="postImage" src={ imgsrc } alt="postimg"></img>
                     <div className="icons">
@@ -138,26 +142,20 @@ const Post = React.forwardRef(({ postID, username, imgsrc, caption, researchGrou
                     </div>
                     <h4 className="postText"><span className="username">{ username }</span> { caption }</h4>
 
-                    {paperDisplay && <PaperDisplay username={ username } 
-                                                   postID={ postID }
-                                                   researchGroupID={ researchGroupID } 
+                    {paperDisplay && <PaperDisplay {...idData}
                                                    setPaperDisplay={ setPaperDisplay }
                                                    setNewPaperDisplay={ setNewPaperDisplay }
                                      />
                     }
                     {addPaperDisplay && <AddPaperCard setAddPaperDisplay={ setAddPaperDisplay } 
-                                                      username={ username}
-                                                      postID={ postID }
-                                                      researchGroupID ={ researchGroupID }
+                                                      {...idData}
                                                       setDoi={ setDoi }
                                                       doi={ doi }
                                                       setNewPaperDisplay={ setNewPaperDisplay }
                                         />
                     }
                     {newPaperDisplay && <SubmitNewPaper setNewPaperDisplay={ setNewPaperDisplay } 
-                                                      username={ username}
-                                                      postID={ postID }
-                                                      researchGroupID = { researchGroupID }
+                                                      {...idData}
                                                       doi={ doi }
                                         />
                     }
