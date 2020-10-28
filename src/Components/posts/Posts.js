@@ -14,6 +14,27 @@ const Posts = () => {
 
     const user = useContext(UserContext)
 
+    const getMorePosts = () => {
+      db.collection('researchgroups').doc(researchGroupID)
+              .collection('posts')
+              .orderBy('timestamp', 'desc')
+              .startAfter(lastVisible)
+              .limit(10)
+              .onSnapshot(snapshot => {
+
+                const lastVisible = snapshot.docs[snapshot.docs.length-1]
+                setLastVisible(lastVisible)
+
+                setPosts(prevPosts => {
+                  const newPosts = snapshot.docs.map(doc => ({
+                    id: doc.id,
+                    post: doc.data()
+                  }))
+                  return [...prevPosts, newPosts]
+                })
+            })
+    }
+
     useEffect(() => {
 
       if(user){
