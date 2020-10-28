@@ -10,6 +10,7 @@ const Posts = () => {
     
     const [posts, setPosts] = useState([])
     const [researchGroupID, setResearchGroupID] = useState('')
+    const [lastVisible, setLastVisible] = useState({})
 
     const user = useContext(UserContext)
 
@@ -31,7 +32,12 @@ const Posts = () => {
             db.collection('researchgroups').doc(researchGroupID)
               .collection('posts')
               .orderBy('timestamp', 'desc')
+              .limit(10)
               .onSnapshot(snapshot => {
+
+                const lastVisible = snapshot.docs[snapshot.docs.length-1]
+                setLastVisible(lastVisible)
+
                 setPosts(snapshot.docs.map(doc => ({
                   id: doc.id,
                   post: doc.data()
