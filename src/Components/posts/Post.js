@@ -18,7 +18,7 @@ import AddPaperCard from '../AddPaperCard';
 import SubmitNewPaper from '../SubmitNewPaper';
 
 
-const Post = ({ postID, username, imgsrc, caption, researchGroupID, userFeedData }) => {
+const Post = React.forwardRef(({ postID, username, imgsrc, caption, researchGroupID, userFeedData }, ref) => {
 
     const [comments, setComments] = useState([])
     const [openComment, setOpenComment] = useState(true)
@@ -118,8 +118,8 @@ const Post = ({ postID, username, imgsrc, caption, researchGroupID, userFeedData
                 </div>
             </Card>
             </Modal>
-            <Card id="postCard">
-                <div className="post">
+            <Card ref={ ref } id="postCard">
+                <div  className="post">
                         <PostHeader 
                         username={ username } 
                         userFeedData={ userFeedData }
@@ -184,6 +184,6 @@ const Post = ({ postID, username, imgsrc, caption, researchGroupID, userFeedData
             </Card>
         </React.Fragment>
     )
-}
+})
 
 export default Post
