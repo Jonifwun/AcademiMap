@@ -3,6 +3,7 @@ import { db } from '../../firebase'
 import Upload from '../Upload'
 import Post from './Post'
 import { UserContext } from '../../Contexts/UserContext'
+import Loader from 'react-loader-spinner'
 
 
 
@@ -12,29 +13,12 @@ const Posts = () => {
 
     const [posts, setPosts] = useState([])
     const [researchGroupID, setResearchGroupID] = useState('')
-    const [lastVisible, setLastVisible] = useState({})
+    const [lastVisible, setLastVisible] = useState(null)
     const [loading, setLoading] = useState(true)
     const [hasMore, setHasMore] = useState(true)
 
     // Last post ref
-    const observer = useRef()
-    const lastPostRef = useCallback(node => {
-      //If loading, do nothing
-      if (loading) return
-      //Want to disconnect from the previous last post and then reconnect to the new last post
-      if(observer.current) observer.current.disconnect()
-      observer.current = new IntersectionObserver(entries => {
-        if(entries[0].isIntersecting){
-          console.log('Post is visible')
-          //Here we want to run getMorePosts
-          getMorePosts()
-        }
-      })
-      if(node) observer.current.observe(node)
-      console.log(node)
-    }, [loading])
-
-    
+    const observer = useRef()  
 
     const getMorePosts = () => {
       setLoading(true)
@@ -42,12 +26,14 @@ const Posts = () => {
               .collection('posts')
               .orderBy('timestamp', 'desc')
               .startAfter(lastVisible)
-              .limit(4)
+              .limit(6)              
               .onSnapshot(snapshot => {
-
                 const lastVisible = snapshot.docs[snapshot.docs.length-1]
+
+                if(snapshot.docs.length === 0) setHasMore(false)
+
                 if(lastVisible) setLastVisible(lastVisible)
-                
+
                 const newPosts = snapshot.docs.map(doc => ({
                   id: doc.id,
                   post: doc.data()
@@ -59,8 +45,24 @@ const Posts = () => {
             })
     }
 
-    useEffect(() => {
+    const lastPostRef = useCallback(node => {
+      //If loading, do nothing
+      if (loading) return
+      //Want to disconnect from the previous last post and then reconnect to the new last post
+      if(observer.current) observer.current.disconnect()
+      observer.current = new IntersectionObserver(entries => {
+        if(entries[0].isIntersecting){
+          console.log('Post is visible')
+          //Here we want to run getMorePosts if there are any posts left
+          if(hasMore) getMorePosts()
+        }
+      })
+      if(node) observer.current.observe(node)
+      console.log(node)
+    }, [loading, getMorePosts, hasMore])
 
+    useEffect(() => {
+      setLoading(true)
       if(user){
         db.collection('users').doc(user.displayName).get()
           .then((userDoc) => {
@@ -77,10 +79,11 @@ const Posts = () => {
             db.collection('researchgroups').doc(researchGroupID)
               .collection('posts')
               .orderBy('timestamp', 'desc')
-              .limit(4)
+              .limit(6)
               .onSnapshot(snapshot => {
 
                 const lastVisible = snapshot.docs[snapshot.docs.length-1]
+                console.log(lastVisible)
                 setLastVisible(lastVisible)
 
                 setPosts(snapshot.docs.map(doc => ({
@@ -99,8 +102,7 @@ const Posts = () => {
 
     return (
       <React.Fragment>
-        {!loading ?
-        <div>  
+         
         <div style={{display: 'grid', grid: 'auto-flow dense / repeat(2, 50%)', placeItems: 'center', margin: '85px 0'}}>
             {
               posts.map(({ post, id }, index) => {
@@ -131,9 +133,14 @@ const Posts = () => {
             }
         </div>
         { user?.displayName ? <Upload username={ user.displayName } researchGroupID={ researchGroupID }/> : null }
-        </div>
-        :
-        'Loading'
+        
+        {loading && <Loader
+                        style={{position: 'absolute', left: '50%', marginBottom: '60px'}}
+                        type="Grid"
+                        color='#009DDC'
+                        height={50}
+                        width={50}
+                    />
         }
         
       </React.Fragment> 
