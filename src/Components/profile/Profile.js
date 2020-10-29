@@ -6,6 +6,8 @@ import { MemoizedGroup } from './Group'
 import { db } from '../../firebase'
 import ProfilePic from './ProfilePic'
 import Collaborators from './Collaborators'
+import ErrorBoundary from '../ErrorBoundary'
+
 
 
 const Profile = () => {
@@ -69,15 +71,23 @@ const Profile = () => {
             <div>
                 <Card style={{margin: '80px 30px 30px', backgroundColor: '#0c3141', color: '#FFF', padding: '25px'}}>
                     <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-around'}}>
-                        <ProfilePic buttonStyle={ buttonStyle } />    
-                        <Bio collaborators={ researchGroup.groupmembers } posts={ postCount } userData={ userData } />
-                        <MemoizedGroup buttonStyle={ buttonStyle } researchGroup={ researchGroup } userData={ userData }/>
+                        <ErrorBoundary>
+                            <ProfilePic buttonStyle={ buttonStyle } /> 
+                        </ErrorBoundary>
+                        <ErrorBoundary>
+                            <Bio collaborators={ researchGroup.groupmembers } posts={ postCount } userData={ userData } />
+                        </ErrorBoundary>
+                        <ErrorBoundary>
+                            <MemoizedGroup buttonStyle={ buttonStyle } researchGroup={ researchGroup } userData={ userData }/>
+                        </ErrorBoundary>                                               
                     </div>
                 </Card>
                 <Card style={{margin: '0 30px 30px', backgroundColor: '#0c3141', color: '#FFF', padding: '25px'}}>
                     
                         { researchGroup?.groupmembers ?
-                        <Collaborators collaborators={ researchGroup.groupmembers }/>
+                        <ErrorBoundary>
+                            <Collaborators collaborators={ researchGroup.groupmembers }/>
+                        </ErrorBoundary>
                             : null      
                         }  
 

@@ -84,6 +84,7 @@ const Post = React.forwardRef(({ postID, username, imgsrc, caption, researchGrou
             console.error("Error removing document: ", error);
         });
         }
+        
     }
    
       const useStyles = makeStyles((theme) => ({
@@ -142,22 +143,26 @@ const Post = React.forwardRef(({ postID, username, imgsrc, caption, researchGrou
                     </div>
                     <h4 className="postText"><span className="username">{ username }</span> { caption }</h4>
 
-                    {paperDisplay && <PaperDisplay {...idData}
-                                                   setPaperDisplay={ setPaperDisplay }
-                                                   setNewPaperDisplay={ setNewPaperDisplay }
-                                     />
+                    {paperDisplay && <ErrorBoundary>
+                                        <PaperDisplay {...idData}
+                                            setPaperDisplay={ setPaperDisplay }
+                                            setNewPaperDisplay={ setNewPaperDisplay }
+                                        />
+                                    </ErrorBoundary>
                     }
-                    {addPaperDisplay && <AddPaperCard setAddPaperDisplay={ setAddPaperDisplay } 
-                                                      {...idData}
-                                                      setDoi={ setDoi }
-                                                      doi={ doi }
-                                                      setNewPaperDisplay={ setNewPaperDisplay }
+                    {addPaperDisplay && <AddPaperCard {...idData}
+                                            setAddPaperDisplay={ setAddPaperDisplay } 
+                                            setDoi={ setDoi }
+                                            doi={ doi }
+                                            setNewPaperDisplay={ setNewPaperDisplay }
                                         />
                     }
-                    {newPaperDisplay && <SubmitNewPaper setNewPaperDisplay={ setNewPaperDisplay } 
-                                                      {...idData}
-                                                      doi={ doi }
-                                        />
+                    {newPaperDisplay && <ErrorBoundary>
+                                            <SubmitNewPaper {...idData}
+                                                setNewPaperDisplay={ setNewPaperDisplay } 
+                                                doi={ doi }
+                                            />
+                                        </ErrorBoundary>
                     }
                     { comments && comments.map(({comment, id}) => {
                         return (

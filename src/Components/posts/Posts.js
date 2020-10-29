@@ -4,6 +4,7 @@ import Upload from '../Upload'
 import Post from './Post'
 import { UserContext } from '../../Contexts/UserContext'
 import Loader from 'react-loader-spinner'
+import ErrorBoundary from '../ErrorBoundary'
 
 
 
@@ -20,31 +21,34 @@ const Posts = () => {
     // Last post ref
     const observer = useRef()  
 
+    //runs when user scrolls to the bottom of the page if there are any posts left to load
     const getMorePosts = () => {
       setLoading(true)
-      db.collection('researchgroups').doc(researchGroupID)
-              .collection('posts')
-              .orderBy('timestamp', 'desc')
-              .startAfter(lastVisible)
-              .limit(6)              
-              .onSnapshot(snapshot => {
-                const lastVisible = snapshot.docs[snapshot.docs.length-1]
+      db.collection('researchgroups')
+        .doc(researchGroupID)
+        .collection('posts')
+        .orderBy('timestamp', 'desc')
+        .startAfter(lastVisible)
+        .limit(2)              
+        .onSnapshot(snapshot => {
+          const lastVisible = snapshot.docs[snapshot.docs.length-1]
 
-                if(snapshot.docs.length === 0) setHasMore(false)
+          if(snapshot.docs.length === 0) setHasMore(false)
 
-                if(lastVisible) setLastVisible(lastVisible)
+          if(lastVisible) setLastVisible(lastVisible)
 
-                const newPosts = snapshot.docs.map(doc => ({
+          const newPosts = snapshot.docs.map(doc => ({
                   id: doc.id,
-                  post: doc.data()
-                }))
-                setPosts(prevPosts => {
-                  return [...prevPosts, ...newPosts]
-                })
-                setLoading(false)
-            })
+            post: doc.data()
+          }))
+          setPosts(prevPosts => {
+            return [...prevPosts, ...newPosts]
+          })
+          setLoading(false)
+      })
     }
 
+    //Set up an observer to follow the last post and then run getMorePosts when it appears on screen
     const lastPostRef = useCallback(node => {
       //If loading, do nothing
       if (loading) return
@@ -58,7 +62,7 @@ const Posts = () => {
         }
       })
       if(node) observer.current.observe(node)
-      console.log(node)
+
     }, [loading, getMorePosts, hasMore])
 
     useEffect(() => {
@@ -79,7 +83,7 @@ const Posts = () => {
             db.collection('researchgroups').doc(researchGroupID)
               .collection('posts')
               .orderBy('timestamp', 'desc')
-              .limit(6)
+              .limit(4)
               .onSnapshot(snapshot => {
 
                 const lastVisible = snapshot.docs[snapshot.docs.length-1]
@@ -97,12 +101,13 @@ const Posts = () => {
           }).catch((error) => {
             console.log("Error getting document:", error);
         })
+        
       }
       }, [user])
 
     return (
-      <React.Fragment>
-         
+      <ErrorBoundary>
+      <React.Fragment>       
         <div style={{display: 'grid', grid: 'auto-flow dense / repeat(2, 50%)', placeItems: 'center', margin: '85px 0'}}>
             {
               posts.map(({ post, id }, index) => {
@@ -142,8 +147,8 @@ const Posts = () => {
                         width={50}
                     />
         }
-        
-      </React.Fragment> 
+      </React.Fragment>
+      </ErrorBoundary> 
     )
 }
 

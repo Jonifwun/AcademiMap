@@ -71,7 +71,7 @@ const SubmitNewPaper = ({doi, username, postID, researchGroupID, setNewPaperDisp
             {data.message ? 
                 <Card style={{backgroundColor: '#009DDC', marginBottom: '20px', color: '#FFF', display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
                     <h5 style={{marginTop: '5px'}}>Add Paper</h5>
-                    <Card style={{padding: '5px', margin: '10px', backgroundColor: '#174B61', color: '#FFF'}}> 
+                    <Card style={{padding: '5px', margin: '10px', backgroundColor: '#174B61', color: '#FFF', width: '95%'}}> 
                         <h5><em>{ data.message.title[0] }</em></h5>
                         <a href={data.message.URL || `https://doi.org/${doi}`} target="_blank" rel="noopener noreferrer" style={{color: "#FFF", display: 'inline-block'}}><h5>DOI: { doi }</h5></a>
                         <h5><em>{`${data.message.author[0].family} et al`}</em></h5>
