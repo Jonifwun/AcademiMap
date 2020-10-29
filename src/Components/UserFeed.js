@@ -6,6 +6,7 @@ import Post from './posts/Post'
 import { UserContext } from '../Contexts/UserContext'
 import { Card } from '@material-ui/core'
 import ErrorBoundary from './ErrorBoundary'
+import Loader from 'react-loader-spinner'
 
 
 const UserFeed = () => {
@@ -17,6 +18,7 @@ let { username } = useParams()
 const [posts, setPosts] = useState([])
 const [userData, setUserData] = useState({})
 const [researchGroup, setResearchGroup] = useState({})
+const [loading, setLoading] = useState(true)
 
 useEffect(() => {
 
@@ -54,18 +56,23 @@ useEffect(() => {
                 const researchGroupData = doc.data()
                 setResearchGroup(researchGroupData)
                 console.log('research group data', researchGroupData)
+
             })
         })
         .catch((error) => {
           console.log("Error getting document:", error);
       })
+      setLoading(false)
     }}, [username])
 
     return (
       <ErrorBoundary>
         <React.Fragment>
+        
           {user ?
+            
             <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '100px'}}>
+              
                 <ErrorBoundary>
                   <Bio 
                   userFeedData={ userData }
@@ -73,6 +80,14 @@ useEffect(() => {
                   collaborators={ researchGroup?.groupmembers }
                   />
                 </ErrorBoundary>
+                {loading && <Loader
+                        style={{position: 'absolute', left: '50%'}}
+                        type="Grid"
+                        color='#009DDC'
+                        height={50}
+                        width={50}
+                    />
+                } 
                 { 
                   posts.map(({ post, id }) => (
                           //the post belongs to this username
@@ -94,6 +109,8 @@ useEffect(() => {
                     <h5>Please Log In To View UserFeed</h5>
                 </Card>
           }
+
+          
         </React.Fragment> 
       </ErrorBoundary>         
       

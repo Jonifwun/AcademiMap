@@ -7,6 +7,7 @@ import { db } from '../../firebase'
 import ProfilePic from './ProfilePic'
 import Collaborators from './Collaborators'
 import ErrorBoundary from '../ErrorBoundary'
+import Loader from 'react-loader-spinner'
 
 
 
@@ -17,6 +18,7 @@ const Profile = () => {
     const [researchGroup, setResearchGroup] = useState({})
     const [userData, setUserData] = useState({})
     const [postCount, setPostCount] = useState('')
+    const [loading, setLoading] = useState(true)
 
     useEffect(() => {
         
@@ -54,11 +56,12 @@ const Profile = () => {
                   })
                   .catch(err => {
                       console.log("Error getting documents: ", err);
-                  });
+                  })
             }
             catch (err) {
                 console.log(err)
             }
+            setLoading(false)
             }     
         }, [user])
 
@@ -99,6 +102,14 @@ const Profile = () => {
             <Card style={{margin: '100px 30px 40px', backgroundColor: '#0c3141', color: '#FFF', padding: '25px', display: 'flex', justifyContent: 'center'}}>
                 <h5>Please Log In To View Profile</h5>
             </Card>
+            }
+            {loading && <Loader
+                        style={{position: 'absolute', left: '50%', bottom:'50%', marginBottom: '60px'}}
+                        type="Grid"
+                        color='#009DDC'
+                        height={50}
+                        width={50}
+                    />
             }
         </React.Fragment> 
     )

@@ -21,7 +21,7 @@ class ErrorBoundary extends Component {
     render() {
         if(this.state.hasError){
             return (
-                <Card style={{margin: '100px 30px 40px', backgroundColor: '#0c3141', color: '#FFF', padding: '25px', display: 'flex', justifyContent: 'center'}}>
+                <Card style={{margin: '100px 30px 40px', backgroundColor: '#FFF', color: 'black', padding: '25px', display: 'flex', justifyContent: 'center'}}>
                     <h5>An error has occurred...</h5>
                 </Card>
             )

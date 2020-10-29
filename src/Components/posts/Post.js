@@ -16,6 +16,7 @@ import PostHeader from './PostHeader';
 import PaperDisplay from './PaperDisplay';
 import AddPaperCard from '../AddPaperCard';
 import SubmitNewPaper from '../SubmitNewPaper';
+import ErrorBoundary from '../ErrorBoundary';
 
 
 const Post = React.forwardRef(({ postID, username, imgsrc, caption, researchGroupID, userFeedData }, ref) => {
