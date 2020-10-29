@@ -103,6 +103,12 @@ useEffect(() => {
                   </ErrorBoundary>
                       ))
                 }
+                {
+                  posts.length === 0 && 
+                  <Card style={{margin: '100px 30px 40px', backgroundColor: '#0c3141', color: '#FFF', padding: '25px', display: 'flex', justifyContent: 'center'}}>
+                    <h5>This user has no posts to display</h5>
+                  </Card>
+                }
             </div>
                 : 
                 <Card style={{margin: '100px 30px 40px', backgroundColor: '#0c3141', color: '#FFF', padding: '25px', display: 'flex', justifyContent: 'center'}}>
