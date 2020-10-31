@@ -22,9 +22,10 @@ const Posts = () => {
     const observer = useRef()  
 
     //runs when user scrolls to the bottom of the page if there are any posts left to load
-    const getMorePosts = () => {
+    const getMorePosts = useCallback(() => {
       setLoading(true)
-      db.collection('researchgroups')
+      try {
+        db.collection('researchgroups')
         .doc(researchGroupID)
         .collection('posts')
         .orderBy('timestamp', 'desc')
@@ -32,11 +33,8 @@ const Posts = () => {
         .limit(2)              
         .onSnapshot(snapshot => {
           const lastVisible = snapshot.docs[snapshot.docs.length-1]
-
           if(snapshot.docs.length === 0) setHasMore(false)
-
           if(lastVisible) setLastVisible(lastVisible)
-
           const newPosts = snapshot.docs.map(doc => ({
                   id: doc.id,
             post: doc.data()
@@ -45,8 +43,11 @@ const Posts = () => {
             return [...prevPosts, ...newPosts]
           })
           setLoading(false)
-      })
-    }
+        })
+      } catch (err) {
+        if(err) console.log('getMorePosts error:', err)
+      }      
+    }, [lastVisible, researchGroupID])
 
     //Set up an observer to follow the last post and then run getMorePosts when it appears on screen
     const lastPostRef = useCallback(node => {
@@ -62,7 +63,6 @@ const Posts = () => {
         }
       })
       if(node) observer.current.observe(node)
-
     }, [loading, getMorePosts, hasMore])
 
     useEffect(() => {
@@ -70,7 +70,6 @@ const Posts = () => {
       if(user){
         db.collection('users').doc(user.displayName).get()
           .then((userDoc) => {
-
             let user;
             if (userDoc.exists) {
               user = userDoc.data()
@@ -100,54 +99,40 @@ const Posts = () => {
             setLoading(false)
           }).catch((error) => {
             console.log("Error getting document:", error);
-        })
-        
-      }
-      }, [user])
+        })      
+      }}, [user])
 
     return (
       <ErrorBoundary>
-      <React.Fragment>       
-        <div style={{display: 'grid', grid: 'auto-flow dense / repeat(2, 50%)', placeItems: 'center', margin: '85px 0'}}>
-            {
-              posts.map(({ post, id }, index) => {
-              if(posts.length === index + 1){
-                return (
-                  <Post
-                    ref={ lastPostRef }                           
-                    user={ user } 
-                    key={ id } 
-                    postID={ id }
-                    researchGroupID={ researchGroupID }
-                    {...post}
-                  />
-                )
-              } else {
-                return (
-                  <Post
-                    ref={ null }                           
-                    user={ user } 
-                    key={ id } 
-                    postID={ id }
-                    researchGroupID={ researchGroupID }
-                    {...post}
-                  />
-                )
-              }                            
-            })
-            }
-        </div>
-        { user?.displayName ? <Upload username={ user.displayName } researchGroupID={ researchGroupID }/> : null }
-        
-        {loading && <Loader
-                        style={{position: 'absolute', left: '50%', marginBottom: '60px'}}
-                        type="Grid"
-                        color='#009DDC'
-                        height={50}
-                        width={50}
+        <React.Fragment>       
+          <div style={{display: 'grid', grid: 'auto-flow dense / repeat(2, 50%)', placeItems: 'center', margin: '85px 0'}}>
+              {
+                posts.map(({ post, id }, index) => {
+                  return (
+                    <Post
+                      ref={ posts.length === index + 1 ? lastPostRef : null }                           
+                      user={ user } 
+                      key={ id } 
+                      postID={ id }
+                      researchGroupID={ researchGroupID }
+                      {...post}
                     />
-        }
-      </React.Fragment>
+                  )                                          
+              })
+              }
+          </div>
+
+          { user?.displayName ? <Upload username={ user.displayName } researchGroupID={ researchGroupID }/> : null }
+          
+          {loading && <Loader
+                          style={{position: 'absolute', left: '50%', marginBottom: '60px'}}
+                          type="Grid"
+                          color='#009DDC'
+                          height={50}
+                          width={50}
+                      />
+          }
+        </React.Fragment>
       </ErrorBoundary> 
     )
 }
