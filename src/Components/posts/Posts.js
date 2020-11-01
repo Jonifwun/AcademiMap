@@ -18,6 +18,12 @@ const Posts = () => {
     const [loading, setLoading] = useState(true)
     const [hasMore, setHasMore] = useState(true)
 
+    //hook that runs on mounting to grab posts
+    const { posts, lastVisible, loading, error } = useGetPostsFromFirestore({
+      collection: 'researchgroups',
+      id: researchGroupID
+    })
+
     // Last post ref
     const observer = useRef()  
 
@@ -59,13 +65,14 @@ const Posts = () => {
         if(entries[0].isIntersecting){
           console.log('Post is visible')
           //Here we want to run getMorePosts if there are any posts left
-          if(hasMore) getMorePosts()
+          if (hasMore) getMorePosts()
         }
       })
       if(node) observer.current.observe(node)
     }, [loading, getMorePosts, hasMore])
 
     useEffect(() => {
+
       setLoading(true)
       if(user){
         db.collection('users').doc(user.displayName).get()
