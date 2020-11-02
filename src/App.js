@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
-import { auth } from './firebase'
+import { auth, db } from './firebase'
 import Modal from '@material-ui/core/Modal';
 import { makeStyles } from '@material-ui/core/styles';
 import { Button, Card } from '@material-ui/core';
@@ -16,6 +16,7 @@ import { Link } from 'react-router-dom'
 import { UserContextProvider } from './Contexts/UserContext'
 import UserFeed from './Components/UserFeed';
 import GroupFeed from './Components/group/GroupFeed'
+import { ResearchGroupContextProvider } from './Contexts/ResearchGroupContext';
 
 const App = () => {
   
@@ -23,12 +24,20 @@ const App = () => {
   const [logIn, setLogin] = useState(true)
   const [modalStyle] = useState(getModalStyle)
   const [user, setUser] = useState(null)
-
+  const [researchGroupID, setResearchGroupID] = useState('')
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((authUser) => {
-        if(authUser){
-          console.log(authUser)
+        if(authUser){         
+          db.collection('users').doc(authUser.displayName).get()
+            .then((userDoc) => {              
+              if (userDoc.exists) {
+                 const { researchGroup } = userDoc.data()
+                 setResearchGroupID(researchGroup)               
+              } else {
+                  console.log("No such document!");
+              }
+          })
           setUser(authUser)
         } else {
           setUser(null)
@@ -91,6 +100,7 @@ const App = () => {
       </Modal>
 
       <UserContextProvider user={ user }>
+        <ResearchGroupContextProvider researchGroupID={researchGroupID}>
         <div className="header">
           <Link to={'../'}>
             <img src="logo.png" alt="logo" className="headerLogo"></img>
@@ -142,6 +152,7 @@ const App = () => {
           )}
           />
         </Switch>
+        </ResearchGroupContextProvider>
       </UserContextProvider>    
     </div>
     </Router>
