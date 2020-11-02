@@ -1,10 +1,12 @@
-import React, { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { db } from '../firebase'
 
-const useGetPostsFromFirestore = ({collection, id}) => {
+export const useGetPostsFromFirestore = ({collection, id}) => {
 
-    const [posts, setPosts] = useState([])
-    const [lastVisible, setLastVisible] = useState(null)
+    const [data, setData] = useState([])
+    const [initialLastVisible, setLastVisible] = useState(null)
     const [error, setError] = useState(null)
+    const [dataLoading, setDataLoading] = useState(false)
 
     useEffect(() => {
         try {
@@ -15,23 +17,23 @@ const useGetPostsFromFirestore = ({collection, id}) => {
             .onSnapshot(snapshot => {
                 const lastVisible = snapshot.docs[snapshot.docs.length-1]
                 setLastVisible(lastVisible)    
-                setPosts(snapshot.docs.map(doc => ({
+                setData(snapshot.docs.map(doc => ({
                 id: doc.id,
                 post: doc.data()
                 }
             )))
             })
-            setLoading(false)
+            setDataLoading(false)
         } 
         catch (err) {
-            error && setError('Error fetching posts:', err)
+            if(error) setError('Error fetching posts:', err)
         } 
-    }, [researchGroupID])
+    }, [id, collection, error])
 
     return {
-        lastVisible,
-        posts,
-        loading,
+        data,
+        initialLastVisible,
+        dataLoading,
         error
     }
 }

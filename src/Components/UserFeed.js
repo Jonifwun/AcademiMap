@@ -1,4 +1,4 @@
-import React, {  useState, useEffect, useContext } from 'react'
+import React, {  useState, useEffect, useContext, useRef, useCallback } from 'react'
 import { useParams } from "react-router-dom"
 import Bio from './profile/Bio'
 import { db } from '../firebase'
@@ -7,6 +7,8 @@ import { UserContext } from '../Contexts/UserContext'
 import { Card } from '@material-ui/core'
 import ErrorBoundary from './ErrorBoundary'
 import Loader from 'react-loader-spinner'
+import { useGetPostsFromFirestore } from './useGetPostsFromFirestore'
+import { GetMorePosts } from './GetMorePosts'
 
 
 const UserFeed = () => {
@@ -19,6 +21,8 @@ const [posts, setPosts] = useState([])
 const [userData, setUserData] = useState({})
 const [researchGroup, setResearchGroup] = useState({})
 const [loading, setLoading] = useState(true)
+const [lastVisible, setLastVisible] = useState(null)
+const [hasMore, setHasMore] = useState(true)
 
 useEffect(() => {
 
@@ -35,20 +39,6 @@ useEffect(() => {
           }
         return user
 
-        }).then((user) => {
-          db.collection('users').doc(user.username)
-            .collection('posts')
-            .orderBy('timestamp', 'desc')
-            .onSnapshot(snapshot => {
-              setPosts(snapshot.docs.map(doc => ({
-                id: doc.id,
-                post: doc.data(),
-                length: snapshot.docs.length
-              }
-            )))
-          })
-          return user
-
         }).then((user) =>{
             console.log('user data:', user) 
             db.collection('researchgroups').doc(user.researchGroup).get()
@@ -56,7 +46,6 @@ useEffect(() => {
                 const researchGroupData = doc.data()
                 setResearchGroup(researchGroupData)
                 console.log('research group data', researchGroupData)
-
             })
         })
         .catch((error) => {
@@ -65,14 +54,51 @@ useEffect(() => {
       setLoading(false)
     }}, [username])
 
+    //custom hook that runs on mounting to grab initial set of posts
+    const { data: firstPosts, initialLastVisible, dataLoading, error } = useGetPostsFromFirestore({
+      collection: 'users',
+      id: userData.username
+    })
+
+    useEffect(() => {      
+      if(dataLoading) return
+      setPosts(firstPosts)
+      setLastVisible(initialLastVisible)
+      setLoading(false)
+    }, [user, firstPosts, initialLastVisible, dataLoading])
+
+    //Logic below deals with watching for the last post, then loading more if there are any
+
+    const observer = useRef()
+    
+    const lastPostRef = useCallback(node => {
+      //If loading, do nothing
+      if (loading) return
+      //Want to disconnect from the previous last post and then reconnect to the new last post
+      if(observer.current) observer.current.disconnect()
+      observer.current = new IntersectionObserver(entries => {
+        if(entries[0].isIntersecting){
+          console.log('Post is visible')
+          //Here we want to run getMorePosts if there are any posts left
+          if (hasMore) GetMorePosts({
+            collection: 'users', 
+            id: userData.username,
+            setLoading,
+            lastVisible,
+            setLastVisible,
+            setHasMore,
+            setPosts
+          })
+        }
+      })
+      if(node) observer.current.observe(node)
+    }, [loading, hasMore, lastVisible, userData])
+
     return (
       <ErrorBoundary>
         <React.Fragment>
-        
-          {user ?
-            
-            <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '100px'}}>
-              
+          {user ?            
+            <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '100px'}}>              
                 <ErrorBoundary>
                   <Bio 
                   userFeedData={ userData }
@@ -88,21 +114,22 @@ useEffect(() => {
                         width={50}
                     />
                 } 
-                { 
-                  posts.map(({ post, id }) => (
-                          //the post belongs to this username
-                  <ErrorBoundary>        
-                    <Post  username={ userData.username }
-                            //this is the signed in user 
-                            {...post}
-                            userFeedData={ userData } 
-                            key={ id } 
-                            postID={ id } 
-                            researchGroupID={ userData.researchGroup }
-                    />
-                  </ErrorBoundary>
-                      ))
-                }
+                <ErrorBoundary> 
+                  {
+                    posts.map(({ post, id }, index) => (
+                            //the post belongs to this username
+                      <Post  username={ userData.username }
+                        //this is the signed in user 
+                        ref={ posts.length === index + 1 ? lastPostRef : null }
+                        {...post}
+                        userFeedData={ userData } 
+                        key={ id } 
+                        postID={ id } 
+                        researchGroupID={ userData.researchGroup }
+                      />
+                    ))
+                  }
+                </ErrorBoundary>                
                 {
                   posts.length === 0 && 
                   <Card style={{margin: '100px 30px 40px', backgroundColor: '#0c3141', color: '#FFF', padding: '25px', display: 'flex', justifyContent: 'center'}}>
@@ -114,12 +141,9 @@ useEffect(() => {
                 <Card style={{margin: '100px 30px 40px', backgroundColor: '#0c3141', color: '#FFF', padding: '25px', display: 'flex', justifyContent: 'center'}}>
                     <h5>Please Log In To View UserFeed</h5>
                 </Card>
-          }
-
-          
+          }          
         </React.Fragment> 
-      </ErrorBoundary>         
-      
+      </ErrorBoundary>               
     )
 }
 
