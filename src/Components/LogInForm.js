@@ -26,11 +26,9 @@ const LogInForm = ({ setOpenModal }) => {
     return(
         <div className="logInDiv">
             <LogInSignUpHeader />     
-            
-            <form className="logInForm">
+                <form className="logInForm">
                 <Card id="Card">
                 <h2>Log In</h2>
-                    
                 <FormControl className="input">
                     <InputLabel htmlFor="email">Email</InputLabel>
                     <Input 

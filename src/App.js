@@ -17,6 +17,7 @@ import { UserContextProvider } from './Contexts/UserContext'
 import UserFeed from './Components/UserFeed';
 import GroupFeed from './Components/group/GroupFeed'
 import { ResearchGroupContextProvider } from './Contexts/ResearchGroupContext';
+import Home from './Components/Home';
 
 const App = () => {
   
@@ -26,11 +27,13 @@ const App = () => {
   const [user, setUser] = useState(null)
   const [researchGroupID, setResearchGroupID] = useState('')
 
+
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((authUser) => {
         if(authUser){         
           db.collection('users').doc(authUser.displayName).get()
-            .then((userDoc) => {              
+            .then((userDoc) => {
+              
               if (userDoc.exists) {
                  const { researchGroup } = userDoc.data()
                  setResearchGroupID(researchGroup)               
@@ -136,7 +139,7 @@ const App = () => {
 
         <Switch>             
           <Route path='/' exact render={() => (
-            <Posts />
+            user ? <Posts /> : <Home/>
           )}
           />
           <Route path='/profile' render={() => (

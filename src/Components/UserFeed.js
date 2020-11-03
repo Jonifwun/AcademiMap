@@ -25,7 +25,7 @@ const [lastVisible, setLastVisible] = useState(null)
 const [hasMore, setHasMore] = useState(true)
 
 useEffect(() => {
-
+  //This use effect deals with grabbing the user document from firebase ready for the useGetPostsFromFirestore hook
     if(username){
       db.collection('users').doc(username).get()
         .then((userDoc) => {
@@ -60,7 +60,8 @@ useEffect(() => {
       id: userData.username
     })
 
-    useEffect(() => {      
+    useEffect(() => {
+      //This use effect deals with setting posts and last visible post 
       if(dataLoading) return
       setPosts(firstPosts)
       setLastVisible(initialLastVisible)
