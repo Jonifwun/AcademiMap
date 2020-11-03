@@ -13,7 +13,7 @@ export const useGetPostsFromFirestore = ({collection, id}) => {
             db.collection(collection).doc(id)
             .collection('posts')
             .orderBy('timestamp', 'desc')
-            .limit(4)
+            .limit(2)
             .onSnapshot(snapshot => {
                 const lastVisible = snapshot.docs[snapshot.docs.length-1]
                 setLastVisible(lastVisible)    
